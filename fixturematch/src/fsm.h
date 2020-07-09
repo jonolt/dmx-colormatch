@@ -31,12 +31,14 @@ uint8_t extract_int(String str, uint8_t defaultInt);
 void param_enter();
 bool param_loop();
 void param_exit();
-void param_read_serial(String str);
+void param_reset();
+bool param_read_serial(String str);
 
 void increase_dmx_values(uint8_t inc_step);
 void increase_dmx_value(uint8_t index, uint8_t inc_step);
 void print_values();
 void write_dmx(uint8_t values[3]);
+void write_dmx_all();
 void write_dmx_on();
 void write_dmx_off();
 

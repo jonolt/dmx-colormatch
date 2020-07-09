@@ -52,11 +52,14 @@ void loop() {
     Serial.print(" ->");
     if (fsm.state() == fsm.IDLE) {
       if (str == "ref") {
+        Serial.println("ack");
         setState(fsm.REFERENCE);
       } else if (str == "match") {
+        Serial.println("ack");
         setState(fsm.MATCH);
       } else if (str == "param") {
         if (mode == MODE_SERIAL) {
+          Serial.println("ack");
           setState(fsm.PARAM);
         } else{
           Serial.print("--> mode not supported in standalone");
@@ -65,10 +68,13 @@ void loop() {
         Serial.println(" --> str not recognized");
       }
     } else if (str == "cancle" || str == "c") {
+      Serial.println("ack");
       Serial.println(" --> current action cancled");
       setState(fsm.IDLE);
     } else if (fsm.state() == fsm.PARAM) {
-        param_read_serial(str);
+        if(param_read_serial(str)){
+          Serial.println("ack");
+        }
     } else {
       Serial.print("Device busy. Current state is '");
       Serial.print(fsm.state());

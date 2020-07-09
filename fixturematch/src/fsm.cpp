@@ -66,24 +66,17 @@ uint8_t param_hold_count = 0;
 
 
 extern TCS34725 tcs;
-//uint8_t dmx_r, dmx_g, dmx_b = 0;
 uint8_t dmx_cur[10] = { };  // init all to zero
 uint8_t dmx_old[10] = { };  // init all to zero
 uint16_t r, g, b, c = 0;
-//uint8_t dmx_cur[] = {0, 0, 0};
-//uint8_t dmx_old[] = {0, 0, 0};
 uint8_t hold_counter = 0;
 bool wait_for_start = true;
+uint32_t loop_count = 0;
 bool finished = false;
 
 void param_enter(){
     Serial.println("PARAM_ENTER");
     write_dmx_on();
-    dmx_cur[10] = { };  // init all to zero
-    dmx_old[10] = { };  // init all to zero
-    hold_counter = 0;
-    wait_for_start = true;
-    finished = false;
     return;
 }
 
@@ -93,12 +86,24 @@ bool param_loop(){
     return true;
   }
 
+  loop_count++;
+
+  if (loop_count == 1){
+    write_dmx_off();
+    delay(10);
+  }
+
   tcs.startIntegration();
   //do computing send old values from previous loop
-  print_values();
+
+  if(loop_count > 1){
+    print_values();
+  }
+  
   for(int i = 0; i<param_chnanels; i++){
     dmx_old[i] = dmx_cur[i];
   }
+
   //increase_dmx_value(3, DMX_STEPS);
   increase_dmx_values(param_dmx_step);
   //wait until integration is finished
@@ -124,17 +129,36 @@ void param_exit(){
     return;
 }
 
-void param_read_serial(String str){
-    // expected String: 'start param X'
+bool param_read_serial(String str){
     if(str.startsWith("start")){
         wait_for_start = false;
+        return true;
     } else if (str.startsWith("param_chnanels")){
+        write_dmx_off();
         param_chnanels = extract_int(str, param_chnanels);
+        write_dmx_on();
     } else if ( str.startsWith("param_dmx_step")){
         param_dmx_step = extract_int(str, param_dmx_step);
     } else if ( str.startsWith("param_hold_count")){
         param_hold_count = extract_int(str, param_hold_count);
+    } else if ( str.startsWith("reset")) {
+        // do nothing, reset will be called below. 
+    } else {
+      return false;
     }
+    param_reset();
+    return true;
+}
+
+void param_reset(){
+  for (uint8_t i = 0; i < sizeof(dmx_cur); i++){
+    dmx_cur[i] = 0;
+    dmx_old[i] = 0;
+  }  
+  hold_counter = 0;
+  wait_for_start = true;
+  loop_count = 0;
+  finished = false;
 }
 
 uint8_t extract_int(String str, uint8_t defaultInt){
@@ -161,10 +185,6 @@ uint8_t extract_int(String str, uint8_t defaultInt){
 void increase_dmx_values(uint8_t inc_step) {
   if (hold_counter == 0) {
     for(int i = param_chnanels; i >= 0; i--){
-      // Serial.print("Increase: ");
-      // Serial.print(i);
-      // Serial.print("/");
-      // Serial.println(param_chnanels);
       if (dmx_cur[i] == 0){
         if(i>0){
           increase_dmx_value(i-1, inc_step);
@@ -183,36 +203,37 @@ void increase_dmx_values(uint8_t inc_step) {
 void increase_dmx_value(uint8_t index, uint8_t inc_step) {
   uint16_t val = dmx_cur[index];
   val = val + inc_step;
-  if (val > (uint8_t)255 && val < (uint8_t)(255 + inc_step)) {
+  if (val > (uint16_t)255 && val < (uint16_t)(255 + inc_step)) {
     val = 255;
   }
-  if (val == (uint8_t)(255 + inc_step)) {
+  if (val == (uint16_t)(255 + inc_step)) {
     val = 0;
   }
-  if (val > (uint8_t)255) {
+  if (val > (uint16_t)255) {
     val = 0;
   }
   hold_counter = param_hold_count;
   dmx_cur[index] = val;
 }
 
+void write_dmx(uint8_t values[]) {
+  for(int i = 0; i < param_chnanels; i++){
+    DMXSerial.write(i+1, values[i]);
+  }
+}
 
-void write_dmx(uint8_t values[3]) {
-  DMXSerial.write(1, values[0]);
-  DMXSerial.write(2, values[1]);
-  DMXSerial.write(3, values[2]);
+void write_dmx_all(uint8_t val) {
+  for(int i = 0; i < param_chnanels; i++){
+    DMXSerial.write(i+1, val);
+  }
 }
 
 void write_dmx_on() {
-  DMXSerial.write(1, 255);
-  DMXSerial.write(2, 255);
-  DMXSerial.write(3, 255);
+  write_dmx_all(255);
 }
 
 void write_dmx_off() {
-  DMXSerial.write(1, 0);
-  DMXSerial.write(2, 0);
-  DMXSerial.write(3, 0);
+  write_dmx_all(0);
 }
 
 void print_values() {
