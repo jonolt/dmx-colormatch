@@ -4,12 +4,11 @@
 Fsm & Fsm::begin() {
 
     const static state_t state_table[] PROGMEM = {
-    /*                    ON_ENTER      ON_LOOP      ON_EXIT   CMD_STOP   CMD_PARAM    CMD_REF  CMD_MATCH   EVT_MD   ELSE */
-    /* IDLE      */       ENT_IDLE,          -1,          -1,      IDLE,      PARAM, REFERENCE,     MATCH,      -1,    -1,
-    /* PARAM     */      ENT_PARAM,  LOOP_PARAM,  EXIT_PARAM,      IDLE,         -1,        -1,        -1,      -1,    -1,
-    /* REFERENCE */       ENT_REF,     LOOP_REF,    EXIT_REF,      IDLE,         -1,        -1,        -1,      -1,    -1,
-    /* MATCH     */     ENT_MATCH,   LOOP_MATCH,  EXIT_MATCH,      IDLE,         -1,        -1,        -1,  MATCH2,    -1,
-    /* MATCH2    */    ENT_MATCH2,  LOOP_MATCH2,          -1,      IDLE,         -1,        -1,        -1,      -1,    -1,
+    /*                    ON_ENTER      ON_LOOP      ON_EXIT   CMD_STOP   CMD_PARAM    CMD_REF  CMD_MATCH    ELSE */
+    /* IDLE      */       ENT_IDLE,          -1,          -1,      IDLE,      PARAM, REFERENCE,     MATCH,     -1,
+    /* PARAM     */      ENT_PARAM,  LOOP_PARAM,  EXIT_PARAM,      IDLE,         -1,        -1,        -1,     -1,
+    /* REFERENCE */       ENT_REF,     LOOP_REF,    EXIT_REF,      IDLE,         -1,        -1,        -1,     -1,
+    /* MATCH     */     ENT_MATCH,   LOOP_MATCH,  EXIT_MATCH,      IDLE,         -1,        -1,        -1,     -1,
     };
 
     Machine::begin( state_table, ELSE );
@@ -18,15 +17,6 @@ Fsm & Fsm::begin() {
 }
 
 int Fsm::event( int id ) {
-  // switch (id)
-  // {
-  //   case CMD_STOP:
-  //     Serial.println("CMD_STOP");
-  //     return 1;
-  //   case CMD_PARAM:
-  //     Serial.println("CMD_PARAM");
-  //     return 1;
-  // }
   return 0;
 }
 
@@ -70,22 +60,13 @@ void Fsm::action( int id ) {
       return;
     case EXIT_MATCH:
       match_exit();
-      Fsm::trigger(Fsm::EVT_MD);
-      return;
-    case ENT_MATCH2:
-      match2_enter();
-      return;
-    case LOOP_MATCH2:
-      if(!match2_loop()){
-        Fsm::trigger(Fsm::CMD_STOP);
-      }
       return;
   }
 }
 
 Fsm & Fsm::trace( Stream & stream ) {
   Machine::setTrace( &stream, atm_serial_debug::trace,
-    "FSM\0CMD_STOP\0CMD_PARAM\0CMD_REF\0CMD_MATCH\0EVT_MD\0ELSE\0IDLE\0PARAM\0REFERENCE\0MATCH\0MATCH2");
+    "FSM\0CMD_STOP\0CMD_PARAM\0CMD_REF\0CMD_MATCH\0ELSE\0IDLE\0PARAM\0REFERENCE\0MATCH");
   return *this;
 }
 
@@ -116,6 +97,7 @@ uint8_t index_var = 0;
 // dmx_cur
 uint8_t last_dmx1 = -1;
 uint8_t last_dmx2 = -2;
+float last_dif_rel = 42;
 uint8_t repetitions = 0;
 
 float matrix[3][3] = { };
@@ -167,7 +149,6 @@ bool match_loop(){   // iterate loop
   if(index_var == index_abs){
     index_ref = index_var;
     repetitions++;
-    return repetitions == 10 ? true : false;
   }
 
   tcs.startIntegration();
@@ -205,39 +186,43 @@ bool match_loop(){   // iterate loop
   }else if(dmx < 0){
       dmx = 0;
       index_ref = index_var;
-      repetitions += 1;
-  }else if(last_dmx1 == dmx || last_dmx2 == dmx){
+      repetitions++;
+  //}else if(last_dmx1 == dmx || last_dmx2 == dmx){
+  //    index_ref = index_var;
+  //    repetitions += 2;
+  }else if (last_dif_rel < abs(dif_rel)){
+      dmx = last_dmx1;
       index_ref = index_var;
-      repetitions += 2;
-  }else{
-      last_dmx2 = last_dmx1;
-      last_dmx1 = dmx;
+      repetitions++;
   }
+      
+  last_dmx2 = last_dmx1;
+  last_dmx1 = dmx;
 
   dmx_cur[index_var] = (uint8_t) dmx;
   write_dmx(dmx_cur);
+
+  if(index_ref == index_var || index_abs == index_var){        
+      last_dif_rel = 100;
+  }else{
+      last_dif_rel = abs(dif_rel);
+  }
 
   Serial.print(" [");
   for(uint8_t ch=0; ch<dmx_color_ch; ch++){
     Serial.print(dmx_cur[ch]);
     Serial.print(", ");
   }
-  Serial.println("]");
+  Serial.print("] ");
 
-  return false;
+  Serial.println(repetitions);
+
+  return repetitions == 42 ? true : false;
 
 }
 
 void match_exit(){
   Serial.println("MATCH_EXIT");
-}
-
-void match2_enter(){
-  Serial.println("MATCH2_ENTER");
-}
-
-bool match2_loop(){
-  return true;
 }
 
 void divide_dmx_cur_by(uint8_t divisor){

@@ -16,8 +16,8 @@ class Fsm: public Machine {
     atm_timer_millis timer;
 
     enum { IDLE, PARAM, REFERENCE, MATCH, MATCH2 }; // STATES
-    enum { CMD_STOP, CMD_PARAM, CMD_REF, CMD_MATCH, EVT_MD, ELSE }; // EVENTS
-    enum { ENT_IDLE, ENT_PARAM, LOOP_PARAM, EXIT_PARAM, ENT_REF, LOOP_REF, EXIT_REF, ENT_MATCH, LOOP_MATCH, EXIT_MATCH, ENT_MATCH2, LOOP_MATCH2 }; // ACTIONS
+    enum { CMD_STOP, CMD_PARAM, CMD_REF, CMD_MATCH, ELSE }; // EVENTS
+    enum { ENT_IDLE, ENT_PARAM, LOOP_PARAM, EXIT_PARAM, ENT_REF, LOOP_REF, EXIT_REF, ENT_MATCH, LOOP_MATCH, EXIT_MATCH}; // ACTIONS
 	
     Fsm & begin();
     Fsm & trace( Stream & stream );
@@ -40,8 +40,6 @@ void divide_dmx_cur_by(uint8_t divisor);
 void match_enter();
 bool match_loop();
 void match_exit();
-void match2_enter();
-bool match2_loop();
 
 void reference_enter();
 bool reference_loop();

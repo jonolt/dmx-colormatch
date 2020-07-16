@@ -68,6 +68,9 @@ if __name__ == "__main__":
 
     last_dmx1 = -1
     last_dmx2 = -2
+    
+    last_dif1 = 100
+    last_dif2 = 100
 
     matrix = np.zeros((3, 3), float)
     row_sums = np.zeros(3, float)
@@ -119,17 +122,31 @@ if __name__ == "__main__":
         dmx[index_var] += int(sign(dif_rel) * (factor + 1))
 
         if dmx[index_var] > 255:
+            print(">255")
             divide_array(dmx, 2)
             dmx[index_var] = 255
             index_abs = index_var
         elif dmx[index_var] < 0:
+            print("<0")
             dmx[index_var] = 0
             index_ref = index_var
-        elif last_dmx1 == dmx[index_var] or last_dmx2 == dmx[index_var]:
+        #elif last_dmx1 == dmx[index_var] or last_dmx2 == dmx[index_var]:
+        #    index_ref = index_var
+        elif last_dif1 < abs(dif_rel):
+            print(f"{last_dif1} < {abs(dif_rel)}")
+            dmx[index_var] = last_dmx1
             index_ref = index_var
+
+            
+        last_dmx2 = last_dmx1
+        last_dmx1 = dmx[index_var]
+
+        if index_ref == index_var or index_abs == index_var:        
+            last_dif1 = 100
         else:
-            last_dmx2 = last_dmx1
-            last_dmx1 = dmx[index_var]
+            last_dif1 = abs(dif_rel)
+
+        
 
         print(f"[{dmx[0]:03d},{dmx[1]:03d},{dmx[2]:03d}]")
         time.sleep(0.25)
