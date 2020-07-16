@@ -74,10 +74,11 @@ Fsm & Fsm::trace( Stream & stream ) {
 // general
 
 extern TCS34725 tcs;
+extern uint8_t dmx_ch_count;
+extern uint8_t dmx_start_address;
 
 uint8_t dmx_cur[10] = { };  // init all to zero
 uint8_t dmx_old[10] = { };  // init all to zero
-uint8_t dmx_start_address = 1;
 uint16_t r, g, b, c = 0;
 uint16_t *rgbc[] = {&r, &g, &b, &c};
 
@@ -89,14 +90,11 @@ uint64_t rgbc64[4] = { };
 uint16_t rgbc_reference[4] = { };
 
 // match
-
-uint8_t dmx_color_ch = 3;
 uint8_t index_abs = 0;
 uint8_t index_ref = 0;
 uint8_t index_var = 0;
 // dmx_cur
-uint8_t last_dmx1 = -1;
-uint8_t last_dmx2 = -2;
+uint8_t last_dmx = -1;
 float last_dif_rel = 42;
 uint8_t repetitions = 0;
 
@@ -109,8 +107,7 @@ void match_enter(){
   read_reference(ref_eeaddr);
 
   Serial.println("MATCH_ENTER");
-  last_dmx1 = -1;
-  last_dmx2 = -2;
+  last_dmx = -1;
   memset(row_sums, 0, sizeof(row_sums));
   memset(rgbc_dmx_ch, 0, sizeof(row_sums));
   for(int ref=0; ref<3; ref++){
@@ -121,7 +118,7 @@ void match_enter(){
   }
   uint8_t rgbc_index_max = get_max_index(row_sums);
 
-  for(uint8_t ch=0; ch<dmx_color_ch; ch++){
+  for(uint8_t ch=0; ch<dmx_ch_count; ch++){
     dmx_cur[ch] = 255;
     write_dmx(dmx_cur);
     delay(2);
@@ -134,6 +131,7 @@ void match_enter(){
   }
 
   index_abs = get_max_index(rgbc_dmx_ch);
+  Serial.println(index_abs);
   dmx_cur[index_abs] = 255;
   index_ref = index_abs;
   
@@ -142,13 +140,18 @@ void match_enter(){
   Serial.println("MATCH_ENTER_EXIT");
 }
 
+int8_t direction = 1;
+
 bool match_loop(){   // iterate loop
 
-  index_var = (index_ref+1)%dmx_color_ch;
+  index_var = (index_ref+dmx_ch_count+direction)%dmx_ch_count;
 
   if(index_var == index_abs){
     index_ref = index_var;
     repetitions++;
+    direction = -direction;
+    Serial.println("REVERSE");
+    return false;
   }
 
   tcs.startIntegration();
@@ -160,6 +163,10 @@ bool match_loop(){   // iterate loop
 
   int dmx = dmx_cur[index_var];
 
+  Serial.print(direction);
+  Serial.print(":");
+  Serial.print(index_abs);
+  Serial.print(":");
   Serial.print(index_ref);
   Serial.print("/");
   Serial.print(index_var);
@@ -169,35 +176,36 @@ bool match_loop(){   // iterate loop
   Serial.print(matrix[index_ref][index_var]);
   Serial.print(" ");
   Serial.print(dif_rel);
+  Serial.print(" [");
+  for(uint8_t ch=0; ch<dmx_ch_count; ch++){
+    Serial.print(dmx_cur[ch]);
+    Serial.print(", ");
+  }
+  Serial.print("] ");
 
   int factor = (int) abs(dif_rel)*10;
   if( factor > 9){
     factor = 9;
   }
 
-  dmx = dmx + int(sgn(dif_rel))*(factor+1);
+  dmx = dmx + (int) sgn(dif_rel)*(factor+1);
 
   if(dmx > 255){
-      divide_dmx_cur_by(2);
-      memset(dmx_cur, 0, sizeof(dmx_cur));
+      Serial.print("max ");
       dmx = 255;
       index_abs = index_var;
-      repetitions -= 2;
+      index_ref = index_abs;
   }else if(dmx < 0){
+      Serial.print("neg ");
       dmx = 0;
       index_ref = index_var;
-      repetitions++;
-  //}else if(last_dmx1 == dmx || last_dmx2 == dmx){
-  //    index_ref = index_var;
-  //    repetitions += 2;
   }else if (last_dif_rel < abs(dif_rel)){
-      dmx = last_dmx1;
+      Serial.print("dif ");
+      dmx = last_dmx;
       index_ref = index_var;
-      repetitions++;
   }
-      
-  last_dmx2 = last_dmx1;
-  last_dmx1 = dmx;
+
+  last_dmx = dmx;
 
   dmx_cur[index_var] = (uint8_t) dmx;
   write_dmx(dmx_cur);
@@ -207,13 +215,6 @@ bool match_loop(){   // iterate loop
   }else{
       last_dif_rel = abs(dif_rel);
   }
-
-  Serial.print(" [");
-  for(uint8_t ch=0; ch<dmx_color_ch; ch++){
-    Serial.print(dmx_cur[ch]);
-    Serial.print(", ");
-  }
-  Serial.print("] ");
 
   Serial.println(repetitions);
 
@@ -226,7 +227,7 @@ void match_exit(){
 }
 
 void divide_dmx_cur_by(uint8_t divisor){
-  for(uint8_t i=0; i<dmx_color_ch; i++){
+  for(uint8_t i=0; i<dmx_ch_count; i++){
     dmx_cur[i] = (int) dmx_cur[i]/divisor;
   }
 }
@@ -320,7 +321,7 @@ void read_reference(uint16_t address){
 
 // param
 
-uint8_t param_chnanels = 4;
+uint8_t param_chnanels = dmx_ch_count;
 uint8_t param_dmx_step = 10;
 uint8_t param_hold_count = 0;
 
@@ -418,7 +419,7 @@ void param_reset(){
   finished = false;
 }
 
-uint8_t extract_int(String str, uint8_t defaultInt){
+int64_t extract_int(String str, int64_t defaultInt){
   String numString;
   bool inStartsWith = true;
   for (uint8_t i = 0; i < str.length(); i++){

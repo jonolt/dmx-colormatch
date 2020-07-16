@@ -69,8 +69,7 @@ if __name__ == "__main__":
     last_dmx1 = -1
     last_dmx2 = -2
     
-    last_dif1 = 100
-    last_dif2 = 100
+    last_dif_rel = 42
 
     matrix = np.zeros((3, 3), float)
     row_sums = np.zeros(3, float)
@@ -132,8 +131,8 @@ if __name__ == "__main__":
             index_ref = index_var
         #elif last_dmx1 == dmx[index_var] or last_dmx2 == dmx[index_var]:
         #    index_ref = index_var
-        elif last_dif1 < abs(dif_rel):
-            print(f"{last_dif1} < {abs(dif_rel)}")
+        elif last_dif_rel < abs(dif_rel):
+            print(f"{last_dif_rel} < {abs(dif_rel)}")
             dmx[index_var] = last_dmx1
             index_ref = index_var
 
@@ -142,9 +141,9 @@ if __name__ == "__main__":
         last_dmx1 = dmx[index_var]
 
         if index_ref == index_var or index_abs == index_var:        
-            last_dif1 = 100
+            last_dif_rel = 100
         else:
-            last_dif1 = abs(dif_rel)
+            last_dif_rel = abs(dif_rel)
 
         
 

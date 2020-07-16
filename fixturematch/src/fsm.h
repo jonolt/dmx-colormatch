@@ -27,13 +27,11 @@ class Fsm: public Machine {
 
 };
 
-uint8_t extract_int(String str, uint8_t defaultInt);
+int64_t extract_int(String str, int64_t defaultInt);
 void save_reference(uint16_t address);
 void read_reference(uint16_t address);
-void make_relative(float target[3], uint16_t source[4]);
 uint8_t get_max_index(uint8_t dmx[]);
 uint8_t get_max_index(float dmx[]);
-bool compareArray(uint8_t a[],uint8_t b[]);
 float rel_diff(float a, float b);
 void divide_dmx_cur_by(uint8_t divisor);
 

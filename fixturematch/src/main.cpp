@@ -12,6 +12,8 @@
 
 Fsm fsm;
 TCS34725 tcs = TCS34725();
+uint8_t dmx_ch_count = 3;
+uint8_t dmx_start_address = 1;
 
 enum mode_t {
   MODE_SERIAL,
@@ -53,6 +55,22 @@ void loop() {
           fsm.trigger(fsm.CMD_PARAM);
         } else{
           Serial.print("--> mode not supported in standalone");
+        }
+      } else if (str.startsWith("dmx_ch")) {
+        uint8_t num = (uint8_t) extract_int(str, dmx_ch_count);
+        if(num < 10){
+          dmx_ch_count = num;
+          Serial.println("ack");
+        }else{
+          Serial.println("nack");
+        }
+      } else if (str.startsWith("dmx_add")) {
+        uint16_t num = (uint16_t) extract_int(str, dmx_ch_count);
+        if(num < 255 && num > 0){
+          dmx_start_address = num;
+          Serial.println("ack");
+        }else{
+          Serial.println("nack");
         }
       } else {
         Serial.println(" --> str not recognized");
