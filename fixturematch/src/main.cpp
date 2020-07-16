@@ -20,16 +20,6 @@ enum mode_t {
 
 enum mode_t mode;
 
-//extern uint8_t param_chnanels;
-
-void setState(int state) {
-  Serial.print("Set State: ");
-  Serial.println(state);  
-  fsm.trigger(state);
-  // Serial.print("/");
-  // Serial.println(fsm.state());  
-}
-
 void setup() {
   mode=MODE_SERIAL;
   Serial.begin( 9600 );
@@ -53,14 +43,14 @@ void loop() {
     if (fsm.state() == fsm.IDLE) {
       if (str == "ref") {
         Serial.println("ack");
-        setState(fsm.REFERENCE);
+        fsm.trigger(fsm.CMD_REF);
       } else if (str == "match") {
         Serial.println("ack");
-        setState(fsm.MATCH);
+        fsm.trigger(fsm.CMD_MATCH);
       } else if (str == "param") {
         if (mode == MODE_SERIAL) {
           Serial.println("ack");
-          setState(fsm.PARAM);
+          fsm.trigger(fsm.CMD_PARAM);
         } else{
           Serial.print("--> mode not supported in standalone");
         }
@@ -70,7 +60,7 @@ void loop() {
     } else if (str == "cancle" || str == "c") {
       Serial.println("ack");
       Serial.println(" --> current action cancled");
-      setState(fsm.IDLE);
+      fsm.trigger(fsm.CMD_STOP);
     } else if (fsm.state() == fsm.PARAM) {
         if(param_read_serial(str)){
           Serial.println("ack");
@@ -81,6 +71,6 @@ void loop() {
       Serial.println("'.");
     }
   }
-  //fsm.trace(Serial);
+  fsm.trace(Serial);
   fsm.cycle();
 }

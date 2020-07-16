@@ -1,110 +1,16 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
-"""
-Created on Wed May 13 21:38:56 2020
-
-@author: johannes
-"""
 
 from fixture import FixtureRGB
-
-T_TOT_STEPS = 10
-
-U_NUM_COLORS = 4
-Y_NUM_CH = 3  # wird größer
+import math
+import time
+import numpy as np
 
 
-csvpath = "../data/adj_megatripar_all.csv"
-csvpaths = (
-    "../data/adj_megatripar_red.csv",
-    "../data/adj_megatripar_green.csv",
-    "../data/adj_megatripar_blue.csv",
-)
-f = FixtureRGB(csvpaths)
-
-
-def make_relative(array):
-    r = list()
-    for i in range(len(array) - 2):
-        r.append(array[i] / array[i + 1])
-    r.append(array[-2] / array[0])
-    return r
-
-
-org_rgbc = [1508, 1147, 2873, 5526]
-org_dmx = [200, 150, 210]
-
-# org_rgb=[1604,1828,1144, 4597]
-# org_dmx=[200,	235,	85]
-
-
-def adjust(dmx, index, diff):
-    i = (index + 1) % 3
-    if abs(diff) < 0.05:
-        return True
-    if diff > 0:
-        if diff > -1:
-            dmx[i] -= 1
-        else:
-            dmx[i] -= 5
-    elif diff < 0:
-        if diff < 1:
-            dmx[i] += 1
-        else:
-            dmx[i] += 5
-    if dmx[i] < 0:
-        dmx[i] = 255
-    if dmx[i] > 255:
-        dmx[i] = 0
-
-    return False
-
-
-def iterate(dmx, u_soll_rel, index_abs=0):
-
-    if index_abs >= len(dmx):
-        raise ValueError("index must be size dmx")
-
-    index = index_abs + 1
-
-    itersum = 0
-    m = 0
-    while m < 21:
-        index_shifted = (index - 1) % len(dmx)
-        u_ist = f.in_out(dmx)
-        u_ist_rel = make_relative(u_ist)
-        u_diff = u_soll_rel[index_shifted] - u_ist_rel[index_shifted]
-
-        if abs(u_diff) < 0.005 or (m > 0 and m % 20 == 0):
-            itersum += m
-            index += 1
-            m = 0
-
-        if index >= len(dmx):
-            index = 0
-
-        if index == index_abs:
-            return itersum
-
-        if u_diff > 0:
-            if u_diff < 0.1:
-                dmx[index] -= 1
-            else:
-                dmx[index] -= 5
-        elif u_diff < 0:
-            if u_diff > -0.1:
-                dmx[index] += 1
-            else:
-                dmx[index] += 5
-
-        if dmx[index] < 0:
-            dmx[index] = 255
-        if dmx[index] > 255:
-            dmx[index] = 0
-
-        m += 1
-
-    return -42
+def rel_diff(cur, ref) -> float:
+    if ref == 0:
+        return cur
+    return (ref - cur) / ref
 
 
 def get_max_index(array):
@@ -115,38 +21,115 @@ def get_max_index(array):
     return max_index
 
 
-def interate_loop(dmx, u_soll_rel, index_abs=0):
-    dmx_old = [0] * len(dmx)
-    for n in range(5):
-        m = iterate(dmx, u_soll_rel, index_abs=index_abs)
-        print(n, m, dmx)
-        if dmx == dmx_old:
-            break
-        dmx_old = dmx.copy()
-    else:
-        Exception("find_values stuck in loop")
+def get_min_index(array):
+    min_index = 0
+    for i in range(len(array)):
+        if array[i] < array[min_index]:
+            min_index = i
+    return min_index
 
 
-def find_values(u_soll_rel, intesity=255):
+def sign(val):
+    return math.copysign(1, val)
 
-    dmx0 = [128, 128, 128]
-    dmx = dmx0.copy()
 
-    print("first loop")
-    interate_loop(dmx, u_soll_rel, index_abs=0)
-
-    max_index = get_max_index(dmx)
-    dmx[max_index] = intesity
-    print(f"second loop, max index {max_index}")
-    interate_loop(dmx, u_soll_rel, index_abs=max_index)
-
-    return dmx
+def divide_array(array, divisor):
+    for i in range(len(array)):
+        array[i] = int(array[i] / divisor)
 
 
 if __name__ == "__main__":
 
-    u_soll = org_rgbc
-    u_soll_rel = make_relative(u_soll)
+    org_rgbc = [1508, 1147, 2873, 5526]
+    org_dmx = [200, 150, 210]
 
-    # find_values(u_soll_rel)
-    find_values(u_soll_rel, intesity=255)
+    # org_rgbc = [3333,1186,705,5057]
+    # org_dmx = [255, 200, 0]
+
+    # org_rgb=[1604,1828,1144, 4597]
+    # org_dmx=[200,	235,	85]
+
+    # org_rgbc = [75,1259,5331,6775]
+    # org_dmx = [0,0,255]
+
+    csvpaths = (
+        "../data/adj_megatripar_red.csv",
+        "../data/adj_megatripar_green.csv",
+        "../data/adj_megatripar_blue.csv",
+    )
+    f = FixtureRGB(csvpaths)
+
+    # ENTER
+
+    ref_abs_rgbc = org_rgbc
+    index_abs = 0
+    index_ref = 0
+    dmx = [0, 0, 0]
+
+    last_dmx1 = -1
+    last_dmx2 = -2
+
+    matrix = np.zeros((3, 3), float)
+    row_sums = np.zeros(3, float)
+    rgbc_dmx_ch = np.zeros(len(dmx), int)
+
+    for ref in range(3):
+        for var in range(3):
+            matrix[ref, var] = rel_diff(ref_abs_rgbc[var], ref_abs_rgbc[ref])
+            row_sums[ref] += matrix[ref, var]
+
+    rgbc_index_max = get_max_index(row_sums)
+
+    for ch in range(len(dmx)):
+        dmx[ch] = 255
+        rgbc_dmx_ch[ch] = f.in_out(dmx)[rgbc_index_max]
+        dmx[ch] = 0
+
+    index_abs = 0
+    dmx[index_abs] = 255
+    index_ref = index_abs
+
+    repetitions = 0
+
+    # LOOP
+
+    while True:
+
+        index_var = (index_ref + 1) % len(dmx)
+
+        if index_var == index_abs:
+            index_ref = index_var
+            repetitions += 1
+            if repetitions == 5:
+                break
+            continue
+
+        cur_abs_rgbc = f.in_out(dmx)
+        cur_rel = rel_diff(cur_abs_rgbc[index_var], cur_abs_rgbc[index_ref])
+        dif_rel = cur_rel - matrix[index_ref, index_var]
+
+        print(
+            f"{index_abs} {index_ref}/{index_var} {cur_rel:06.3f} {matrix[index_abs, index_var]:06.3f} {dif_rel:+06.3f} ",
+            end="",
+        )
+
+        factor = abs(dif_rel) * 10
+        if factor > 9:
+            factor = 9
+        dmx[index_var] += int(sign(dif_rel) * (factor + 1))
+
+        if dmx[index_var] > 255:
+            divide_array(dmx, 2)
+            dmx[index_var] = 255
+            index_abs = index_var
+        elif dmx[index_var] < 0:
+            dmx[index_var] = 0
+            index_ref = index_var
+        elif last_dmx1 == dmx[index_var] or last_dmx2 == dmx[index_var]:
+            index_ref = index_var
+        else:
+            last_dmx2 = last_dmx1
+            last_dmx1 = dmx[index_var]
+
+        print(f"[{dmx[0]:03d},{dmx[1]:03d},{dmx[2]:03d}]")
+        time.sleep(0.25)

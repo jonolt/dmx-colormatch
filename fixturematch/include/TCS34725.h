@@ -104,17 +104,17 @@ class TCS34725 : public Adafruit_TCS34725 {
             }
         }
 
-        float integrate_2_min_norm(uint16_t min, float *r, float *g, float *b, float *c){
+        float integrate_2_min_norm(uint16_t min, uint16_t *r, uint16_t *g, uint16_t *b, uint16_t *c){
             while(!is_integrated());
             read_data_rgbc(&val_r, &val_g, &val_b, &val_c);
             int_count = 0;
             _integrate_2_min(min);
             setIntegrationTime(48);
             float divisor = _tcs34725IntegrationTime+int_count*24;
-            *r = (float)(val_r/divisor);
-            *g = (float)(val_g/divisor);
-            *b = (float)(val_b/divisor);
-            *c = (float)(val_c/divisor);
+            *r = (uint16_t)(val_r/divisor);
+            *g = (uint16_t)(val_g/divisor);
+            *b = (uint16_t)(val_b/divisor);
+            *c = (uint16_t)(val_c/divisor);
             // Serial.print(int_count);
             // Serial.print("/");
             // Serial.print(divisor);
