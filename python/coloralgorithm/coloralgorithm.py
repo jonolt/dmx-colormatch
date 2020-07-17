@@ -43,14 +43,14 @@ if __name__ == "__main__":
     org_rgbc = [1508, 1147, 2873, 5526]
     org_dmx = [200, 150, 210]
 
-    # org_rgbc = [3333,1186,705,5057]
-    # org_dmx = [255, 200, 0]
+    #org_rgbc = [3333,1186,705,5057]
+    #org_dmx = [255, 200, 0]
 
-    # org_rgb=[1604,1828,1144, 4597]
-    # org_dmx=[200,	235,	85]
+    #org_rgbc=[1604,1828,1144, 4597]
+    #org_dmx=[200,	235,	85]
 
-    # org_rgbc = [75,1259,5331,6775]
-    # org_dmx = [0,0,255]
+    #org_rgbc = [75,1259,5331,6775]
+    #org_dmx = [0,0,255]
 
     csvpaths = (
         "../data/adj_megatripar_red.csv",
@@ -61,91 +61,122 @@ if __name__ == "__main__":
 
     # ENTER
 
-    ref_abs_rgbc = org_rgbc
-    index_abs = 0
-    index_ref = 0
     dmx = [0, 0, 0]
-
-    last_dmx1 = -1
-    last_dmx2 = -2
     
-    last_dif_rel = 42
+    last_dif_rel = 0
+    dif_rel = 0
 
     matrix = np.zeros((3, 3), float)
-    row_sums = np.zeros(3, float)
-    rgbc_dmx_ch = np.zeros(len(dmx), int)
+    dmx_best = np.zeros((3,3), int)
+    dif_best = np.zeros(3, float)
+
+    index_ch = 0  # index var
+    index_base_ch = 0  #index abs
+
+    repetitions = 0
+    first_miss = True
+    initialized = False
+    updown = 5
+    # LOOP
 
     for ref in range(3):
         for var in range(3):
-            matrix[ref, var] = rel_diff(ref_abs_rgbc[var], ref_abs_rgbc[ref])
-            row_sums[ref] += matrix[ref, var]
+            matrix[ref, var] = rel_diff(org_rgbc[var], org_rgbc[ref])
 
-    rgbc_index_max = get_max_index(row_sums)
-
-    for ch in range(len(dmx)):
-        dmx[ch] = 255
-        rgbc_dmx_ch[ch] = f.in_out(dmx)[rgbc_index_max]
-        dmx[ch] = 0
-
-    index_abs = 0
-    dmx[index_abs] = 255
-    index_ref = index_abs
-
-    repetitions = 0
-
-    # LOOP
+    def reset():
+        global index_ch
+        global index_base_ch
+        global repetitions
+        global first_miss
+        global updown
+        global dmx
+        global initialized
+        index_ch = 0
+        repetitions = 0
+        first_miss = True
+        initialized = False
+        updown = 5
+        dmx = [0, 0, 0]
+        dmx[index_base_ch] = 255
+        
+    reset()
 
     while True:
 
-        index_var = (index_ref + 1) % len(dmx)
-
-        if index_var == index_abs:
-            index_ref = index_var
-            repetitions += 1
-            if repetitions == 5:
-                break
+        # skip base_ch
+        index_ch = index_ch%len(dmx)
+        if index_ch == index_base_ch :
+            index_ch += 1
             continue
+        
+        last_dif_rel = dif_rel
 
         cur_abs_rgbc = f.in_out(dmx)
-        cur_rel = rel_diff(cur_abs_rgbc[index_var], cur_abs_rgbc[index_ref])
-        dif_rel = cur_rel - matrix[index_ref, index_var]
 
+        dif_rel = pow(rel_diff(cur_abs_rgbc[0], cur_abs_rgbc[1]) - matrix[1, 0], 2)
+        dif_rel += pow(rel_diff(cur_abs_rgbc[1], cur_abs_rgbc[2]) - matrix[2, 1], 2)
+        dif_rel += pow(rel_diff(cur_abs_rgbc[2], cur_abs_rgbc[0]) - matrix[0, 2], 2)
+        
+        if not initialized:
+            initialized = True
+            last_dif_rel = dif_rel
+            last_dmx = dmx[index_ch]
+            
         print(
-            f"{index_abs} {index_ref}/{index_var} {cur_rel:06.3f} {matrix[index_abs, index_var]:06.3f} {dif_rel:+06.3f} ",
-            end="",
+            f"{repetitions} {index_base_ch} {index_ch} {last_dif_rel:07.4f} {dif_rel:07.4f} {first_miss} [{dmx[0]:03d},{dmx[1]:03d},{dmx[2]:03d}]",
+            end="\n",
         )
 
-        factor = abs(dif_rel) * 10
-        if factor > 9:
-            factor = 9
-        dmx[index_var] += int(sign(dif_rel) * (factor + 1))
-
-        if dmx[index_var] > 255:
-            print(">255")
-            divide_array(dmx, 2)
-            dmx[index_var] = 255
-            index_abs = index_var
-        elif dmx[index_var] < 0:
-            print("<0")
-            dmx[index_var] = 0
-            index_ref = index_var
-        #elif last_dmx1 == dmx[index_var] or last_dmx2 == dmx[index_var]:
-        #    index_ref = index_var
-        elif last_dif_rel < abs(dif_rel):
-            print(f"{last_dif_rel} < {abs(dif_rel)}")
-            dmx[index_var] = last_dmx1
-            index_ref = index_var
-
+        if dif_rel > last_dif_rel:
+            dmx[index_ch] = last_dmx
+            if first_miss:
+                first_miss = False
+                updown = -updown
+            else:
+                first_miss = True
+                index_ch += 1
+                repetitions += 1
+            continue
             
-        last_dmx2 = last_dmx1
-        last_dmx1 = dmx[index_var]
-
-        if index_ref == index_var or index_abs == index_var:        
-            last_dif_rel = 100
-        else:
-            last_dif_rel = abs(dif_rel)
-
+        last_dmx = dmx[index_ch]
+        dmx[index_ch] += updown
         
-
-        print(f"[{dmx[0]:03d},{dmx[1]:03d},{dmx[2]:03d}]")
-        time.sleep(0.25)
+        if dmx[index_ch] > 255:
+            dmx[index_ch] = 255
+            if first_miss:
+                first_miss = False
+                updown = -updown
+            else:
+                first_miss = True
+                index_ch += 1
+                repetitions += 1
+        elif dmx[index_ch] < 0:
+            dmx[index_ch] = 0
+            if first_miss:
+                first_miss = False
+                updown = -updown
+            else:
+                first_miss = True
+                index_ch += 1
+                repetitions += 1
+        
+        if repetitions == 10:
+            updown = 1
+        if repetitions == 30:
+            dif_best[index_base_ch] = dif_rel
+            for i in range(len(dmx)):
+                dmx_best[index_base_ch, i] = dmx[i]
+            print(f"Mid Result ({index_base_ch}): {dmx_best[index_base_ch]} with {dif_best[index_base_ch]:07.4f} match")
+            index_base_ch += 1
+            if index_base_ch==len(dmx):
+                break
+            reset()
+            #input("Enter to continue")
+                
+    
+    best_max_ch = get_min_index(dif_best)
+    dmx_final = dmx_best[best_max_ch]
+    
+    print(f"Final Result: {dmx_final} with {dif_best[best_max_ch]:07.4f} match")
+        # print(f"")
+        #time.sleep(0.2)

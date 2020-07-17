@@ -13,6 +13,22 @@ class TCS34725 : public Adafruit_TCS34725 {
         //bool is_integrated();
         //void read_data_rgbc(uint16_t *r, uint16_t *g, uint16_t *b, uint16_t *c);
 
+        uint16_t background_r = 0;
+        uint16_t background_g = 0;
+        uint16_t background_b = 0;
+        uint16_t background_c = 0;
+
+        void adjust_background_scan(uint16_t min_val=1024){
+            TCS34725::integrate_2_min_norm(min_val, &background_r, &background_c, &background_b, &background_b);
+        }
+
+        void adjust_background_clear(){
+            background_r = 0;
+            background_g = 0;
+            background_b = 0;
+            background_c = 0;
+        }
+
         void _setIntegrationTime(uint8_t atime) {
             _delay_millis = 2.4*(256-atime+1);
             _max_rgbc_count = (256-atime)*1024;
@@ -53,10 +69,10 @@ class TCS34725 : public Adafruit_TCS34725 {
 
         void read_data_rgbc(uint16_t *r, uint16_t *g, uint16_t *b, uint16_t *c) {
             _integration_started = false;
-            *c = read16(TCS34725_CDATAL);
-            *r = read16(TCS34725_RDATAL);
-            *g = read16(TCS34725_GDATAL);
-            *b = read16(TCS34725_BDATAL);
+            *c = read16(TCS34725_CDATAL) - background_r;
+            *r = read16(TCS34725_RDATAL) - background_g;
+            *g = read16(TCS34725_GDATAL) - background_b;
+            *b = read16(TCS34725_BDATAL) - background_c;
         }
 
         //void read_data_rgbc_norm(float *r, float *g, float *b, float *c) {

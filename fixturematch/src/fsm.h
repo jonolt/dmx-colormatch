@@ -32,8 +32,10 @@ void save_reference(uint16_t address);
 void read_reference(uint16_t address);
 uint8_t get_max_index(uint8_t dmx[]);
 uint8_t get_max_index(float dmx[]);
+uint8_t get_min_index(float *list, uint8_t size);
 float rel_diff(float a, float b);
-void divide_dmx_cur_by(uint8_t divisor);
+void match_handler();
+String sprintf_dmx_values(uint8_t *dmx);
 
 void match_enter();
 bool match_loop();
@@ -51,7 +53,7 @@ bool param_read_serial(String str);
 
 void increase_dmx_values(uint8_t inc_step);
 void increase_dmx_value(uint8_t index, uint8_t inc_step);
-void print_values();
+void param_print_values();
 void write_dmx(uint8_t values[3]);
 void write_dmx_all();
 void write_dmx_on();

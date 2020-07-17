@@ -90,147 +90,206 @@ uint64_t rgbc64[4] = { };
 uint16_t rgbc_reference[4] = { };
 
 // match
-uint8_t index_abs = 0;
-uint8_t index_ref = 0;
-uint8_t index_var = 0;
-// dmx_cur
-uint8_t last_dmx = -1;
-float last_dif_rel = 42;
-uint8_t repetitions = 0;
+uint8_t index_ch;
+uint8_t index_base_ch = 0;
+uint8_t last_dmx;
+double dif_rel;
+float last_dif_rel;
+uint8_t repetitions;
+bool first_miss;
+bool initialized;
+int8_t updown;
+int8_t direction = 1;
 
 float matrix[3][3] = { };
-float row_sums[3] = { };
-float rgbc_dmx_ch[10] = { };
+uint8_t dmx_best[10][10] = { };
+float dif_best[10] = { };
+
+void reset_match(){
+  index_ch = 0;
+  repetitions = 0;
+  first_miss = true;
+  initialized = false;
+  updown = 5;
+  memset(dmx_cur, 0, sizeof(dmx_cur));
+  dmx_cur[index_base_ch] = 255;
+}
 
 void match_enter(){
 
   read_reference(ref_eeaddr);
 
   Serial.println("MATCH_ENTER");
-  last_dmx = -1;
-  memset(row_sums, 0, sizeof(row_sums));
-  memset(rgbc_dmx_ch, 0, sizeof(row_sums));
+  Serial.println(dmx_ch_count);
+
   for(int ref=0; ref<3; ref++){
     for(int var=0; var<3; var++){
       matrix[ref][var] = rel_diff(rgbc_reference[var], rgbc_reference[ref]);
-      row_sums[ref] = row_sums[ref] + matrix[ref][var];
     }
   }
-  uint8_t rgbc_index_max = get_max_index(row_sums);
-
-  for(uint8_t ch=0; ch<dmx_ch_count; ch++){
-    dmx_cur[ch] = 255;
-    write_dmx(dmx_cur);
-    delay(2);
-    //tcs.integrate_2_min_norm(1024, &r, &g, &b, &c);
-    tcs.startIntegration();
-    while(!tcs.is_integrated());
-    dmx_cur[ch] = 0;
-    tcs.read_data_rgbc(&r, &g, &b, &c);
-    rgbc_dmx_ch[ch] = *rgbc[rgbc_index_max];
-  }
-
-  index_abs = get_max_index(rgbc_dmx_ch);
-  Serial.println(index_abs);
-  dmx_cur[index_abs] = 255;
-  index_ref = index_abs;
+  Serial.print(matrix[0][0]);
+  Serial.print(" ");
+  Serial.print(matrix[0][1]);
+  Serial.print(" ");
+  Serial.println(matrix[0][2]);
+  Serial.print(matrix[1][0]);
+  Serial.print(" ");
+  Serial.print(matrix[1][1]);
+  Serial.print(" ");
+  Serial.println(matrix[1][2]);
+  Serial.print(matrix[2][0]);
+  Serial.print(" ");
+  Serial.print(matrix[2][1]);
+  Serial.print(" ");
+  Serial.println(matrix[2][2]);
   
-  repetitions = 0;
+  //write_dmx_off();
+  //delay(20);
+  //tcs.adjust_background_scan();
+
+  index_base_ch = 0;
+  reset_match();
+
+  Serial.println(sprintf_dmx_values(dmx_cur));
 
   Serial.println("MATCH_ENTER_EXIT");
 }
 
-int8_t direction = 1;
 
 bool match_loop(){   // iterate loop
 
-  index_var = (index_ref+dmx_ch_count+direction)%dmx_ch_count;
+  write_dmx(dmx_cur);
+  delay(20);
 
-  if(index_var == index_abs){
-    index_ref = index_var;
-    repetitions++;
-    direction = -direction;
-    Serial.println("REVERSE");
+  index_ch = index_ch%dmx_ch_count;
+  if (index_ch == index_base_ch){
+    index_ch++;
     return false;
   }
+
+  last_dif_rel = dif_rel;
 
   tcs.startIntegration();
   while(!tcs.is_integrated());
   tcs.read_data_rgbc(&r, &g, &b, &c);
 
-  float cur_rel = rel_diff(*rgbc[index_var], *rgbc[index_ref]);
-  float dif_rel = cur_rel - matrix[index_ref][index_var];
+  char buff[8];
+  String str = "[ ";
+  for(int i = 0; i < 4; i++){
+    sprintf(buff, ", %06d", (int) *rgbc[i]);
+    str+= buff;
+  }
+  str += " ]  ";
+  Serial.print(str);
 
-  int dmx = dmx_cur[index_var];
+  dif_rel = pow(rel_diff(r, g) - matrix[1][0], 2);
+  dif_rel += pow(rel_diff(g, b) - matrix[2][1], 2);
+  dif_rel += pow(rel_diff(b, r) - matrix[0][2], 2);
 
-  Serial.print(direction);
-  Serial.print(":");
-  Serial.print(index_abs);
-  Serial.print(":");
-  Serial.print(index_ref);
+  if (!initialized){
+    initialized = true;
+    last_dif_rel = dif_rel;
+    last_dmx = dmx_cur[index_ch];
+  }
+
+  Serial.print("Running [");
+  Serial.print(repetitions);
   Serial.print("/");
-  Serial.print(index_var);
-  Serial.print(" ");
-  Serial.print(cur_rel);
-  Serial.print(" ");
-  Serial.print(matrix[index_ref][index_var]);
-  Serial.print(" ");
-  Serial.print(dif_rel);
-  Serial.print(" [");
-  for(uint8_t ch=0; ch<dmx_ch_count; ch++){
-    Serial.print(dmx_cur[ch]);
-    Serial.print(", ");
+  Serial.print(index_ch);
+  Serial.print("]: ");
+  Serial.print(sprintf_dmx_values(dmx_cur));
+  Serial.print(", with score ");
+  Serial.println(dif_rel);
+
+  if (dif_rel>last_dif_rel){
+    Serial.print("BIGGER INCICDENT: ");
+    Serial.println(first_miss);
+    dmx_cur[index_ch] = last_dmx;
+    match_handler();
   }
-  Serial.print("] ");
-
-  int factor = (int) abs(dif_rel)*10;
-  if( factor > 9){
-    factor = 9;
-  }
-
-  dmx = dmx + (int) sgn(dif_rel)*(factor+1);
-
-  if(dmx > 255){
-      Serial.print("max ");
-      dmx = 255;
-      index_abs = index_var;
-      index_ref = index_abs;
-  }else if(dmx < 0){
-      Serial.print("neg ");
-      dmx = 0;
-      index_ref = index_var;
-  }else if (last_dif_rel < abs(dif_rel)){
-      Serial.print("dif ");
-      dmx = last_dmx;
-      index_ref = index_var;
+  else{
+    last_dmx = dmx_cur[index_ch];
+    int16_t dmx = dmx_cur[index_ch] + updown;
+  
+    if (dmx > 255){
+      dmx_cur[index_ch] = 255;
+      match_handler();
+    }else if(dmx<0){
+      dmx_cur[index_ch] = 0;
+      match_handler();
+    }else{
+      dmx_cur[index_ch] = (uint8_t) dmx;
+    }
   }
 
-  last_dmx = dmx;
-
-  dmx_cur[index_var] = (uint8_t) dmx;
-  write_dmx(dmx_cur);
-
-  if(index_ref == index_var || index_abs == index_var){        
-      last_dif_rel = 100;
-  }else{
-      last_dif_rel = abs(dif_rel);
+  if (repetitions == 10 && dif_rel < 42){
+    updown = 1;
   }
+  if (repetitions >= 30){
+    dif_best[index_base_ch] = dif_rel;
+    for(uint8_t ch=0; ch<dmx_ch_count; ch++){
+      dmx_best[index_base_ch][ch] = dmx_cur[ch];
+    }
+    
+    Serial.print("Channel [");
+    Serial.print(index_base_ch);
+    Serial.print("]: ");
+    Serial.print(sprintf_dmx_values(dmx_cur));
+    Serial.print(", with score ");
+    Serial.println(dif_rel);
 
-  Serial.println(repetitions);
+    index_base_ch += 1;
+    if (index_base_ch>=dmx_ch_count){
+      return true;
+    }
 
-  return repetitions == 42 ? true : false;
+    reset_match();
+  } 
+
+  return false;
 
 }
 
 void match_exit(){
   Serial.println("MATCH_EXIT");
+
+  uint8_t best_max_ch = get_min_index(dif_best, dmx_ch_count);
+  for(uint8_t ch=0; ch<dmx_ch_count; ch++){
+    dmx_cur[ch] = dmx_best[best_max_ch][ch];
+  }
+  write_dmx(dmx_cur);
+
+  Serial.print("Best Match:   ");
+  Serial.print(sprintf_dmx_values(dmx_cur));
+  Serial.print(", with score ");
+  Serial.println(dif_best[best_max_ch]);
+
+  //tcs.adjust_background_clear();
+
 }
 
-void divide_dmx_cur_by(uint8_t divisor){
-  for(uint8_t i=0; i<dmx_ch_count; i++){
-    dmx_cur[i] = (int) dmx_cur[i]/divisor;
+void match_handler(){
+  if(first_miss){
+    first_miss = false;
+    updown = -updown;
+  }else{
+    first_miss = true;
+    index_ch++;
+    repetitions++;
+    initialized=false;
   }
 }
+
+String sprintf_dmx_values(uint8_t *dmx) {
+  char buff[6];
+  String str = "[ ";
+  for(int i = 0; i < dmx_ch_count; i++){
+    sprintf(buff, ", %03d", dmx[i]);
+    str+= buff;
+  }
+  str += " ]";
+  return str;
+} 
 
 float rel_diff(float a, float b){
   if(b == 0){
@@ -247,6 +306,16 @@ uint8_t get_max_index(float dmx[]){
     }
   }
   return max_index;
+}
+
+uint8_t get_min_index(float *list, uint8_t size){
+  uint8_t min_index = 0;
+  for (uint8_t i=1; i<size; i++){
+    if (list[i] < list[min_index]){
+      min_index = i;
+    }
+  }
+  return min_index;
 }
 
 uint8_t get_max_index(uint8_t dmx[]){
@@ -271,30 +340,35 @@ bool reference_loop(){
   tcs.startIntegration();
   while (!tcs.is_integrated());
   tcs.read_data_rgbc(&r, &g, &b, &c);
-  for(uint8_t a=0; a<4; a++){
-    rgbc64[a] = rgbc64[a] + (uint64_t) *rgbc[a];
-  }
-  Serial.print(ref_count);
-  Serial.print(": ");
-  Serial.print(r);
-  Serial.print(", ");
-  Serial.print(g);
-  Serial.print(", ");
-  Serial.print(b);
-  Serial.print(", ");
-  Serial.println(c);
-  ref_count++;
-  if(ref_count>=10){
-    return true;
-  }
-  return false;
+  rgbc_reference[0] = r;
+  rgbc_reference[1] = g;
+  rgbc_reference[2] = b;
+  rgbc_reference[3] = c;
+  return true;
+  // for(uint8_t a=0; a<4; a++){
+  //   rgbc64[a] = rgbc64[a] + (uint64_t) *rgbc[a];
+  // }
+  // Serial.print(ref_count);
+  // Serial.print(": ");
+  // Serial.print(r);
+  // Serial.print(", ");
+  // Serial.print(g);
+  // Serial.print(", ");
+  // Serial.print(b);
+  // Serial.print(", ");
+  // Serial.println(c);
+  // ref_count++;
+  // if(ref_count>=10){
+  //   return true;
+  // }
+  // return false;
 }
 
 void reference_exit(){
   Serial.println("REFERENCE_EXIT");
   for (uint8_t a=0; a<4; a++){
-    rgbc_reference[a] = (uint16_t) rgbc64[a]/10;
-    Serial.print("exit ");
+  //   rgbc_reference[a] = (uint16_t) rgbc64[a]/10;
+  //   Serial.print("exit ");
     Serial.println(rgbc_reference[a]);
   }
   save_reference(ref_eeaddr);
@@ -353,7 +427,7 @@ bool param_loop(){
   //do computing send old values from previous loop
 
   if(loop_count > 1){
-    print_values();
+    param_print_values();
   }
   
   for(int i = 0; i<param_chnanels; i++){
@@ -370,7 +444,7 @@ bool param_loop(){
   delay(20);
 
   if(finished){
-    print_values();
+    param_print_values();
     return false;
   }
 
@@ -497,7 +571,7 @@ void write_dmx_off() {
   }
 }
 
-void print_values() {
+void param_print_values() {
   char buff[32];
   sprintf(buff, "%05d, %05d, %05d, %05d", r, g, b, c);
   String str_print = buff;
@@ -506,4 +580,4 @@ void print_values() {
     str_print += buff;
   }
   Serial.println(str_print);
-}
+} 
