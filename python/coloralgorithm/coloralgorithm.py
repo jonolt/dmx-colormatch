@@ -81,7 +81,7 @@ if __name__ == "__main__":
 
     for ref in range(3):
         for var in range(3):
-            matrix[ref, var] = rel_diff(org_rgbc[var], org_rgbc[ref])
+            matrix[ref, var] = rel_diff(org_rgbc[var], org_rgbc[3])
 
     def reset():
         global index_ch
@@ -113,9 +113,9 @@ if __name__ == "__main__":
 
         cur_abs_rgbc = f.in_out(dmx)
 
-        dif_rel = pow(rel_diff(cur_abs_rgbc[0], cur_abs_rgbc[1]) - matrix[1, 0], 2)
-        dif_rel += pow(rel_diff(cur_abs_rgbc[1], cur_abs_rgbc[2]) - matrix[2, 1], 2)
-        dif_rel += pow(rel_diff(cur_abs_rgbc[2], cur_abs_rgbc[0]) - matrix[0, 2], 2)
+        dif_rel = pow(rel_diff(cur_abs_rgbc[0], cur_abs_rgbc[3]) - matrix[1, 0], 2)
+        dif_rel += pow(rel_diff(cur_abs_rgbc[1], cur_abs_rgbc[3]) - matrix[2, 1], 2)
+        dif_rel += pow(rel_diff(cur_abs_rgbc[2], cur_abs_rgbc[3]) - matrix[0, 2], 2)
         
         if not initialized:
             initialized = True

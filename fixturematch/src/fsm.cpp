@@ -124,7 +124,7 @@ void match_enter(){
 
   for(int ref=0; ref<3; ref++){
     for(int var=0; var<3; var++){
-      matrix[ref][var] = rel_diff(rgbc_reference[var], rgbc_reference[ref]);
+      matrix[ref][var] = rel_diff(rgbc_reference[var], rgbc_reference[3]);
     }
   }
   Serial.print(matrix[0][0]);
@@ -159,7 +159,7 @@ void match_enter(){
 bool match_loop(){   // iterate loop
 
   write_dmx(dmx_cur);
-  delay(20);
+  delay(2);
 
   index_ch = index_ch%dmx_ch_count;
   if (index_ch == index_base_ch){
@@ -176,15 +176,15 @@ bool match_loop(){   // iterate loop
   char buff[8];
   String str = "[ ";
   for(int i = 0; i < 4; i++){
-    sprintf(buff, ", %06d", (int) *rgbc[i]);
+    sprintf(buff, " %06d,", (int) *rgbc[i]);
     str+= buff;
   }
   str += " ]  ";
   Serial.print(str);
 
-  dif_rel = pow(rel_diff(r, g) - matrix[1][0], 2);
-  dif_rel += pow(rel_diff(g, b) - matrix[2][1], 2);
-  dif_rel += pow(rel_diff(b, r) - matrix[0][2], 2);
+  dif_rel = pow(rel_diff(r, c) - matrix[1][0], 2);
+  dif_rel += pow(rel_diff(g, c) - matrix[2][1], 2);
+  dif_rel += pow(rel_diff(b, c) - matrix[0][2], 2);
 
   if (!initialized){
     initialized = true;
@@ -199,11 +199,11 @@ bool match_loop(){   // iterate loop
   Serial.print("]: ");
   Serial.print(sprintf_dmx_values(dmx_cur));
   Serial.print(", with score ");
-  Serial.println(dif_rel);
+  Serial.println(dif_rel, 10);
 
   if (dif_rel>last_dif_rel){
-    Serial.print("BIGGER INCICDENT: ");
-    Serial.println(first_miss);
+    //Serial.print("BIGGER INCICDENT: ");
+    //Serial.println(first_miss);
     dmx_cur[index_ch] = last_dmx;
     match_handler();
   }
@@ -222,8 +222,17 @@ bool match_loop(){   // iterate loop
     }
   }
 
-  if (repetitions == 10 && dif_rel < 42){
-    updown = 1;
+  if(repetitions < 10 && dif_rel < .001){
+    repetitions = 10;
+  }
+  if (repetitions == 10){
+    if(dif_rel < .001){
+      updown = 1;
+    }else{
+      repetitions = 42;
+      Serial.println("skiping thiss base_ch");
+    }
+    
   }
   if (repetitions >= 30){
     dif_best[index_base_ch] = dif_rel;
@@ -236,7 +245,7 @@ bool match_loop(){   // iterate loop
     Serial.print("]: ");
     Serial.print(sprintf_dmx_values(dmx_cur));
     Serial.print(", with score ");
-    Serial.println(dif_rel);
+    Serial.println(dif_rel, 10);
 
     index_base_ch += 1;
     if (index_base_ch>=dmx_ch_count){
@@ -259,10 +268,12 @@ void match_exit(){
   }
   write_dmx(dmx_cur);
 
-  Serial.print("Best Match:   ");
+  Serial.print("Best Match (");
+  Serial.print(best_max_ch);
+  Serial.print(":   ");
   Serial.print(sprintf_dmx_values(dmx_cur));
   Serial.print(", with score ");
-  Serial.println(dif_best[best_max_ch]);
+  Serial.println(dif_best[best_max_ch], 10);
 
   //tcs.adjust_background_clear();
 
@@ -284,7 +295,7 @@ String sprintf_dmx_values(uint8_t *dmx) {
   char buff[6];
   String str = "[ ";
   for(int i = 0; i < dmx_ch_count; i++){
-    sprintf(buff, ", %03d", dmx[i]);
+    sprintf(buff, " %03d,", dmx[i]);
     str+= buff;
   }
   str += " ]";
@@ -298,16 +309,6 @@ float rel_diff(float a, float b){
   return (b-a)/b;
 }
 
-uint8_t get_max_index(float dmx[]){
-  uint8_t max_index = 0;
-  for (uint8_t i=0; i<(uint8_t)sizeof(&dmx); i++){
-    if (dmx[i] > dmx[max_index]){
-      max_index = i;
-    }
-  }
-  return max_index;
-}
-
 uint8_t get_min_index(float *list, uint8_t size){
   uint8_t min_index = 0;
   for (uint8_t i=1; i<size; i++){
@@ -316,16 +317,6 @@ uint8_t get_min_index(float *list, uint8_t size){
     }
   }
   return min_index;
-}
-
-uint8_t get_max_index(uint8_t dmx[]){
-  uint8_t max_index = 0;
-  for (uint8_t i=0; i<(uint8_t)sizeof(&dmx); i++){
-    if (dmx[i] > dmx[max_index]){
-      max_index = i;
-    }
-  }
-  return max_index;
 }
 
 void reference_enter(){
@@ -345,23 +336,6 @@ bool reference_loop(){
   rgbc_reference[2] = b;
   rgbc_reference[3] = c;
   return true;
-  // for(uint8_t a=0; a<4; a++){
-  //   rgbc64[a] = rgbc64[a] + (uint64_t) *rgbc[a];
-  // }
-  // Serial.print(ref_count);
-  // Serial.print(": ");
-  // Serial.print(r);
-  // Serial.print(", ");
-  // Serial.print(g);
-  // Serial.print(", ");
-  // Serial.print(b);
-  // Serial.print(", ");
-  // Serial.println(c);
-  // ref_count++;
-  // if(ref_count>=10){
-  //   return true;
-  // }
-  // return false;
 }
 
 void reference_exit(){

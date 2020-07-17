@@ -30,8 +30,6 @@ class Fsm: public Machine {
 int64_t extract_int(String str, int64_t defaultInt);
 void save_reference(uint16_t address);
 void read_reference(uint16_t address);
-uint8_t get_max_index(uint8_t dmx[]);
-uint8_t get_max_index(float dmx[]);
 uint8_t get_min_index(float *list, uint8_t size);
 float rel_diff(float a, float b);
 void match_handler();
