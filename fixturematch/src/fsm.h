@@ -18,11 +18,11 @@ class Fsm: public Machine {
     enum { IDLE, PARAM, REFERENCE, MATCH, MATCH2 }; // STATES
     enum { CMD_STOP, CMD_PARAM, CMD_REF, CMD_MATCH, ELSE }; // EVENTS
     enum { ENT_IDLE, ENT_PARAM, LOOP_PARAM, EXIT_PARAM, ENT_REF, LOOP_REF, EXIT_REF, ENT_MATCH, LOOP_MATCH, EXIT_MATCH}; // ACTIONS
-	
+
     Fsm & begin();
     Fsm & trace( Stream & stream );
-    int event( int id ); 
-    void action( int id ); 
+    int event( int id );
+    void action( int id );
 
 
 };
@@ -58,7 +58,7 @@ void write_dmx_on();
 void write_dmx_off();
 
 template <typename T> int sgn(T val) {
-    return (T(0) < val) - (val < T(0));
+  return (T(0) < val) - (val < T(0));
 }
 
 #endif
