@@ -1,0 +1,1062 @@
+EESchema Schematic File Version 4
+EELAYER 30 0
+EELAYER END
+$Descr A3 16535 11693
+encoding utf-8
+Sheet 1 1
+Title ""
+Date ""
+Rev ""
+Comp ""
+Comment1 ""
+Comment2 ""
+Comment3 ""
+Comment4 ""
+$EndDescr
+$Comp
+L nano_every:Arduino_Nano_Every U1
+U 1 1 5F1AC01A
+P 5100 3150
+F 0 "U1" H 5100 2061 50  0000 C CNN
+F 1 "Arduino_Nano_Every" H 5100 1970 50  0000 C CNN
+F 2 "" H 5100 3150 50  0001 C CNN
+F 3 "" H 5100 3150 50  0001 C CNN
+	1    5100 3150
+	1    0    0    -1  
+$EndComp
+$Comp
+L Interface_UART:MAX487E U31
+U 1 1 5F2981B7
+P 11900 2850
+F 0 "U31" H 11900 3531 50  0000 C CNN
+F 1 "MAX487E" H 11900 3440 50  0000 C CNN
+F 2 "" H 11900 2150 50  0001 C CNN
+F 3 "https://datasheets.maximintegrated.com/en/ds/MAX1487E-MAX491E.pdf" H 11900 2900 50  0001 C CNN
+	1    11900 2850
+	1    0    0    -1  
+$EndComp
+$Comp
+L Device:R R30
+U 1 1 5F29A04C
+P 12450 2900
+F 0 "R30" H 12520 2946 50  0000 L CNN
+F 1 "120" H 12520 2855 50  0000 L CNN
+F 2 "" V 12380 2900 50  0001 C CNN
+F 3 "~" H 12450 2900 50  0001 C CNN
+	1    12450 2900
+	1    0    0    -1  
+$EndComp
+$Comp
+L Connector_Generic:Conn_01x03 J30
+U 1 1 5F29A9A1
+P 13300 2850
+F 0 "J30" H 13380 2892 50  0000 L CNN
+F 1 "Conn_01x03" H 13380 2801 50  0000 L CNN
+F 2 "" H 13300 2850 50  0001 C CNN
+F 3 "~" H 13300 2850 50  0001 C CNN
+	1    13300 2850
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	11500 2850 11450 2850
+Wire Wire Line
+	11450 2950 11500 2950
+Wire Wire Line
+	11450 2850 11450 2900
+Connection ~ 11450 2900
+Wire Wire Line
+	11450 2900 11450 2950
+Wire Wire Line
+	12300 2750 12450 2750
+Wire Wire Line
+	12300 3050 12450 3050
+Wire Wire Line
+	12450 3050 12800 3050
+Wire Wire Line
+	12800 3050 12800 2950
+Wire Wire Line
+	12800 2950 13100 2950
+Connection ~ 12450 3050
+Wire Wire Line
+	12450 2750 12800 2750
+Wire Wire Line
+	12800 2750 12800 2850
+Wire Wire Line
+	12800 2850 13100 2850
+Connection ~ 12450 2750
+Wire Wire Line
+	13100 2750 12850 2750
+Text Label 12850 2750 0    50   ~ 0
+GND
+Text Label 12850 2850 0    50   ~ 0
+DMX-
+Text Label 12850 2950 0    50   ~ 0
+DMX+
+Text Label 11000 2750 0    50   ~ 0
+ISO_RX
+Text Label 11000 2900 0    50   ~ 0
+ISO_REDE
+Text Label 11000 3050 0    50   ~ 0
+ISO_TX
+$Comp
+L project:TPS2596XX U20
+U 1 1 5F271AC6
+P 8150 9850
+F 0 "U20" H 8125 10265 50  0000 C CNN
+F 1 "TPS259630" H 8125 10174 50  0000 C CNN
+F 2 "" H 8300 9850 50  0001 C CNN
+F 3 "https://www.ti.com/lit/gpn/tps2596" H 8300 9850 50  0001 C CNN
+	1    8150 9850
+	1    0    0    -1  
+$EndComp
+$Comp
+L Connector:RJ45 J40
+U 1 1 5F290506
+P 14350 8800
+F 0 "J40" H 14020 8804 50  0000 R CNN
+F 1 "RJ45" H 14020 8895 50  0000 R CNN
+F 2 "" V 14350 8825 50  0001 C CNN
+F 3 "~" V 14350 8825 50  0001 C CNN
+	1    14350 8800
+	-1   0    0    1   
+$EndComp
+Wire Wire Line
+	13950 8500 13400 8500
+Wire Wire Line
+	13950 8600 13400 8600
+Wire Wire Line
+	13950 8700 13400 8700
+Wire Wire Line
+	13950 8800 13400 8800
+Wire Wire Line
+	13950 8900 13400 8900
+Wire Wire Line
+	13950 9000 13400 9000
+Wire Wire Line
+	13950 9100 13400 9100
+Wire Wire Line
+	13950 9200 13400 9200
+Text Label 13400 8500 0    50   ~ 0
+VCC
+Text Label 13400 8600 0    50   ~ 0
+GND
+Text Label 13400 8700 0    50   ~ 0
+3V3
+Text Label 13400 8800 0    50   ~ 0
+IO3
+Text Label 13400 8900 0    50   ~ 0
+SDA
+Text Label 13400 9000 0    50   ~ 0
+SCL
+Text Label 13400 9100 0    50   ~ 0
+IO2
+Text Label 13400 9200 0    50   ~ 0
+IO1
+$Comp
+L Device:C C20
+U 1 1 5F2AA9AD
+P 7950 10600
+F 0 "C20" H 8065 10646 50  0000 L CNN
+F 1 "2.2n" H 8065 10555 50  0000 L CNN
+F 2 "Capacitor_SMD:C_0805_2012Metric" H 7988 10450 50  0001 C CNN
+F 3 "~" H 7950 10600 50  0001 C CNN
+	1    7950 10600
+	1    0    0    -1  
+$EndComp
+$Comp
+L Device:R R24
+U 1 1 5F2AB643
+P 8850 10350
+F 0 "R24" H 8920 10396 50  0000 L CNN
+F 1 "910" H 8920 10305 50  0000 L CNN
+F 2 "" V 8780 10350 50  0001 C CNN
+F 3 "~" H 8850 10350 50  0001 C CNN
+	1    8850 10350
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	7300 10750 7300 10500
+Wire Wire Line
+	7950 10750 8350 10750
+Wire Wire Line
+	8850 10750 8850 10500
+Connection ~ 7950 10750
+Wire Wire Line
+	8350 10450 8350 10750
+Connection ~ 8350 10750
+Wire Wire Line
+	8350 10750 8850 10750
+Wire Wire Line
+	8650 10050 8850 10050
+Wire Wire Line
+	8850 10050 8850 10200
+Wire Wire Line
+	8650 9450 9200 9450
+Wire Wire Line
+	8850 10750 9200 10750
+Connection ~ 8850 10750
+$Comp
+L Device:D_Schottky D21
+U 1 1 5F2B9338
+P 9200 10350
+F 0 "D21" V 9154 10430 50  0000 L CNN
+F 1 "D_Schottky" V 9245 10430 50  0000 L CNN
+F 2 "" H 9200 10350 50  0001 C CNN
+F 3 "~" H 9200 10350 50  0001 C CNN
+	1    9200 10350
+	0    1    1    0   
+$EndComp
+Wire Wire Line
+	9200 10500 9200 10750
+Connection ~ 9200 10750
+Wire Wire Line
+	9200 10750 9600 10750
+Wire Wire Line
+	9600 10750 9600 10500
+Connection ~ 9600 10750
+Wire Wire Line
+	9600 10750 10050 10750
+Wire Wire Line
+	9600 10200 9600 9450
+Connection ~ 9600 9450
+Wire Wire Line
+	9200 10200 9200 9450
+Connection ~ 9200 9450
+Wire Wire Line
+	9200 9450 9600 9450
+Connection ~ 7300 9450
+Wire Wire Line
+	9600 9450 10050 9450
+Wire Wire Line
+	7300 10200 7300 10050
+Wire Wire Line
+	6450 10050 6450 10200
+Connection ~ 6450 10750
+Wire Wire Line
+	6450 10750 6450 10500
+$Comp
+L Device:Q_PMOS_GSD Q20
+U 1 1 5F281BA6
+P 6450 9550
+F 0 "Q20" V 6792 9550 50  0000 C CNN
+F 1 "IRLM5203 (PMOS_GSD)" V 6701 9550 50  0000 C CNN
+F 2 "" H 6650 9650 50  0001 C CNN
+F 3 "~" H 6450 9550 50  0001 C CNN
+	1    6450 9550
+	0    -1   -1   0   
+$EndComp
+Wire Wire Line
+	6200 10750 6450 10750
+Connection ~ 6450 10050
+Wire Wire Line
+	6800 10050 6800 9900
+Wire Wire Line
+	6450 10050 6800 10050
+Wire Wire Line
+	6450 9750 6450 10050
+$Comp
+L Device:R R20
+U 1 1 5F27E1F6
+P 6450 10350
+F 0 "R20" H 6520 10396 50  0000 L CNN
+F 1 "100k" H 6520 10305 50  0000 L CNN
+F 2 "" V 6380 10350 50  0001 C CNN
+F 3 "~" H 6450 10350 50  0001 C CNN
+	1    6450 10350
+	1    0    0    -1  
+$EndComp
+Text Label 7200 9450 2    50   ~ 0
+VCC_EXT
+Text Label 7200 10750 2    50   ~ 0
+GND
+Wire Wire Line
+	6200 9550 6200 10750
+Wire Wire Line
+	5500 9550 6200 9550
+Connection ~ 6800 9450
+Wire Wire Line
+	6800 9600 6800 9450
+Wire Wire Line
+	5500 9450 6250 9450
+Wire Wire Line
+	6650 9450 6800 9450
+$Comp
+L Device:D_Zener D20
+U 1 1 5F2A8F20
+P 6800 9750
+F 0 "D20" V 6754 9830 50  0000 L CNN
+F 1 "TZM15" V 6845 9830 50  0000 L CNN
+F 2 "" H 6800 9750 50  0001 C CNN
+F 3 "~" H 6800 9750 50  0001 C CNN
+	1    6800 9750
+	0    1    1    0   
+$EndComp
+$Comp
+L Connector_Generic:Conn_01x02 J20
+U 1 1 5F2A5A40
+P 5300 9550
+F 0 "J20" H 5300 9700 50  0000 C CNN
+F 1 "Conn_01x02" H 5300 9800 50  0000 C CNN
+F 2 "" H 5300 9550 50  0001 C CNN
+F 3 "~" H 5300 9550 50  0001 C CNN
+	1    5300 9550
+	-1   0    0    1   
+$EndComp
+Text Label 10050 9450 2    50   ~ 0
++5V
+Text Label 10050 10750 2    50   ~ 0
+GND
+Wire Wire Line
+	8850 10050 10050 10050
+Connection ~ 8850 10050
+Text Label 10050 10050 2    50   ~ 0
+CUR
+Wire Wire Line
+	10000 3950 10500 3950
+Wire Wire Line
+	10000 4050 10500 4050
+Wire Wire Line
+	10000 4150 10500 4150
+Text Label 10500 4150 2    50   ~ 0
+ISO_RX
+Text Label 10500 3950 2    50   ~ 0
+ISO_REDE
+Text Label 10500 4050 2    50   ~ 0
+ISO_TX
+Wire Wire Line
+	9250 4150 9700 4150
+Wire Wire Line
+	9700 4050 9250 4050
+Wire Wire Line
+	9700 3950 9250 3950
+Text Label 9250 4050 0    50   ~ 0
+TX
+Text Label 9250 4150 0    50   ~ 0
+RX
+Text Label 9250 3950 0    50   ~ 0
+REDE
+$Comp
+L Device:R R31
+U 1 1 5F335428
+P 12450 2500
+F 0 "R31" H 12520 2546 50  0000 L CNN
+F 1 "560" H 12520 2455 50  0000 L CNN
+F 2 "" V 12380 2500 50  0001 C CNN
+F 3 "~" H 12450 2500 50  0001 C CNN
+	1    12450 2500
+	1    0    0    -1  
+$EndComp
+$Comp
+L Device:R R32
+U 1 1 5F33583F
+P 12450 3300
+F 0 "R32" H 12520 3346 50  0000 L CNN
+F 1 "560" H 12520 3255 50  0000 L CNN
+F 2 "" V 12380 3300 50  0001 C CNN
+F 3 "~" H 12450 3300 50  0001 C CNN
+	1    12450 3300
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	12450 2350 12450 2100
+Wire Wire Line
+	12450 2100 11900 2100
+Wire Wire Line
+	11900 2350 11900 2100
+Connection ~ 11900 2100
+Wire Wire Line
+	11900 3450 11900 3650
+Wire Wire Line
+	11900 3650 12450 3650
+Wire Wire Line
+	12450 3650 12450 3450
+Connection ~ 11900 3650
+Wire Wire Line
+	12450 2650 12450 2750
+Wire Wire Line
+	12450 3050 12450 3150
+Wire Wire Line
+	11900 3650 10600 3650
+Wire Wire Line
+	11500 3050 11000 3050
+Wire Wire Line
+	11450 2900 11000 2900
+Wire Wire Line
+	11500 2750 11000 2750
+Wire Wire Line
+	11900 2100 10900 2100
+$Comp
+L Device:C C30
+U 1 1 5F374DE4
+P 9050 2750
+F 0 "C30" V 9200 2750 50  0000 C CNN
+F 1 "100n" V 9300 2750 50  0000 C CNN
+F 2 "Capacitor_SMD:C_0805_2012Metric" H 9088 2600 50  0001 C CNN
+F 3 "~" H 9050 2750 50  0001 C CNN
+	1    9050 2750
+	0    1    1    0   
+$EndComp
+$Comp
+L Device:C C31
+U 1 1 5F375C64
+P 10600 2750
+F 0 "C31" V 10750 2750 50  0000 C CNN
+F 1 "100n" V 10850 2750 50  0000 C CNN
+F 2 "Capacitor_SMD:C_0805_2012Metric" H 10638 2600 50  0001 C CNN
+F 3 "~" H 10600 2750 50  0001 C CNN
+	1    10600 2750
+	0    1    1    0   
+$EndComp
+Wire Wire Line
+	9350 2100 8850 2100
+Wire Wire Line
+	8850 2100 8850 2600
+Wire Wire Line
+	8850 2750 8900 2750
+Wire Wire Line
+	9200 2750 9300 2750
+Wire Wire Line
+	9300 2750 9300 2850
+Wire Wire Line
+	9300 2850 9350 2850
+Connection ~ 9300 2750
+Wire Wire Line
+	9300 2750 9350 2750
+Wire Wire Line
+	10350 2750 10400 2750
+Wire Wire Line
+	10400 2750 10400 2850
+Wire Wire Line
+	10400 2850 10350 2850
+Connection ~ 10400 2750
+Wire Wire Line
+	10400 2750 10450 2750
+Wire Wire Line
+	10350 2100 10900 2100
+Wire Wire Line
+	10900 2100 10900 2600
+Wire Wire Line
+	10900 2750 10750 2750
+$Comp
+L my_lib:DCDC-SIP7-1-2-4-6 U32
+U 1 1 5F38F64A
+P 9850 3450
+F 0 "U32" H 9850 3917 50  0000 C CNN
+F 1 "DCDC-SIP7-1-2-4-6" H 9850 3826 50  0000 C CNN
+F 2 "" H 9050 4600 50  0001 C CNN
+F 3 "" H 9050 4600 50  0001 C CNN
+	1    9850 3450
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	8850 2750 8850 3250
+Wire Wire Line
+	8850 3250 9350 3250
+Connection ~ 8850 2750
+Wire Wire Line
+	10350 3250 10600 3250
+Wire Wire Line
+	10900 3250 10900 2750
+Connection ~ 10900 2750
+Wire Wire Line
+	9300 2850 9300 3650
+Wire Wire Line
+	9300 3650 9350 3650
+Connection ~ 9300 2850
+Wire Wire Line
+	10400 2850 10400 3650
+Wire Wire Line
+	10400 3650 10350 3650
+Connection ~ 10400 2850
+Connection ~ 10900 2100
+Connection ~ 10400 3650
+Wire Wire Line
+	10600 3300 10600 3250
+Connection ~ 10600 3250
+Wire Wire Line
+	10600 3250 10900 3250
+Wire Wire Line
+	10600 3600 10600 3650
+Connection ~ 10600 3650
+Wire Wire Line
+	10600 3650 10400 3650
+Wire Wire Line
+	9350 2600 8850 2600
+Connection ~ 8850 2600
+Wire Wire Line
+	8850 2600 8850 2750
+Wire Wire Line
+	10350 2600 10900 2600
+Connection ~ 10900 2600
+Wire Wire Line
+	10900 2600 10900 2750
+Text Label 11000 2100 0    50   ~ 0
+ISO_+5V
+Text Label 11000 3650 0    50   ~ 0
+ISO_GND
+$Comp
+L Device:R R130
+U 1 1 5F407696
+P 9850 3950
+F 0 "R130" V 9800 3800 50  0000 R CNN
+F 1 "0" V 9800 4100 50  0000 L CNN
+F 2 "" V 9780 3950 50  0001 C CNN
+F 3 "~" H 9850 3950 50  0001 C CNN
+	1    9850 3950
+	0    1    1    0   
+$EndComp
+$Comp
+L Device:R R131
+U 1 1 5F4085B7
+P 9850 4050
+F 0 "R131" V 9800 3900 50  0000 R CNN
+F 1 "0" V 9800 4200 50  0000 L CNN
+F 2 "" V 9780 4050 50  0001 C CNN
+F 3 "~" H 9850 4050 50  0001 C CNN
+	1    9850 4050
+	0    1    1    0   
+$EndComp
+$Comp
+L Device:R R132
+U 1 1 5F408887
+P 9850 4150
+F 0 "R132" V 9800 4000 50  0000 R CNN
+F 1 "0" V 9800 4300 50  0000 L CNN
+F 2 "" V 9780 4150 50  0001 C CNN
+F 3 "~" H 9850 4150 50  0001 C CNN
+	1    9850 4150
+	0    1    1    0   
+$EndComp
+Wire Wire Line
+	10000 4250 10500 4250
+Wire Wire Line
+	10000 4350 10500 4350
+Text Label 10500 4350 2    50   ~ 0
+ISO_GND
+Text Label 10500 4250 2    50   ~ 0
+ISO_+5V
+Wire Wire Line
+	9250 4350 9700 4350
+Wire Wire Line
+	9700 4250 9250 4250
+Text Label 9250 4250 0    50   ~ 0
++5V
+Text Label 9250 4350 0    50   ~ 0
+GND
+$Comp
+L Device:R R133
+U 1 1 5F41893D
+P 9850 4250
+F 0 "R133" V 9800 4100 50  0000 R CNN
+F 1 "0" V 9800 4400 50  0000 L CNN
+F 2 "" V 9780 4250 50  0001 C CNN
+F 3 "~" H 9850 4250 50  0001 C CNN
+	1    9850 4250
+	0    1    1    0   
+$EndComp
+$Comp
+L Device:R R134
+U 1 1 5F418947
+P 9850 4350
+F 0 "R134" V 9800 4200 50  0000 R CNN
+F 1 "0" V 9800 4500 50  0000 L CNN
+F 2 "" V 9780 4350 50  0001 C CNN
+F 3 "~" H 9850 4350 50  0001 C CNN
+	1    9850 4350
+	0    1    1    0   
+$EndComp
+Wire Wire Line
+	9300 3650 8850 3650
+Connection ~ 9300 3650
+Text Label 8850 3650 0    50   ~ 0
+GND
+Text Label 8850 2100 0    50   ~ 0
++5V
+Connection ~ 7300 10050
+Wire Wire Line
+	7300 10050 7600 10050
+Connection ~ 7300 10750
+Wire Wire Line
+	7300 10750 7950 10750
+Wire Wire Line
+	6450 10750 7300 10750
+Wire Wire Line
+	8650 9750 9000 9750
+Text Label 10050 9750 2    50   ~ 0
+~FLT
+Wire Wire Line
+	8850 8800 9000 8800
+Wire Wire Line
+	9000 8800 9000 9750
+Wire Wire Line
+	8900 2450 9350 2450
+Wire Wire Line
+	9350 2350 8900 2350
+Wire Wire Line
+	9350 2250 8900 2250
+Text Label 8900 2350 0    50   ~ 0
+TX
+Text Label 8900 2450 0    50   ~ 0
+RX
+Text Label 8900 2250 0    50   ~ 0
+REDE
+Wire Wire Line
+	10350 2250 10850 2250
+Wire Wire Line
+	10350 2350 10850 2350
+Wire Wire Line
+	10350 2450 10850 2450
+Text Label 10850 2450 2    50   ~ 0
+ISO_RX
+Text Label 10850 2250 2    50   ~ 0
+ISO_REDE
+Text Label 10850 2350 2    50   ~ 0
+ISO_TX
+Text Notes 8200 9050 0    50   ~ 0
+source indicator
+$Comp
+L Device:LED D22
+U 1 1 5F489F04
+P 8700 8800
+F 0 "D22" H 8700 8700 50  0000 C CNN
+F 1 "LR R971" H 8700 8900 50  0000 C CNN
+F 2 "" H 8700 8800 50  0001 C CNN
+F 3 "~" H 8700 8800 50  0001 C CNN
+	1    8700 8800
+	-1   0    0    1   
+$EndComp
+Wire Wire Line
+	9000 8750 9000 8800
+Connection ~ 9000 8800
+Wire Wire Line
+	7300 8450 8800 8450
+Wire Wire Line
+	9200 8450 10050 8450
+Text Label 10050 8450 2    50   ~ 0
+VIN
+Wire Wire Line
+	6800 9450 7300 9450
+Wire Wire Line
+	9000 9750 10050 9750
+Connection ~ 9000 9750
+$Comp
+L project:TLV760 U21
+U 1 1 5F6BCC84
+P 7750 8700
+F 0 "U21" H 7750 8865 50  0000 C CNN
+F 1 "TLV76033" H 7750 8774 50  0000 C CNN
+F 2 "" H 7750 8700 50  0001 C CNN
+F 3 "https://www.ti.com/lit/gpn/tlv760" H 7750 8700 50  0001 C CNN
+	1    7750 8700
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	7300 8450 7300 8800
+Wire Wire Line
+	8550 8800 8450 8800
+Wire Wire Line
+	7400 8800 7300 8800
+Connection ~ 7300 8800
+Wire Wire Line
+	7300 8800 7300 9450
+$Comp
+L power:GND #PWR0101
+U 1 1 5F7144F5
+P 7750 9150
+F 0 "#PWR0101" H 7750 8900 50  0001 C CNN
+F 1 "GND" H 7850 9150 50  0000 C CNN
+F 2 "" H 7750 9150 50  0001 C CNN
+F 3 "" H 7750 9150 50  0001 C CNN
+	1    7750 9150
+	1    0    0    -1  
+$EndComp
+Text Notes 5700 9050 0    50   ~ 0
+Input Stage with\n- reverse voltage protection\n- overvoltage (ov) protection\n- alternate power routing at ov \n   OR undervoltage protection\n\n+5V@4.6<VCC_EXT<5.4\nVIN@5.4<VCC_EXT
+$Comp
+L Device:R R25
+U 1 1 5F728D1A
+P 8300 8800
+F 0 "R25" V 8200 8750 50  0000 L CNN
+F 1 "270" V 8400 8750 50  0000 L CNN
+F 2 "" V 8230 8800 50  0001 C CNN
+F 3 "~" H 8300 8800 50  0001 C CNN
+	1    8300 8800
+	0    1    1    0   
+$EndComp
+Wire Wire Line
+	8150 8800 8100 8800
+$Comp
+L Device:R R22
+U 1 1 5F2F20B4
+P 7300 9900
+F 0 "R22" H 7370 9946 50  0000 L CNN
+F 1 "6.8k" H 7370 9855 50  0000 L CNN
+F 2 "" V 7230 9900 50  0001 C CNN
+F 3 "~" H 7300 9900 50  0001 C CNN
+	1    7300 9900
+	1    0    0    -1  
+$EndComp
+$Comp
+L Device:R R23
+U 1 1 5F2AAE8C
+P 7300 10350
+F 0 "R23" H 7370 10396 50  0000 L CNN
+F 1 "39k" H 7370 10305 50  0000 L CNN
+F 2 "" V 7230 10350 50  0001 C CNN
+F 3 "~" H 7300 10350 50  0001 C CNN
+	1    7300 10350
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	7600 9450 7300 9450
+$Comp
+L Device:R R21
+U 1 1 5F2A51E6
+P 7300 9600
+F 0 "R21" H 7370 9646 50  0000 L CNN
+F 1 "130k" H 7370 9555 50  0000 L CNN
+F 2 "" V 7230 9600 50  0001 C CNN
+F 3 "~" H 7300 9600 50  0001 C CNN
+	1    7300 9600
+	1    0    0    -1  
+$EndComp
+Connection ~ 7300 9750
+Wire Wire Line
+	7600 9750 7300 9750
+$Comp
+L Device:Q_PMOS_GSD Q21
+U 1 1 5F7B81E5
+P 9000 8550
+F 0 "Q21" V 9342 8550 50  0000 C CNN
+F 1 "IRLM5203 (PMOS_GSD)" V 9251 8550 50  0000 C CNN
+F 2 "" H 9200 8650 50  0001 C CNN
+F 3 "~" H 9000 8550 50  0001 C CNN
+	1    9000 8550
+	0    1    -1   0   
+$EndComp
+Text Notes 12300 7450 0    50   ~ 0
+TODOs\n- Input Stage MOSFETS RDSON
+Wire Wire Line
+	4600 2350 4050 2350
+Wire Wire Line
+	4600 2450 4050 2450
+Wire Wire Line
+	4600 2650 4050 2650
+Wire Wire Line
+	4600 2750 4050 2750
+Wire Wire Line
+	4600 2850 4050 2850
+Wire Wire Line
+	4600 2950 4050 2950
+Wire Wire Line
+	4600 3050 4050 3050
+Wire Wire Line
+	4600 3150 4050 3150
+Wire Wire Line
+	4600 3250 4050 3250
+Wire Wire Line
+	4600 3450 4050 3450
+Wire Wire Line
+	4600 3650 4050 3650
+Wire Wire Line
+	4600 3750 4050 3750
+Wire Wire Line
+	4600 3850 4050 3850
+Wire Wire Line
+	5600 3150 6100 3150
+Wire Wire Line
+	5600 3250 6100 3250
+Wire Wire Line
+	5600 3350 6100 3350
+Wire Wire Line
+	5600 3450 6100 3450
+Wire Wire Line
+	5600 3550 6100 3550
+Wire Wire Line
+	5600 3650 6100 3650
+Wire Wire Line
+	5600 3750 6100 3750
+Wire Wire Line
+	5600 3850 6100 3850
+Wire Wire Line
+	5600 2950 6100 2950
+Wire Wire Line
+	5600 2550 6100 2550
+Text Label 4050 2450 0    50   ~ 0
+RX
+Text Label 4050 2350 0    50   ~ 0
+TX
+Text Label 4050 2650 0    50   ~ 0
+REDE
+Text Label 4050 3850 0    50   ~ 0
+SCK
+Text Label 4050 3750 0    50   ~ 0
+MISO
+Text Label 4050 3650 0    50   ~ 0
+MOSI
+Text Label 4050 3250 0    50   ~ 0
+LCD_CS
+Text Label 4050 3150 0    50   ~ 0
+LCD_RS
+Text Label 4050 3450 0    50   ~ 0
+LCD_LED
+Text Label 4050 2750 0    50   ~ 0
+PWM1
+Text Label 4050 2950 0    50   ~ 0
+PWM2
+Text Label 4050 3050 0    50   ~ 0
+PWM3
+Text Label 6100 3550 2    50   ~ 0
+SDA
+Text Label 6100 3650 2    50   ~ 0
+SCL
+Text Label 6100 3750 2    50   ~ 0
+~FLT
+Text Label 6100 3850 2    50   ~ 0
+CUR
+Text Label 4050 2850 0    50   ~ 0
+IO_CS
+Text Label 6100 2550 2    50   ~ 0
+~RESET
+$Comp
+L my_lib:ADUM1301 U30
+U 1 1 5F3237A2
+P 9850 2400
+F 0 "U30" H 9850 2967 50  0000 C CNN
+F 1 "ADUM1301" H 9850 2876 50  0000 C CNN
+F 2 "" H 9850 2600 50  0001 C CNN
+F 3 "https://www.analog.com/media/en/technical-documentation/data-sheets/ADuM1300_1301.pdf" H 9850 2600 50  0001 C CNN
+	1    9850 2400
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	4600 3350 4050 3350
+Text Label 4050 3350 0    50   ~ 0
+PWM4
+$Comp
+L Device:C C32
+U 1 1 5F3CE062
+P 10600 3450
+F 0 "C32" H 10485 3404 50  0000 R CNN
+F 1 "10u" H 10485 3495 50  0000 R CNN
+F 2 "" H 10638 3300 50  0001 C CNN
+F 3 "~" H 10600 3450 50  0001 C CNN
+	1    10600 3450
+	-1   0    0    1   
+$EndComp
+$Comp
+L Device:CP C21
+U 1 1 5F2B9D4D
+P 9600 10350
+F 0 "C21" H 9718 10396 50  0000 L CNN
+F 1 "1u" H 9718 10305 50  0000 L CNN
+F 2 "" H 9638 10200 50  0001 C CNN
+F 3 "~" H 9600 10350 50  0001 C CNN
+	1    9600 10350
+	1    0    0    -1  
+$EndComp
+$Comp
+L Transistor_FET:IRF3205 Q?
+U 1 1 5F363296
+P 2500 8950
+F 0 "Q?" V 2842 8950 50  0000 C CNN
+F 1 "IRF3205" V 2751 8950 50  0000 C CNN
+F 2 "Package_TO_SOT_THT:TO-220-3_Vertical" H 2750 8875 50  0001 L CIN
+F 3 "http://www.irf.com/product-info/datasheets/data/irf3205.pdf" H 2500 8950 50  0001 L CNN
+	1    2500 8950
+	0    -1   -1   0   
+$EndComp
+$Comp
+L Power_Management:LM5050-1 U?
+U 1 1 5F3654B3
+P 2500 9800
+F 0 "U?" H 2500 10381 50  0000 C CNN
+F 1 "LM5050-1" H 2500 10290 50  0000 C CNN
+F 2 "Package_TO_SOT_SMD:TSOT-23-6" H 3150 9450 50  0001 C CNN
+F 3 "http://www.ti.com/lit/ds/symlink/lm5050-1-q1.pdf" H 3600 9750 50  0001 C CNN
+	1    2500 9800
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	2500 9400 2500 9150
+Wire Wire Line
+	2700 8850 2900 8850
+Wire Wire Line
+	2900 8850 2900 9700
+Wire Wire Line
+	2900 9700 2800 9700
+Wire Wire Line
+	2300 8850 2100 8850
+Wire Wire Line
+	2100 8850 2100 9700
+Wire Wire Line
+	2100 9700 2200 9700
+$Comp
+L Device:D_Schottky D?
+U 1 1 5F39CCFE
+P 1750 10500
+F 0 "D?" V 1796 10420 50  0000 R CNN
+F 1 "SS16T3" V 1705 10420 50  0000 R CNN
+F 2 "" H 1750 10500 50  0001 C CNN
+F 3 "~" H 1750 10500 50  0001 C CNN
+	1    1750 10500
+	0    -1   -1   0   
+$EndComp
+$Comp
+L Device:C C?
+U 1 1 5F39FF3F
+P 3100 10050
+F 0 "C?" H 3215 10096 50  0000 L CNN
+F 1 ".1 100V" H 3215 10005 50  0000 L CNN
+F 2 "" H 3138 9900 50  0001 C CNN
+F 3 "~" H 3100 10050 50  0001 C CNN
+	1    3100 10050
+	1    0    0    -1  
+$EndComp
+$Comp
+L Device:R R?
+U 1 1 5F3A066D
+P 3100 9300
+F 0 "R?" H 3170 9346 50  0000 L CNN
+F 1 "R" H 3170 9255 50  0000 L CNN
+F 2 "" V 3030 9300 50  0001 C CNN
+F 3 "~" H 3100 9300 50  0001 C CNN
+	1    3100 9300
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	2800 9800 3100 9800
+Wire Wire Line
+	3100 9800 3100 9450
+Wire Wire Line
+	2900 8850 3100 8850
+Wire Wire Line
+	3100 8850 3100 9150
+Connection ~ 2900 8850
+Wire Wire Line
+	3100 9800 3100 9900
+Connection ~ 3100 9800
+Connection ~ 3100 9900
+Wire Wire Line
+	3100 9900 3100 9950
+Wire Wire Line
+	3100 10200 3100 10300
+Wire Wire Line
+	3100 10300 2500 10300
+Wire Wire Line
+	1750 10300 1750 10350
+Wire Wire Line
+	2500 10200 2500 10300
+Connection ~ 2500 10300
+Wire Wire Line
+	2500 10300 2050 10300
+Connection ~ 1750 10300
+Wire Wire Line
+	2100 8850 1750 8850
+Wire Wire Line
+	1750 8850 1750 9650
+Connection ~ 2100 8850
+Wire Wire Line
+	3100 8850 3600 8850
+Wire Wire Line
+	3600 8850 3600 9650
+Connection ~ 3100 8850
+Wire Wire Line
+	3600 8850 4000 8850
+Wire Wire Line
+	4000 8850 4000 9650
+Connection ~ 3600 8850
+Wire Wire Line
+	1750 10650 1750 10700
+Wire Wire Line
+	1750 10700 3600 10700
+Connection ~ 3600 10700
+Wire Wire Line
+	3600 10700 4000 10700
+Wire Wire Line
+	4000 9950 4000 10700
+$Comp
+L Device:C C?
+U 1 1 5F439BA4
+P 1350 9800
+F 0 "C?" H 1465 9846 50  0000 L CNN
+F 1 "1u 30V" H 1465 9755 50  0000 L CNN
+F 2 "" H 1388 9650 50  0001 C CNN
+F 3 "~" H 1350 9800 50  0001 C CNN
+	1    1350 9800
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	1750 8850 1350 8850
+Wire Wire Line
+	1350 8850 1350 9650
+Connection ~ 1750 8850
+Wire Wire Line
+	1350 9950 1350 10700
+Wire Wire Line
+	1350 10700 1750 10700
+Connection ~ 1750 10700
+Wire Wire Line
+	3600 9950 3600 10700
+$Comp
+L Device:CP C?
+U 1 1 5F3F0752
+P 3600 9800
+F 0 "C?" H 3718 9846 50  0000 L CNN
+F 1 "22u" H 3718 9755 50  0000 L CNN
+F 2 "" H 3638 9650 50  0001 C CNN
+F 3 "~" H 3600 9800 50  0001 C CNN
+	1    3600 9800
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	1750 9950 1750 10300
+$Comp
+L Device:D_Schottky D?
+U 1 1 5F39C29C
+P 1750 9800
+F 0 "D?" V 1704 9880 50  0000 L CNN
+F 1 "SS16T3" V 1795 9880 50  0000 L CNN
+F 2 "" H 1750 9800 50  0001 C CNN
+F 3 "~" H 1750 9800 50  0001 C CNN
+	1    1750 9800
+	0    1    1    0   
+$EndComp
+Wire Wire Line
+	2200 9900 2050 9900
+Wire Wire Line
+	2050 9900 2050 10300
+Connection ~ 2050 10300
+Wire Wire Line
+	2050 10300 1750 10300
+$Comp
+L Device:D_TVS D?
+U 1 1 5F495ED6
+P 4000 9800
+F 0 "D?" V 3954 9880 50  0000 L CNN
+F 1 "SMBJ15CA" V 4045 9880 50  0000 L CNN
+F 2 "" H 4000 9800 50  0001 C CNN
+F 3 "~" H 4000 9800 50  0001 C CNN
+	1    4000 9800
+	0    1    1    0   
+$EndComp
+Text Label 5600 9450 0    50   ~ 0
+VCC_IN
+Wire Wire Line
+	1350 8850 1000 8850
+Connection ~ 1350 8850
+Wire Wire Line
+	1350 10700 1050 10700
+Connection ~ 1350 10700
+Wire Wire Line
+	4000 8850 4400 8850
+Connection ~ 4000 8850
+Text Label 1050 10700 0    50   ~ 0
+GND
+Text Label 1000 8850 0    50   ~ 0
+VCC_IN
+Text Label 4400 8850 2    50   ~ 0
+VCC_EXT
+Text Notes 1150 8450 0    50   ~ 0
+Option for High Currents and Revertse Current Protection (O-ring with USB)\n
+$EndSCHEMATC

@@ -1,0 +1,280 @@
+EESchema Schematic File Version 4
+EELAYER 30 0
+EELAYER END
+$Descr A3 16535 11693
+encoding utf-8
+Sheet 1 1
+Title ""
+Date ""
+Rev ""
+Comp ""
+Comment1 ""
+Comment2 ""
+Comment3 ""
+Comment4 ""
+$EndDescr
+$Comp
+L Switch:SW_Push_LED SW8
+U 1 1 5F16E207
+P 4950 7700
+F 0 "SW8" H 4950 8085 50  0000 C CNN
+F 1 "SW_Push_LED" H 4950 7994 50  0000 C CNN
+F 2 "" H 4950 8000 50  0001 C CNN
+F 3 "~" H 4950 8000 50  0001 C CNN
+	1    4950 7700
+	1    0    0    -1  
+$EndComp
+$Comp
+L Switch:SW_Push_LED SW7
+U 1 1 5F16F097
+P 4300 7700
+F 0 "SW7" H 4300 8085 50  0000 C CNN
+F 1 "SW_Push_LED" H 4300 7994 50  0000 C CNN
+F 2 "" H 4300 8000 50  0001 C CNN
+F 3 "~" H 4300 8000 50  0001 C CNN
+	1    4300 7700
+	1    0    0    -1  
+$EndComp
+$Comp
+L Switch:SW_Push_LED SW6
+U 1 1 5F16F9E5
+P 3650 7700
+F 0 "SW6" H 3650 8085 50  0000 C CNN
+F 1 "SW_Push_LED" H 3650 7994 50  0000 C CNN
+F 2 "" H 3650 8000 50  0001 C CNN
+F 3 "~" H 3650 8000 50  0001 C CNN
+	1    3650 7700
+	1    0    0    -1  
+$EndComp
+$Comp
+L Switch:SW_Push SW2
+U 1 1 5F170322
+P 5800 7700
+F 0 "SW2" H 5800 7985 50  0000 C CNN
+F 1 "SW_Push" H 5800 7894 50  0000 C CNN
+F 2 "Button_Switch_THT:KSA_Tactile_SPST" H 5800 7900 50  0001 C CNN
+F 3 "~" H 5800 7900 50  0001 C CNN
+	1    5800 7700
+	1    0    0    -1  
+$EndComp
+$Comp
+L Switch:SW_Push SW3
+U 1 1 5F1715B9
+P 6300 7700
+F 0 "SW3" H 6300 7985 50  0000 C CNN
+F 1 "SW_Push" H 6300 7894 50  0000 C CNN
+F 2 "Button_Switch_THT:KSA_Tactile_SPST" H 6300 7900 50  0001 C CNN
+F 3 "~" H 6300 7900 50  0001 C CNN
+	1    6300 7700
+	1    0    0    -1  
+$EndComp
+$Comp
+L Switch:SW_Push SW4
+U 1 1 5F171875
+P 6800 7700
+F 0 "SW4" H 6800 7985 50  0000 C CNN
+F 1 "SW_Push" H 6800 7894 50  0000 C CNN
+F 2 "Button_Switch_THT:KSA_Tactile_SPST" H 6800 7900 50  0001 C CNN
+F 3 "~" H 6800 7900 50  0001 C CNN
+	1    6800 7700
+	1    0    0    -1  
+$EndComp
+$Comp
+L Device:Rotary_Encoder_Switch SW1
+U 1 1 5F18F175
+P 6300 6950
+F 0 "SW1" H 6300 7317 50  0000 C CNN
+F 1 "1" H 6300 7226 50  0000 C CNN
+F 2 "Rotary_Encoder:RotaryEncoder_Alps_EC11E-Switch_Vertical_H20mm" H 6150 7110 50  0001 C CNN
+F 3 "~" H 6300 7210 50  0001 C CNN
+	1    6300 6950
+	1    0    0    -1  
+$EndComp
+$Comp
+L Switch:SW_Push_LED SW5
+U 1 1 5F1A2BDE
+P 3050 7700
+F 0 "SW5" H 3050 8085 50  0000 C CNN
+F 1 "SW_Push_LED" H 3050 7994 50  0000 C CNN
+F 2 "" H 3050 8000 50  0001 C CNN
+F 3 "~" H 3050 8000 50  0001 C CNN
+	1    3050 7700
+	1    0    0    -1  
+$EndComp
+$Comp
+L my_lib:EADOGM162 LCD1
+U 1 1 5F4F25A4
+P 3900 5600
+F 0 "LCD1" H 3975 6525 50  0000 C CNN
+F 1 "EADOGM162" H 3975 6434 50  0000 C CNN
+F 2 "" H 2900 6050 50  0001 C CNN
+F 3 "" H 2900 6050 50  0001 C CNN
+	1    3900 5600
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	4400 5900 4350 5900
+Wire Wire Line
+	4400 5900 4400 5400
+Wire Wire Line
+	4400 4800 3400 4800
+Wire Wire Line
+	3400 4800 3400 4900
+Wire Wire Line
+	3400 4900 3600 4900
+Wire Wire Line
+	3400 4900 3400 5500
+Wire Wire Line
+	3400 5500 3600 5500
+Connection ~ 3400 4900
+Wire Wire Line
+	3600 5600 3400 5600
+Wire Wire Line
+	3400 5600 3400 5500
+Connection ~ 3400 5500
+Wire Wire Line
+	4350 4900 4400 4900
+Connection ~ 4400 4900
+Wire Wire Line
+	4400 4900 4400 4800
+Wire Wire Line
+	4350 5000 4400 5000
+Connection ~ 4400 5000
+Wire Wire Line
+	4400 5000 4400 4900
+Wire Wire Line
+	4350 5100 4400 5100
+Connection ~ 4400 5100
+Wire Wire Line
+	4400 5100 4400 5000
+Wire Wire Line
+	4350 5200 4400 5200
+Connection ~ 4400 5200
+Wire Wire Line
+	4400 5200 4400 5100
+Wire Wire Line
+	4350 5300 4400 5300
+Connection ~ 4400 5300
+Wire Wire Line
+	4400 5300 4400 5200
+Wire Wire Line
+	4350 5400 4400 5400
+Connection ~ 4400 5400
+Wire Wire Line
+	4400 5400 4400 5300
+Wire Wire Line
+	4350 5500 4800 5500
+Wire Wire Line
+	4350 5600 4800 5600
+Wire Wire Line
+	4350 5700 4800 5700
+Wire Wire Line
+	4350 6000 4800 6000
+Wire Wire Line
+	4350 5800 4800 5800
+Wire Wire Line
+	3600 5000 3550 5000
+Wire Wire Line
+	3550 5000 3550 5800
+Wire Wire Line
+	3550 5800 3600 5800
+Wire Wire Line
+	3600 6000 3150 6000
+Text Label 4800 5500 2    50   ~ 0
+SCK
+Text Label 4800 5600 2    50   ~ 0
+MOSI
+Text Label 4800 5700 2    50   ~ 0
+LCD_RS
+Text Label 4800 5800 2    50   ~ 0
+GND
+Text Label 4800 6000 2    50   ~ 0
+LCD_CS
+Text Label 3150 6000 0    50   ~ 0
+~RESET
+NoConn ~ 3600 5200
+NoConn ~ 3600 5300
+Wire Wire Line
+	4350 6200 4400 6200
+Wire Wire Line
+	4400 6200 4400 6400
+Wire Wire Line
+	4400 6400 3550 6400
+Wire Wire Line
+	3550 6400 3550 6300
+Wire Wire Line
+	3550 6300 3600 6300
+Wire Wire Line
+	3600 6200 3150 6200
+Wire Wire Line
+	3550 5800 3150 5800
+Connection ~ 3550 5800
+Wire Wire Line
+	3400 5600 3150 5600
+Connection ~ 3400 5600
+Text Label 3150 5600 0    50   ~ 0
++5V
+Text Label 3150 5800 0    50   ~ 0
+GND
+Text Label 3150 6200 0    50   ~ 0
++5V
+Text Notes 4450 5600 0    50   ~ 0
+SI
+$Comp
+L Interface_Expansion:MCP23S17_SS U1
+U 1 1 5F8C3787
+P 9350 7200
+F 0 "U1" H 9350 8481 50  0000 C CNN
+F 1 "MCP23S17_SS" H 9350 8390 50  0000 C CNN
+F 2 "Package_SO:SSOP-28_5.3x10.2mm_P0.65mm" H 9550 6200 50  0001 L CNN
+F 3 "http://ww1.microchip.com/downloads/en/DeviceDoc/20001952C.pdf" H 9550 6100 50  0001 L CNN
+	1    9350 7200
+	-1   0    0    -1  
+$EndComp
+Wire Wire Line
+	10050 6400 10600 6400
+Wire Wire Line
+	10050 6500 10600 6500
+Wire Wire Line
+	10050 6600 10600 6600
+Wire Wire Line
+	10050 6700 10600 6700
+Wire Wire Line
+	10050 7000 10600 7000
+Wire Wire Line
+	10050 7100 10600 7100
+Wire Wire Line
+	10050 7300 10600 7300
+Text Label 10600 6400 2    50   ~ 0
+IO_CS
+Text Label 10600 6500 2    50   ~ 0
+SCK
+Text Label 10600 6600 2    50   ~ 0
+MOSI
+Text Label 10600 6700 2    50   ~ 0
+MISO
+Wire Wire Line
+	10050 7800 10100 7800
+Wire Wire Line
+	10100 7800 10100 7900
+Wire Wire Line
+	10100 8400 9350 8400
+Wire Wire Line
+	9350 8400 9350 8300
+Wire Wire Line
+	10050 7900 10100 7900
+Connection ~ 10100 7900
+Wire Wire Line
+	10100 7900 10100 8000
+Wire Wire Line
+	10050 8000 10100 8000
+Connection ~ 10100 8000
+Wire Wire Line
+	10100 8000 10100 8400
+Text Label 10600 7300 2    50   ~ 0
+~RESET
+Text Label 10600 7100 2    50   ~ 0
+IO_INTA
+Text Label 10600 7000 2    50   ~ 0
+IO_INTB
+$EndSCHEMATC
