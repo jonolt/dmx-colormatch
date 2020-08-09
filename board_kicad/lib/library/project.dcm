@@ -1,0 +1,24 @@
+EESchema-DOCLIB  Version 2.0
+#
+$CMP ADUM1301
+D Triple-Channel Digital Isolators
+F https://www.analog.com/media/en/technical-documentation/data-sheets/ADuM1300_1301.pdf
+$ENDCMP
+#
+$CMP DCDC-SIP7-1-2-4-6
+D DCDC Converter Single SIL Package
+$ENDCMP
+#
+$CMP TLV760
+D 100-mA, 30-V, low-dropout voltage regulator
+K LDO Regulator Linear fixed
+F https://www.ti.com/lit/gpn/tlv760
+$ENDCMP
+#
+$CMP TPS2596XX
+D 2.7-V to 19-V, 85mΩ, 0.13-2A eFuse with selectable over voltage protection clamp in leaded
+K eFuse power switches current monitor Overvoltage Protection Undervoltage
+F https://www.ti.com/lit/gpn/tps2596
+$ENDCMP
+#
+#End Doc Library

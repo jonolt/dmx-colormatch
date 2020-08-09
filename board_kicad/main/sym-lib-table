@@ -1,5 +1,4 @@
 (sym_lib_table
-  (lib (name nano_every)(type Legacy)(uri ${KIPRJMOD}/../lib/library/nano_every.lib)(options "")(descr ""))
   (lib (name project)(type Legacy)(uri ${KIPRJMOD}/../lib/library/project.lib)(options "")(descr ""))
-  (lib (name my_lib)(type Legacy)(uri ${KIPRJMOD}/../lib/library/my_lib.lib)(options "")(descr ""))
+  (lib (name arduino)(type Legacy)(uri /home/johannes/Documents/Projects/dmx-colormatch/board_kicad/lib/library/arduino.lib)(options "")(descr ""))
 )
