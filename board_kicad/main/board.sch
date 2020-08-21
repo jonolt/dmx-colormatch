@@ -4,17 +4,17 @@ EELAYER END
 $Descr A4 11693 8268
 encoding utf-8
 Sheet 1 1
-Title ""
-Date ""
+Title "NanoE-DMX"
+Date "2020-08-21"
 Rev ""
 Comp ""
-Comment1 ""
+Comment1 "Board can be used as Shield without Arduino Nano Every"
 Comment2 ""
 Comment3 ""
 Comment4 ""
 $EndDescr
 $Comp
-L project:Arduino_Nano_Every U1
+L project:Arduino-Nano_Every U1
 U 1 1 5F1AC01A
 P 8650 4850
 F 0 "U1" H 8300 3600 50  0000 C CNN
@@ -145,17 +145,6 @@ Wire Wire Line
 	4400 6650 4500 6650
 Wire Wire Line
 	4500 6650 4500 6800
-$Comp
-L Device:D_Schottky D21
-U 1 1 5F2B9338
-P 5100 6950
-F 0 "D21" V 5054 7030 50  0000 L CNN
-F 1 "STPS1L30AFN" H 4950 6850 50  0000 L CNN
-F 2 "Diode_SMD:D_SMA" H 5100 6950 50  0001 C CNN
-F 3 "~" H 5100 6950 50  0001 C CNN
-	1    5100 6950
-	0    1    1    0   
-$EndComp
 Wire Wire Line
 	5500 7100 5500 7350
 Wire Wire Line
@@ -736,8 +725,6 @@ Wire Wire Line
 	4100 7350 4500 7350
 Connection ~ 4500 6650
 Connection ~ 4500 7350
-Wire Wire Line
-	4500 6650 6350 6650
 Connection ~ 4100 5350
 Wire Wire Line
 	4100 5850 4500 5850
@@ -834,47 +821,47 @@ Wire Wire Line
 Connection ~ 4700 6050
 Wire Wire Line
 	4700 6050 4750 6050
-Text Label 9600 3800 0    50   ~ 0
+Text Label 750  4600 0    50   ~ 0
 IO1
-Text Label 9600 3700 0    50   ~ 0
+Text Label 750  4500 0    50   ~ 0
 IO2
-Text Label 9600 3500 0    50   ~ 0
+Text Label 750  4300 0    50   ~ 0
 SCL
-Text Label 9600 3600 0    50   ~ 0
+Text Label 750  4400 0    50   ~ 0
 SDA
-Text Label 9600 3400 0    50   ~ 0
+Text Label 750  4200 0    50   ~ 0
 IO3
-Text Label 9600 3300 0    50   ~ 0
+Text Label 750  4100 0    50   ~ 0
 +3V3
-Text Label 9600 3200 0    50   ~ 0
+Text Label 750  4000 0    50   ~ 0
 GND
-Text Label 9600 3100 0    50   ~ 0
+Text Label 750  3900 0    50   ~ 0
 +5V
 Wire Wire Line
-	10150 3800 9600 3800
+	1300 4600 750  4600
 Wire Wire Line
-	10150 3700 9600 3700
+	1300 4500 750  4500
 Wire Wire Line
-	10150 3600 9600 3600
+	1300 4400 750  4400
 Wire Wire Line
-	10150 3500 9600 3500
+	1300 4300 750  4300
 Wire Wire Line
-	10150 3400 9600 3400
+	1300 4200 750  4200
 Wire Wire Line
-	10150 3300 9600 3300
+	1300 4100 750  4100
 Wire Wire Line
-	10150 3200 9600 3200
+	1300 4000 750  4000
 Wire Wire Line
-	10150 3100 9600 3100
+	1300 3900 750  3900
 $Comp
 L Connector:RJ45 J40
 U 1 1 5F290506
-P 10550 3400
-F 0 "J40" H 10220 3404 50  0000 R CNN
-F 1 "RJ45" H 10220 3495 50  0000 R CNN
-F 2 "Connector_RJ:RJ45_OST_PJ012-8P8CX_Vertical" V 10550 3425 50  0001 C CNN
-F 3 "~" V 10550 3425 50  0001 C CNN
-	1    10550 3400
+P 1700 4200
+F 0 "J40" H 1370 4204 50  0000 R CNN
+F 1 "RJ45" H 1370 4295 50  0000 R CNN
+F 2 "Connector_RJ:RJ45_OST_PJ012-8P8CX_Vertical" V 1700 4225 50  0001 C CNN
+F 3 "~" V 1700 4225 50  0001 C CNN
+	1    1700 4200
 	-1   0    0    1   
 $EndComp
 $Comp
@@ -996,93 +983,93 @@ $EndComp
 Connection ~ 1300 6150
 Wire Wire Line
 	1300 6150 1950 6150
-NoConn ~ 9600 3400
-NoConn ~ 9600 3700
-NoConn ~ 9600 3800
+NoConn ~ 750  4200
+NoConn ~ 750  4500
+NoConn ~ 750  4600
 $Comp
 L Device:C C21
 U 1 1 5F349D62
 P 5500 6950
 F 0 "C21" H 5615 6996 50  0000 L CNN
 F 1 "1u" H 5615 6905 50  0000 L CNN
-F 2 "Capacitor_Tantalum_SMD:CP_EIA-3528-15_AVX-H" H 5538 6800 50  0001 C CNN
+F 2 "Capacitor_SMD:C_0805_2012Metric" H 5538 6800 50  0001 C CNN
 F 3 "~" H 5500 6950 50  0001 C CNN
 	1    5500 6950
 	1    0    0    -1  
 $EndComp
 Wire Wire Line
-	1800 1650 1700 1650
+	2300 1100 2200 1100
 Wire Wire Line
-	4400 1650 4850 1650
+	4900 1100 5350 1100
 Wire Wire Line
-	4400 1750 4850 1750
+	4900 1200 5350 1200
 Wire Wire Line
-	4400 1950 4850 1950
+	4900 1400 5350 1400
 Wire Wire Line
-	4400 2050 4850 2050
+	4900 1500 5350 1500
 Wire Wire Line
-	4400 2150 4850 2150
+	4900 1600 5350 1600
 Wire Wire Line
-	4400 2250 4850 2250
+	4900 1700 5350 1700
 Wire Wire Line
-	4400 2350 4850 2350
+	4900 1800 5350 1800
 Wire Wire Line
-	4400 2450 4850 2450
+	4900 1900 5350 1900
 Wire Wire Line
-	4400 2550 4850 2550
+	4900 2000 5350 2000
 Wire Wire Line
-	4400 2650 4850 2650
+	4900 2100 5350 2100
 Wire Wire Line
-	1800 1850 1350 1850
+	2300 1300 1850 1300
 Wire Wire Line
-	1800 1950 1350 1950
+	2300 1400 1850 1400
 Wire Wire Line
-	1800 2450 1350 2450
+	2300 1900 1850 1900
 Wire Wire Line
-	1800 2550 1350 2550
+	2300 2000 1850 2000
 Wire Wire Line
-	1800 2650 1350 2650
+	2300 2100 1850 2100
 Wire Wire Line
-	1800 2750 1350 2750
+	2300 2200 1850 2200
 Wire Wire Line
-	1800 2850 1350 2850
+	2300 2300 1850 2300
 Wire Wire Line
-	4400 3550 4850 3550
-Text Label 1000 1550 0    50   ~ 0
+	4900 3000 5350 3000
+Text Label 1500 1000 0    50   ~ 0
 TX
-Text Label 1000 1650 0    50   ~ 0
+Text Label 1500 1100 0    50   ~ 0
 RX
-Text Label 1350 1950 0    50   ~ 0
+Text Label 1850 1400 0    50   ~ 0
 SDA
-Text Label 1350 1850 0    50   ~ 0
+Text Label 1850 1300 0    50   ~ 0
 SCL
-Text Label 4850 3550 2    50   ~ 0
+Text Label 5350 3000 2    50   ~ 0
 ~RESET
-Text Label 4850 1750 2    50   ~ 0
+Text Label 5350 1200 2    50   ~ 0
 REDE
-Text Label 4850 1850 2    50   ~ 0
+Text Label 5350 1300 2    50   ~ 0
 IO_CS
-Text Label 4850 2050 2    50   ~ 0
+Text Label 5350 1500 2    50   ~ 0
 LCD_RS
-Text Label 4850 2150 2    50   ~ 0
+Text Label 5350 1600 2    50   ~ 0
 LCD_CS
-Text Label 4850 2350 2    50   ~ 0
+Text Label 5350 1800 2    50   ~ 0
 LCD_LED
-Text Label 4850 2450 2    50   ~ 0
+Text Label 5350 1900 2    50   ~ 0
 MOSI
-Text Label 4850 2550 2    50   ~ 0
+Text Label 5350 2000 2    50   ~ 0
 MISO
-Text Label 4850 2650 2    50   ~ 0
+Text Label 5350 2100 2    50   ~ 0
 SCK
-Text Label 1350 2750 0    50   ~ 0
+Text Label 1850 2200 0    50   ~ 0
 A0-CUR
-Text Label 1350 2650 0    50   ~ 0
+Text Label 1850 2100 0    50   ~ 0
 A1-~FLT
-Text Label 1350 2550 0    50   ~ 0
+Text Label 1850 2000 0    50   ~ 0
 A2
-Text Label 1350 2450 0    50   ~ 0
+Text Label 1850 1900 0    50   ~ 0
 A3
-Text Label 1350 2850 0    50   ~ 0
+Text Label 1850 2300 0    50   ~ 0
 AREF
 Wire Wire Line
 	9150 4650 9650 4650
@@ -1093,34 +1080,34 @@ A3
 Text Label 9650 5050 2    50   ~ 0
 A2
 Wire Wire Line
-	1800 3650 1650 3650
+	2300 3100 2150 3100
 Wire Wire Line
-	1800 3450 1500 3450
+	2300 2900 2000 2900
 Wire Wire Line
-	1800 3550 1650 3550
+	2300 3000 2150 3000
 $Comp
 L power:+5V #PWR0106
 U 1 1 5F443F2A
-P 1650 3550
-F 0 "#PWR0106" H 1650 3400 50  0001 C CNN
-F 1 "+5V" H 1665 3723 50  0000 C CNN
-F 2 "" H 1650 3550 50  0001 C CNN
-F 3 "" H 1650 3550 50  0001 C CNN
-	1    1650 3550
+P 2150 3000
+F 0 "#PWR0106" H 2150 2850 50  0001 C CNN
+F 1 "+5V" H 2165 3173 50  0000 C CNN
+F 2 "" H 2150 3000 50  0001 C CNN
+F 3 "" H 2150 3000 50  0001 C CNN
+	1    2150 3000
 	0    -1   1    0   
 $EndComp
 $Comp
 L power:+3.3V #PWR0107
 U 1 1 5F443F30
-P 1500 3450
-F 0 "#PWR0107" H 1500 3300 50  0001 C CNN
-F 1 "+3.3V" H 1515 3623 50  0000 C CNN
-F 2 "" H 1500 3450 50  0001 C CNN
-F 3 "" H 1500 3450 50  0001 C CNN
-	1    1500 3450
+P 2000 2900
+F 0 "#PWR0107" H 2000 2750 50  0001 C CNN
+F 1 "+3.3V" H 2015 3073 50  0000 C CNN
+F 2 "" H 2000 2900 50  0001 C CNN
+F 3 "" H 2000 2900 50  0001 C CNN
+	1    2000 2900
 	0    -1   1    0   
 $EndComp
-Text Label 1650 3650 0    50   ~ 0
+Text Label 2150 3100 0    50   ~ 0
 VIN
 Text Label 7600 4750 0    50   ~ 0
 D6-~FLT
@@ -1133,96 +1120,96 @@ LCD_RS
 Text Label 7600 4950 0    50   ~ 0
 LCD_CS
 Wire Wire Line
-	4850 1550 4400 1550
+	5350 1000 4900 1000
 Wire Wire Line
-	4850 1850 4400 1850
-Text Label 4850 1550 2    50   ~ 0
+	5350 1300 4900 1300
+Text Label 5350 1000 2    50   ~ 0
 D2
-Text Label 4850 1650 2    50   ~ 0
+Text Label 5350 1100 2    50   ~ 0
 D3
-Text Label 4850 1950 2    50   ~ 0
+Text Label 5350 1400 2    50   ~ 0
 D6-~FLT
-Text Label 4850 2250 2    50   ~ 0
+Text Label 5350 1700 2    50   ~ 0
 D9
 Text Label 7600 5050 0    50   ~ 0
 D9
 $Comp
 L arduino:Arduino_Uno_Shield XA1
 U 1 1 5F53BAD1
-P 3100 2600
-F 0 "XA1" H 3100 3987 60  0000 C CNN
-F 1 "Arduino_Uno_Shield" H 3100 3881 60  0000 C CNN
-F 2 "project:Arduino_Shield" H 4900 6350 60  0001 C CNN
-F 3 "https://store.arduino.cc/arduino-uno-rev3" H 4900 6350 60  0001 C CNN
-	1    3100 2600
+P 3600 2050
+F 0 "XA1" H 3600 3437 60  0000 C CNN
+F 1 "Arduino_Uno_Shield" H 3600 3331 60  0000 C CNN
+F 2 "project:Arduino_Shield" H 5400 5800 60  0001 C CNN
+F 3 "https://store.arduino.cc/arduino-uno-rev3" H 5400 5800 60  0001 C CNN
+	1    3600 2050
 	1    0    0    -1  
 $EndComp
 Wire Wire Line
-	1800 3150 1800 3250
-Connection ~ 1800 3250
+	2300 2600 2300 2700
+Connection ~ 2300 2700
 Wire Wire Line
-	1800 3250 1800 3350
+	2300 2700 2300 2800
 $Comp
 L power:GND #PWR0108
 U 1 1 5F6D541E
-P 1800 3250
-F 0 "#PWR0108" H 1800 3000 50  0001 C CNN
-F 1 "GND" H 1805 3077 50  0000 C CNN
-F 2 "" H 1800 3250 50  0001 C CNN
-F 3 "" H 1800 3250 50  0001 C CNN
-	1    1800 3250
+P 2300 2700
+F 0 "#PWR0108" H 2300 2450 50  0001 C CNN
+F 1 "GND" H 2305 2527 50  0000 C CNN
+F 2 "" H 2300 2700 50  0001 C CNN
+F 3 "" H 2300 2700 50  0001 C CNN
+	1    2300 2700
 	0    1    1    0   
 $EndComp
 $Comp
 L Connector_Generic:Conn_01x02 J1
 U 1 1 5F713556
-P 1200 1150
-F 0 "J1" V 1164 962 50  0000 R CNN
-F 1 "Conn_01x02" V 1073 962 50  0000 R CNN
-F 2 "Connector_PinHeader_2.54mm:PinHeader_1x02_P2.54mm_Vertical" H 1200 1150 50  0001 C CNN
-F 3 "~" H 1200 1150 50  0001 C CNN
-	1    1200 1150
+P 1700 600
+F 0 "J1" V 1700 400 50  0000 R CNN
+F 1 "Conn_01x02" V 1550 1500 50  0000 R CNN
+F 2 "Connector_PinHeader_2.54mm:PinHeader_1x02_P2.54mm_Vertical" H 1700 600 50  0001 C CNN
+F 3 "~" H 1700 600 50  0001 C CNN
+	1    1700 600 
 	0    -1   -1   0   
 $EndComp
 Wire Wire Line
-	1000 1550 1200 1550
+	1500 1000 1700 1000
 Wire Wire Line
-	1300 1350 1300 1650
-Connection ~ 1300 1650
+	1800 800  1800 1100
+Connection ~ 1800 1100
 Wire Wire Line
-	1300 1650 1000 1650
+	1800 1100 1500 1100
 Wire Wire Line
-	1200 1350 1200 1550
-Connection ~ 1200 1550
+	1700 800  1700 1000
+Connection ~ 1700 1000
 Wire Wire Line
-	1200 1550 1400 1550
+	1700 1000 1900 1000
 $Comp
 L Jumper:SolderJumper_2_Open JP1
 U 1 1 5F7495B8
-P 1550 1550
-F 0 "JP1" H 1550 1755 50  0000 C CNN
-F 1 "SolderJumper_2_Open" H 1550 1664 50  0000 C CNN
-F 2 "Jumper:SolderJumper-2_P1.3mm_Open_Pad1.0x1.5mm" H 1550 1550 50  0001 C CNN
-F 3 "~" H 1550 1550 50  0001 C CNN
-	1    1550 1550
+P 2050 1000
+F 0 "JP1" H 2050 1205 50  0000 C CNN
+F 1 "SolderJumper_2_Open" H 2050 1114 50  0001 C CNN
+F 2 "Jumper:SolderJumper-2_P1.3mm_Open_Pad1.0x1.5mm" H 2050 1000 50  0001 C CNN
+F 3 "~" H 2050 1000 50  0001 C CNN
+	1    2050 1000
 	1    0    0    -1  
 $EndComp
 Wire Wire Line
-	1700 1550 1800 1550
+	2200 1000 2300 1000
 $Comp
 L Jumper:SolderJumper_2_Open JP2
 U 1 1 5F749A74
-P 1550 1650
-F 0 "JP2" H 1550 1855 50  0000 C CNN
-F 1 "SolderJumper_2_Open" H 1550 1764 50  0000 C CNN
-F 2 "Jumper:SolderJumper-2_P1.3mm_Open_Pad1.0x1.5mm" H 1550 1650 50  0001 C CNN
-F 3 "~" H 1550 1650 50  0001 C CNN
-	1    1550 1650
+P 2050 1100
+F 0 "JP2" H 2050 1305 50  0000 C CNN
+F 1 "SolderJumper_2_Open" H 2050 1214 50  0001 C CNN
+F 2 "Jumper:SolderJumper-2_P1.3mm_Open_Pad1.0x1.5mm" H 2050 1100 50  0001 C CNN
+F 3 "~" H 2050 1100 50  0001 C CNN
+	1    2050 1100
 	1    0    0    -1  
 $EndComp
 Wire Wire Line
-	1400 1650 1300 1650
-Text Notes 1100 1050 0    50   ~ 0
+	1900 1100 1800 1100
+Text Notes 800  700  0    50   ~ 0
 Alternative UART Pins\nfor Mega, Due ...
 Text Notes 9350 6350 0    50   ~ 0
 I2C pins by board SDA/SCL\n-------------------\nNano: A4/A5\n-------------------\nUno, Ethernet: A4/A5->20/21\nMega2560, Due: 20/21\nLeonardo: 2/3->20/21
@@ -1235,12 +1222,12 @@ A5
 Text Label 9650 5450 2    50   ~ 0
 A4
 Wire Wire Line
-	1800 2250 1350 2250
+	2300 1700 1850 1700
 Wire Wire Line
-	1800 2350 1350 2350
-Text Label 1350 2350 0    50   ~ 0
+	2300 1800 1850 1800
+Text Label 1850 1800 0    50   ~ 0
 A4
-Text Label 1350 2250 0    50   ~ 0
+Text Label 1850 1700 0    50   ~ 0
 A5
 Wire Wire Line
 	10600 5050 10950 5050
@@ -1284,4 +1271,300 @@ F 3 "~" H 10400 5050 50  0001 C CNN
 	1    10400 5050
 	1    0    0    -1  
 $EndComp
+$Comp
+L Diode:BAT54J D21
+U 1 1 5F4BB325
+P 5100 6950
+F 0 "D21" V 5054 7030 50  0000 L CNN
+F 1 "BAT54J" V 5145 7030 50  0000 L CNN
+F 2 "Diode_SMD:D_SOD-323F" H 5100 6775 50  0001 C CNN
+F 3 "https://assets.nexperia.com/documents/data-sheet/BAT54J.pdf" H 5100 6950 50  0001 C CNN
+	1    5100 6950
+	0    1    1    0   
+$EndComp
+$Comp
+L project:74LVC2G34 U33
+U 1 1 5F4CD637
+P 5350 3850
+F 0 "U33" H 5325 4117 50  0000 C CNN
+F 1 "74LVC2G34" H 5325 4026 50  0000 C CNN
+F 2 "Package_TO_SOT_SMD:SOT-23-6" H 5350 3850 50  0001 C CNN
+F 3 "http://www.ti.com/lit/sg/scyt129e/scyt129e.pdf" H 5350 3850 50  0001 C CNN
+	1    5350 3850
+	1    0    0    -1  
+$EndComp
+$Comp
+L project:74LVC2G34 U33
+U 2 1 5F4CE9A3
+P 5350 4300
+F 0 "U33" H 5325 4567 50  0000 C CNN
+F 1 "74LVC2G34" H 5325 4476 50  0000 C CNN
+F 2 "Package_TO_SOT_SMD:SOT-23-6" H 5350 4300 50  0001 C CNN
+F 3 "http://www.ti.com/lit/sg/scyt129e/scyt129e.pdf" H 5350 4300 50  0001 C CNN
+	2    5350 4300
+	1    0    0    -1  
+$EndComp
+$Comp
+L project:74LVC2G34 U33
+U 3 1 5F4CF7EC
+P 5350 4700
+F 0 "U33" H 5350 4917 50  0000 C CNN
+F 1 "74LVC2G34" H 5350 4826 50  0000 C CNN
+F 2 "Package_TO_SOT_SMD:SOT-23-6" H 5350 4700 50  0001 C CNN
+F 3 "http://www.ti.com/lit/sg/scyt129e/scyt129e.pdf" H 5350 4700 50  0001 C CNN
+	3    5350 4700
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	4500 6650 6350 6650
+Wire Wire Line
+	3300 6450 3700 6450
+Wire Wire Line
+	3700 6450 3700 6350
+Wire Wire Line
+	5050 3850 4650 3850
+Wire Wire Line
+	5050 4300 4650 4300
+Wire Wire Line
+	5050 4700 4650 4700
+Wire Wire Line
+	5600 3850 5700 3850
+Text Label 4650 3850 0    50   ~ 0
+DMX+
+Text Label 4650 4300 0    50   ~ 0
+DMX-
+Text Label 4650 4700 0    50   ~ 0
+ISO_+5V
+Text Label 6050 4700 2    50   ~ 0
+ISO_GND
+Wire Wire Line
+	6400 3850 6600 3850
+Wire Wire Line
+	6000 3850 6100 3850
+$Comp
+L Device:LED D30
+U 1 1 5F582C98
+P 5850 3850
+F 0 "D30" H 5850 3750 50  0000 C CNN
+F 1 "LED" H 5850 3950 50  0000 C CNN
+F 2 "LED_SMD:LED_0805_2012Metric" H 5850 3850 50  0001 C CNN
+F 3 "~" H 5850 3850 50  0001 C CNN
+	1    5850 3850
+	-1   0    0    1   
+$EndComp
+$Comp
+L Device:R R33
+U 1 1 5F582CA2
+P 6250 3850
+F 0 "R33" V 6150 3850 50  0000 C CNN
+F 1 "270" V 6350 3800 50  0000 L CNN
+F 2 "Resistor_SMD:R_0805_2012Metric" V 6180 3850 50  0001 C CNN
+F 3 "~" H 6250 3850 50  0001 C CNN
+	1    6250 3850
+	0    1    1    0   
+$EndComp
+Wire Wire Line
+	5600 4300 5700 4300
+$Comp
+L Device:R R34
+U 1 1 5F582C7E
+P 6250 4300
+F 0 "R34" V 6150 4300 50  0000 C CNN
+F 1 "270" V 6350 4250 50  0000 L CNN
+F 2 "Resistor_SMD:R_0805_2012Metric" V 6180 4300 50  0001 C CNN
+F 3 "~" H 6250 4300 50  0001 C CNN
+	1    6250 4300
+	0    1    1    0   
+$EndComp
+$Comp
+L Device:LED D31
+U 1 1 5F582C88
+P 5850 4300
+F 0 "D31" H 5850 4200 50  0000 C CNN
+F 1 "LED" H 5850 4400 50  0000 C CNN
+F 2 "LED_SMD:LED_0805_2012Metric" H 5850 4300 50  0001 C CNN
+F 3 "~" H 5850 4300 50  0001 C CNN
+	1    5850 4300
+	-1   0    0    1   
+$EndComp
+Wire Wire Line
+	6000 4300 6100 4300
+Wire Wire Line
+	6400 4300 6600 4300
+Wire Wire Line
+	5650 4700 6600 4700
+Connection ~ 6600 4300
+Wire Wire Line
+	6600 4300 6600 4700
+Wire Wire Line
+	6600 3850 6600 4300
+$Comp
+L project:74LVC2G34 U2
+U 1 1 5F6D9816
+P 3050 3850
+F 0 "U2" H 3025 4117 50  0000 C CNN
+F 1 "74LVC2G34" H 3025 4026 50  0000 C CNN
+F 2 "Package_TO_SOT_SMD:SOT-23-6" H 3050 3850 50  0001 C CNN
+F 3 "http://www.ti.com/lit/sg/scyt129e/scyt129e.pdf" H 3050 3850 50  0001 C CNN
+	1    3050 3850
+	1    0    0    -1  
+$EndComp
+$Comp
+L project:74LVC2G34 U2
+U 2 1 5F6D9820
+P 3050 4300
+F 0 "U2" H 3025 4567 50  0000 C CNN
+F 1 "74LVC2G34" H 3025 4476 50  0000 C CNN
+F 2 "Package_TO_SOT_SMD:SOT-23-6" H 3050 4300 50  0001 C CNN
+F 3 "http://www.ti.com/lit/sg/scyt129e/scyt129e.pdf" H 3050 4300 50  0001 C CNN
+	2    3050 4300
+	1    0    0    -1  
+$EndComp
+$Comp
+L project:74LVC2G34 U2
+U 3 1 5F6D982A
+P 3050 4700
+F 0 "U2" H 3050 4917 50  0000 C CNN
+F 1 "74LVC2G34" H 3050 4826 50  0000 C CNN
+F 2 "Package_TO_SOT_SMD:SOT-23-6" H 3050 4700 50  0001 C CNN
+F 3 "http://www.ti.com/lit/sg/scyt129e/scyt129e.pdf" H 3050 4700 50  0001 C CNN
+	3    3050 4700
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	2750 3850 2350 3850
+Wire Wire Line
+	2750 4300 2350 4300
+Wire Wire Line
+	2750 4700 2350 4700
+Text Label 2350 3850 0    50   ~ 0
+SCL
+Text Label 2350 4300 0    50   ~ 0
+SDA
+Text Label 2350 4700 0    50   ~ 0
++5V
+Text Label 3750 4700 2    50   ~ 0
+GND
+Wire Wire Line
+	4100 3850 4300 3850
+Wire Wire Line
+	3700 3850 3800 3850
+$Comp
+L Device:LED D1
+U 1 1 5F6D983E
+P 3950 3850
+F 0 "D1" H 3950 3750 50  0000 C CNN
+F 1 "LED" H 3950 3950 50  0000 C CNN
+F 2 "LED_SMD:LED_0805_2012Metric" H 3950 3850 50  0001 C CNN
+F 3 "~" H 3950 3850 50  0001 C CNN
+	1    3950 3850
+	-1   0    0    1   
+$EndComp
+$Comp
+L Device:LED D2
+U 1 1 5F6D985D
+P 3950 4300
+F 0 "D2" H 3950 4200 50  0000 C CNN
+F 1 "LED" H 3950 4400 50  0000 C CNN
+F 2 "LED_SMD:LED_0805_2012Metric" H 3950 4300 50  0001 C CNN
+F 3 "~" H 3950 4300 50  0001 C CNN
+	1    3950 4300
+	-1   0    0    1   
+$EndComp
+Wire Wire Line
+	3700 4300 3800 4300
+Wire Wire Line
+	4100 4300 4300 4300
+Wire Wire Line
+	3350 4700 4300 4700
+Connection ~ 4300 4300
+Wire Wire Line
+	4300 4300 4300 4700
+Wire Wire Line
+	4300 3850 4300 4300
+Wire Wire Line
+	3300 4300 3400 4300
+Wire Wire Line
+	3300 3850 3400 3850
+$Comp
+L Device:R R2
+U 1 1 5F6D9853
+P 3550 4300
+F 0 "R2" V 3450 4300 50  0000 C CNN
+F 1 "270" V 3650 4250 50  0000 L CNN
+F 2 "Resistor_SMD:R_0805_2012Metric" V 3480 4300 50  0001 C CNN
+F 3 "~" H 3550 4300 50  0001 C CNN
+	1    3550 4300
+	0    1    1    0   
+$EndComp
+$Comp
+L Device:R R1
+U 1 1 5F6D9848
+P 3550 3850
+F 0 "R1" V 3450 3850 50  0000 C CNN
+F 1 "270" V 3650 3800 50  0000 L CNN
+F 2 "Resistor_SMD:R_0805_2012Metric" V 3480 3850 50  0001 C CNN
+F 3 "~" H 3550 3850 50  0001 C CNN
+	1    3550 3850
+	0    1    1    0   
+$EndComp
+$Comp
+L Device:R R3
+U 1 1 5F80D6C1
+P 1150 3250
+F 0 "R3" V 943 3250 50  0000 C CNN
+F 1 "R" V 1034 3250 50  0000 C CNN
+F 2 "Resistor_SMD:R_0805_2012Metric" V 1080 3250 50  0001 C CNN
+F 3 "~" H 1150 3250 50  0001 C CNN
+	1    1150 3250
+	0    1    1    0   
+$EndComp
+$Comp
+L Device:R R4
+U 1 1 5F80E3C1
+P 1150 3650
+F 0 "R4" V 943 3650 50  0000 C CNN
+F 1 "R" V 1034 3650 50  0000 C CNN
+F 2 "Resistor_SMD:R_0805_2012Metric" V 1080 3650 50  0001 C CNN
+F 3 "~" H 1150 3650 50  0001 C CNN
+	1    1150 3650
+	0    1    1    0   
+$EndComp
+Wire Wire Line
+	1000 3250 750  3250
+Wire Wire Line
+	1000 3650 750  3650
+Wire Wire Line
+	1300 3250 1500 3250
+Wire Wire Line
+	1300 3650 1500 3650
+Text Label 750  3250 0    50   ~ 0
+SDA
+Text Label 750  3650 0    50   ~ 0
+SCL
+Wire Wire Line
+	1500 3250 1500 3450
+Wire Wire Line
+	1500 3450 1650 3450
+Connection ~ 1500 3450
+Wire Wire Line
+	1500 3450 1500 3650
+$Comp
+L power:+5V #PWR01
+U 1 1 5F8BD1E6
+P 1650 3450
+F 0 "#PWR01" H 1650 3300 50  0001 C CNN
+F 1 "+5V" H 1665 3623 50  0000 C CNN
+F 2 "" H 1650 3450 50  0001 C CNN
+F 3 "" H 1650 3450 50  0001 C CNN
+	1    1650 3450
+	0    1    1    0   
+$EndComp
+NoConn ~ 4900 3100
+NoConn ~ 4900 2300
+NoConn ~ 4900 2400
+NoConn ~ 4900 2500
+NoConn ~ 4900 2600
+NoConn ~ 4900 2700
+NoConn ~ 4900 2800
 $EndSCHEMATC

@@ -1,0 +1,4 @@
+(fp_lib_table
+  (lib (name project)(type KiCad)(uri ${KIPRJMOD}/../lib/modules/project.pretty)(options "")(descr ""))
+  (lib (name EA_Display)(type KiCad)(uri ${KIPRJMOD}/../../../KiCad_lib_EA-Display/EA_Display.pretty)(options "")(descr ""))
+)
