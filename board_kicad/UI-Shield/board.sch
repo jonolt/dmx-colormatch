@@ -5,7 +5,7 @@ $Descr A4 11693 8268
 encoding utf-8
 Sheet 1 1
 Title "UI Shield"
-Date "2020-08-21"
+Date "2020-08-23"
 Rev ""
 Comp ""
 Comment1 "ERC Warnings because of false pin types of Symbols"
@@ -57,6 +57,7 @@ F 0 "XA1" H 2650 7687 60  0000 C CNN
 F 1 "Arduino_Shield" H 2650 7581 60  0000 C CNN
 F 2 "project:Arduino_Shield_Large" H 4450 10050 60  0001 C CNN
 F 3 "https://store.arduino.cc/arduino-uno-rev3" H 4450 10050 60  0001 C CNN
+F 4 "Do Not Populate Tag" H 2650 6300 50  0001 C CNN "DNP"
 	1    2650 6300
 	1    0    0    -1  
 $EndComp
@@ -186,17 +187,6 @@ Wire Wire Line
 	5600 7500 5900 7500
 Wire Wire Line
 	5300 7500 5000 7500
-$Comp
-L Jumper:SolderJumper_2_Bridged JP1
-U 1 1 5F518499
-P 5450 7500
-F 0 "JP1" H 5450 7705 50  0000 C CNN
-F 1 "SolderJumper_2_Bridged" H 5450 7614 50  0000 C CNN
-F 2 "Jumper:SolderJumper-2_P1.3mm_Bridged2Bar_Pad1.0x1.5mm" H 5450 7500 50  0001 C CNN
-F 3 "~" H 5450 7500 50  0001 C CNN
-	1    5450 7500
-	1    0    0    -1  
-$EndComp
 Text Label 5900 7150 2    50   ~ 0
 D3
 Text Label 5900 6800 2    50   ~ 0
@@ -221,6 +211,7 @@ F 0 "JP2" H 5450 7355 50  0000 C CNN
 F 1 "SolderJumper_2_Bridged" H 5450 7264 50  0000 C CNN
 F 2 "Jumper:SolderJumper-2_P1.3mm_Bridged2Bar_Pad1.0x1.5mm" H 5450 7150 50  0001 C CNN
 F 3 "~" H 5450 7150 50  0001 C CNN
+F 4 "Do Not Populate Tag" H 5450 7150 50  0001 C CNN "DNP"
 	1    5450 7150
 	1    0    0    -1  
 $EndComp
@@ -232,6 +223,7 @@ F 0 "JP3" H 5450 7005 50  0000 C CNN
 F 1 "SolderJumper_2_Bridged" H 5450 6914 50  0000 C CNN
 F 2 "Jumper:SolderJumper-2_P1.3mm_Bridged2Bar_Pad1.0x1.5mm" H 5450 6800 50  0001 C CNN
 F 3 "~" H 5450 6800 50  0001 C CNN
+F 4 "Do Not Populate Tag" H 5450 6800 50  0001 C CNN "DNP"
 	1    5450 6800
 	1    0    0    -1  
 $EndComp
@@ -246,8 +238,6 @@ F 3 "" H 9850 1350 50  0001 C CNN
 	1    9850 1350
 	1    0    0    -1  
 $EndComp
-NoConn ~ 8850 3250
-NoConn ~ 8850 3150
 Text Label 8850 3050 0    50   ~ 0
 SW4
 Text Label 8850 2950 0    50   ~ 0
@@ -376,6 +366,7 @@ F 0 "U1" H 10300 3400 50  0000 C CNN
 F 1 "MCP23S17_SS" H 9500 3400 50  0000 C CNN
 F 2 "Package_SO:SSOP-28_5.3x10.2mm_P0.65mm" H 10050 1450 50  0001 L CNN
 F 3 "http://ww1.microchip.com/downloads/en/DeviceDoc/20001952C.pdf" H 10050 1350 50  0001 L CNN
+F 4 "MCP23S17-E/SS" H 9850 2450 50  0001 C CNN "manf#"
 	1    9850 2450
 	-1   0    0    -1  
 $EndComp
@@ -488,22 +479,11 @@ F 3 "~" H 5600 6000 50  0001 C CNN
 	1    0    0    -1  
 $EndComp
 $Comp
-L project:MAX5026 U2
-U 1 1 5F481208
-P 2500 3700
-F 0 "U2" H 2500 4065 50  0000 C CNN
-F 1 "MAX5026" H 2500 3974 50  0000 C CNN
-F 2 "Package_TO_SOT_SMD:SOT-23-6" H 2700 3800 50  0001 C CNN
-F 3 "" H 2700 3800 50  0001 C CNN
-	1    2500 3700
-	1    0    0    -1  
-$EndComp
-$Comp
 L Device:R R2
 U 1 1 5F482F4A
 P 3700 3750
 F 0 "R2" H 3770 3796 50  0000 L CNN
-F 1 "R" H 3770 3705 50  0000 L CNN
+F 1 "240k" H 3770 3705 50  0000 L CNN
 F 2 "Resistor_SMD:R_0805_2012Metric" V 3630 3750 50  0001 C CNN
 F 3 "~" H 3700 3750 50  0001 C CNN
 	1    3700 3750
@@ -514,7 +494,7 @@ L Device:R R3
 U 1 1 5F48353B
 P 3700 4150
 F 0 "R3" H 3770 4196 50  0000 L CNN
-F 1 "R" H 3770 4105 50  0000 L CNN
+F 1 "27k" H 3770 4105 50  0000 L CNN
 F 2 "Resistor_SMD:R_0805_2012Metric" V 3630 4150 50  0001 C CNN
 F 3 "~" H 3700 4150 50  0001 C CNN
 	1    3700 4150
@@ -548,19 +528,12 @@ Wire Wire Line
 	1500 3600 1150 3600
 Connection ~ 1500 3600
 Wire Wire Line
-	2450 4100 2450 4400
-Wire Wire Line
-	2450 4400 2550 4400
-Wire Wire Line
 	3700 4400 3700 4300
 Wire Wire Line
-	2550 4100 2550 4400
-Connection ~ 2550 4400
+	2500 4100 2500 4400
+Connection ~ 2500 4400
 Wire Wire Line
-	2550 4400 3700 4400
-Wire Wire Line
-	2450 4400 1500 4400
-Connection ~ 2450 4400
+	2500 4400 3700 4400
 Wire Wire Line
 	1500 3600 1500 3800
 Connection ~ 1500 4400
@@ -666,14 +639,13 @@ L Device:L L1
 U 1 1 5F80D6F7
 P 2500 3200
 F 0 "L1" V 2690 3200 50  0000 C CNN
-F 1 "47uH" V 2599 3200 50  0000 C CNN
+F 1 "33uH" V 2599 3200 50  0000 C CNN
 F 2 "Inductor_SMD:L_1008_2520Metric" H 2500 3200 50  0001 C CNN
 F 3 "~" H 2500 3200 50  0001 C CNN
+F 4 "1008LS-333XJLC" V 2500 3200 50  0001 C CNN "manf#"
 	1    2500 3200
 	0    -1   -1   0   
 $EndComp
-Wire Wire Line
-	2350 3200 1500 3200
 Wire Wire Line
 	1500 3200 1500 3600
 Wire Wire Line
@@ -691,6 +663,7 @@ F 0 "D1" H 3350 3817 50  0000 C CNN
 F 1 "BAT54J" H 3350 3726 50  0000 C CNN
 F 2 "Diode_SMD:D_SOD-323F" H 3350 3425 50  0001 C CNN
 F 3 "https://assets.nexperia.com/documents/data-sheet/BAT54J.pdf" H 3350 3600 50  0001 C CNN
+F 4 "BAT54J\\,115" H 3350 3600 50  0001 C CNN "manf#"
 	1    3350 3600
 	-1   0    0    -1  
 $EndComp
@@ -767,8 +740,8 @@ $Comp
 L Device:R R4
 U 1 1 5F666B17
 P 3200 2050
-F 0 "R4" V 3100 2000 50  0000 R CNN
-F 1 "R" V 3100 2150 50  0000 R CNN
+F 0 "R4" V 3100 2100 50  0000 R CNN
+F 1 "910k" V 3000 2150 50  0000 R CNN
 F 2 "Resistor_SMD:R_0805_2012Metric" V 3130 2050 50  0001 C CNN
 F 3 "~" H 3200 2050 50  0001 C CNN
 	1    3200 2050
@@ -797,6 +770,7 @@ F 0 "LCD2" H 2300 1261 50  0000 C CNN
 F 1 "EA_OLEDM204" H 2300 1170 50  0000 C CNN
 F 2 "EA_Display:OLEDM204_6GGA" H 2550 1700 50  0001 C CNN
 F 3 "https://www.lcd-module.com/fileadmin/eng/pdf/doma/oledm204-ae.pdf" H 2550 1700 50  0001 C CNN
+F 4 "EA OLEDM204-GGA" H 2350 1950 50  0001 C CNN "manf#"
 	1    2350 1950
 	1    0    0    -1  
 $EndComp
@@ -850,6 +824,7 @@ F 0 "LCD1" H 6800 1261 50  0000 C CNN
 F 1 "EA_DOGM163_with_LED" H 6800 1170 50  0000 C CNN
 F 2 "EA_Display:DOGM162_with_LED" H 6800 2150 50  0001 C CNN
 F 3 "https://www.lcd-module.com/fileadmin/eng/pdf/doma/dog-me.pdf" H 6800 2150 50  0001 C CNN
+F 4 "EA DOGM163S-A; EA LED55X31-R" H 6800 2150 50  0001 C CNN "manf#"
 	1    6800 2150
 	1    0    0    -1  
 $EndComp
@@ -960,9 +935,11 @@ L Device:Q_NPN_BEC Q1
 U 1 1 5F6CBDA7
 P 7400 3850
 F 0 "Q1" H 7591 3896 50  0000 L CNN
-F 1 "Q_NPN_BEC" H 7591 3805 50  0000 L CNN
+F 1 "BSR14" H 7591 3805 50  0000 L CNN
 F 2 "Package_TO_SOT_SMD:SOT-23" H 7600 3950 50  0001 C CNN
 F 3 "~" H 7400 3850 50  0001 C CNN
+F 4 "Q_NPN_BEC" H 7400 3850 50  0001 C CNN "kind"
+F 5 "BSR14" H 7400 3850 50  0001 C CNN "manf#"
 	1    7400 3850
 	-1   0    0    -1  
 $EndComp
@@ -971,7 +948,7 @@ L Device:R R9
 U 1 1 5F6D89F1
 P 7050 3650
 F 0 "R9" V 6843 3650 50  0000 C CNN
-F 1 "R" V 6934 3650 50  0000 C CNN
+F 1 "20" V 6934 3650 50  0000 C CNN
 F 2 "Resistor_SMD:R_0805_2012Metric" V 6980 3650 50  0001 C CNN
 F 3 "~" H 7050 3650 50  0001 C CNN
 	1    7050 3650
@@ -1031,6 +1008,7 @@ F 0 "SW8" H 8450 6135 50  0000 C CNN
 F 1 "SW_Push_LED" H 8450 6044 50  0000 C CNN
 F 2 "project:Marquardt_3006_Series" H 8450 6050 50  0001 C CNN
 F 3 "~" H 8450 6050 50  0001 C CNN
+F 4 "3006.2115" H 8450 5750 50  0001 C CNN "manf#"
 	1    8450 5750
 	0    1    -1   0   
 $EndComp
@@ -1042,6 +1020,7 @@ F 0 "SW7" H 7800 6135 50  0000 C CNN
 F 1 "SW_Push_LED" H 7800 6044 50  0000 C CNN
 F 2 "project:Marquardt_3006_Series" H 7800 6050 50  0001 C CNN
 F 3 "~" H 7800 6050 50  0001 C CNN
+F 4 "3006.2115" H 7800 5750 50  0001 C CNN "manf#"
 	1    7800 5750
 	0    1    -1   0   
 $EndComp
@@ -1053,6 +1032,7 @@ F 0 "SW6" H 7150 6135 50  0000 C CNN
 F 1 "SW_Push_LED" H 7150 6044 50  0000 C CNN
 F 2 "project:Marquardt_3006_Series" H 7150 6050 50  0001 C CNN
 F 3 "~" H 7150 6050 50  0001 C CNN
+F 4 "3006.2115" H 7150 5750 50  0001 C CNN "manf#"
 	1    7150 5750
 	0    1    -1   0   
 $EndComp
@@ -1064,6 +1044,7 @@ F 0 "SW1" H 9800 5217 50  0000 C CNN
 F 1 "1" H 9800 5126 50  0000 C CNN
 F 2 "Rotary_Encoder:RotaryEncoder_Alps_EC11E-Switch_Vertical_H20mm" H 9650 5010 50  0001 C CNN
 F 3 "~" H 9800 5110 50  0001 C CNN
+F 4 "EC11E15244B2 " H 9800 4850 50  0001 C CNN "manf#"
 	1    9800 4850
 	1    0    0    -1  
 $EndComp
@@ -1075,6 +1056,7 @@ F 0 "SW5" H 6550 6135 50  0000 C CNN
 F 1 "SW_Push_LED" H 6550 6044 50  0000 C CNN
 F 2 "project:Marquardt_3006_Series" H 6550 6050 50  0001 C CNN
 F 3 "~" H 6550 6050 50  0001 C CNN
+F 4 "3006.2115" H 6550 5750 50  0001 C CNN "manf#"
 	1    6550 5750
 	0    1    -1   0   
 $EndComp
@@ -1166,7 +1148,7 @@ L Device:R R5
 U 1 1 5F3840C1
 P 6550 5200
 F 0 "R5" H 6750 5250 50  0000 R CNN
-F 1 "R" H 6750 5150 50  0000 R CNN
+F 1 "150" H 6750 5150 50  0000 R CNN
 F 2 "Resistor_SMD:R_0805_2012Metric" V 6480 5200 50  0001 C CNN
 F 3 "~" H 6550 5200 50  0001 C CNN
 	1    6550 5200
@@ -1224,7 +1206,7 @@ L Device:R R6
 U 1 1 5F557401
 P 7150 5200
 F 0 "R6" H 7350 5250 50  0000 R CNN
-F 1 "R" H 7350 5150 50  0000 R CNN
+F 1 "150" H 7350 5150 50  0000 R CNN
 F 2 "Resistor_SMD:R_0805_2012Metric" V 7080 5200 50  0001 C CNN
 F 3 "~" H 7150 5200 50  0001 C CNN
 	1    7150 5200
@@ -1235,7 +1217,7 @@ L Device:R R8
 U 1 1 5F557941
 P 8450 5200
 F 0 "R8" H 8650 5250 50  0000 R CNN
-F 1 "R" H 8650 5150 50  0000 R CNN
+F 1 "150" H 8650 5150 50  0000 R CNN
 F 2 "Resistor_SMD:R_0805_2012Metric" V 8380 5200 50  0001 C CNN
 F 3 "~" H 8450 5200 50  0001 C CNN
 	1    8450 5200
@@ -1246,7 +1228,7 @@ L Device:R R7
 U 1 1 5F55764B
 P 7800 5200
 F 0 "R7" H 8000 5250 50  0000 R CNN
-F 1 "R" H 8000 5150 50  0000 R CNN
+F 1 "150" H 8000 5150 50  0000 R CNN
 F 2 "Resistor_SMD:R_0805_2012Metric" V 7730 5200 50  0001 C CNN
 F 3 "~" H 7800 5200 50  0001 C CNN
 	1    7800 5200
@@ -1272,6 +1254,7 @@ F 0 "SW4" H 10300 6035 50  0000 C CNN
 F 1 "SW_Push" H 10300 5944 50  0000 C CNN
 F 2 "project:Marquardt_3006_Series" H 10300 5950 50  0001 C CNN
 F 3 "~" H 10300 5950 50  0001 C CNN
+F 4 "3006.2100" H 10300 5750 50  0001 C CNN "manf#"
 	1    10300 5750
 	0    1    -1   0   
 $EndComp
@@ -1283,6 +1266,7 @@ F 0 "SW3" H 9800 6035 50  0000 C CNN
 F 1 "SW_Push" H 9800 5944 50  0000 C CNN
 F 2 "project:Marquardt_3006_Series" H 9800 5950 50  0001 C CNN
 F 3 "~" H 9800 5950 50  0001 C CNN
+F 4 "3006.2100" H 9800 5750 50  0001 C CNN "manf#"
 	1    9800 5750
 	0    1    -1   0   
 $EndComp
@@ -1294,6 +1278,7 @@ F 0 "SW2" H 9300 6035 50  0000 C CNN
 F 1 "SW_Push" H 9300 5944 50  0000 C CNN
 F 2 "project:Marquardt_3006_Series" H 9300 5950 50  0001 C CNN
 F 3 "~" H 9300 5950 50  0001 C CNN
+F 4 "3006.2100" H 9300 5750 50  0001 C CNN "manf#"
 	1    9300 5750
 	0    1    -1   0   
 $EndComp
@@ -1375,4 +1360,114 @@ Text Notes 5350 3800 1    79   ~ 0
 only mount parts for selected display variant
 Text Notes 5500 3800 1    59   ~ 0
 ignore corresponding courtyard errors in pcbnew
+$Comp
+L Jumper:SolderJumper_2_Open JP1
+U 1 1 5F44175A
+P 5450 7500
+F 0 "JP1" H 5450 7705 50  0000 C CNN
+F 1 "SolderJumper_2_Open" H 5450 7614 50  0000 C CNN
+F 2 "Jumper:SolderJumper-2_P1.3mm_Open_Pad1.0x1.5mm" H 5450 7500 50  0001 C CNN
+F 3 "~" H 5450 7500 50  0001 C CNN
+F 4 "Do Not Populate Tag" H 5450 7500 50  0001 C CNN "DNP"
+	1    5450 7500
+	1    0    0    -1  
+$EndComp
+$Comp
+L project:LM2705 U2
+U 1 1 5F487AFB
+P 2500 3750
+F 0 "U2" H 2500 4165 50  0000 C CNN
+F 1 "LM2705" H 2500 4074 50  0000 C CNN
+F 2 "Package_TO_SOT_SMD:SOT-23-5" H 2500 3750 50  0001 C CNN
+F 3 "https://www.ti.com/lit/gpn/lm2705" H 2500 3750 50  0001 C CNN
+F 4 "LM2705MF-ADJ/NOPB" H 2500 3750 50  0001 C CNN "manf#"
+	1    2500 3750
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	1500 3200 2350 3200
+Wire Wire Line
+	1500 4400 2500 4400
+$Comp
+L Device:LED D2
+U 1 1 5F4721AC
+P 9300 3800
+F 0 "D2" H 9293 4017 50  0000 C CNN
+F 1 "LED" H 9293 3926 50  0000 C CNN
+F 2 "LED_SMD:LED_0805_2012Metric" H 9300 3800 50  0001 C CNN
+F 3 "~" H 9300 3800 50  0001 C CNN
+	1    9300 3800
+	-1   0    0    -1  
+$EndComp
+$Comp
+L Device:R R10
+U 1 1 5F472E6B
+P 8800 3800
+F 0 "R10" V 8593 3800 50  0000 C CNN
+F 1 "560" V 8684 3800 50  0000 C CNN
+F 2 "Resistor_SMD:R_0805_2012Metric" V 8730 3800 50  0001 C CNN
+F 3 "~" H 8800 3800 50  0001 C CNN
+	1    8800 3800
+	0    -1   1    0   
+$EndComp
+$Comp
+L Device:LED D3
+U 1 1 5F47CBE7
+P 9300 4200
+F 0 "D3" H 9293 4417 50  0000 C CNN
+F 1 "LED" H 9293 4326 50  0000 C CNN
+F 2 "LED_SMD:LED_0805_2012Metric" H 9300 4200 50  0001 C CNN
+F 3 "~" H 9300 4200 50  0001 C CNN
+	1    9300 4200
+	-1   0    0    -1  
+$EndComp
+$Comp
+L Device:R R11
+U 1 1 5F47CBF1
+P 8800 4200
+F 0 "R11" V 8593 4200 50  0000 C CNN
+F 1 "560" V 8684 4200 50  0000 C CNN
+F 2 "Resistor_SMD:R_0805_2012Metric" V 8730 4200 50  0001 C CNN
+F 3 "~" H 8800 4200 50  0001 C CNN
+	1    8800 4200
+	0    -1   1    0   
+$EndComp
+Wire Wire Line
+	9150 3800 8950 3800
+Wire Wire Line
+	9450 3800 9650 3800
+Wire Wire Line
+	9650 3800 9650 4000
+Wire Wire Line
+	9650 4200 9450 4200
+Wire Wire Line
+	8650 3800 8350 3800
+Wire Wire Line
+	8650 4200 8350 4200
+Text Label 8850 3150 0    50   ~ 0
+LED1
+Text Label 8850 3250 0    50   ~ 0
+LED2
+Text Label 8350 3800 0    50   ~ 0
+LED1
+Text Label 8350 4200 0    50   ~ 0
+LED2
+Wire Wire Line
+	9150 4200 8950 4200
+Wire Wire Line
+	9650 4000 9750 4000
+Connection ~ 9650 4000
+Wire Wire Line
+	9650 4000 9650 4200
+$Comp
+L power:GND #PWR06
+U 1 1 5F5229F2
+P 9750 4000
+F 0 "#PWR06" H 9750 3750 50  0001 C CNN
+F 1 "GND" V 9755 3872 50  0000 R CNN
+F 2 "" H 9750 4000 50  0001 C CNN
+F 3 "" H 9750 4000 50  0001 C CNN
+	1    9750 4000
+	0    -1   -1   0   
+$EndComp
 $EndSCHEMATC

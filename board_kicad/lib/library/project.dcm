@@ -21,6 +21,10 @@ $CMP DCDC-SIP7-1-2-4-6
 D DCDC Converter Single SIL Package
 $ENDCMP
 #
+$CMP LM2705
+F https://www.ti.com/lit/gpn/lm2705
+$ENDCMP
+#
 $CMP TLV760
 D 100-mA, 30-V, low-dropout voltage regulator
 K LDO Regulator Linear fixed
