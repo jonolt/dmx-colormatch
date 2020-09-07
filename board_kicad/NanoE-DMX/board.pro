@@ -1,4 +1,4 @@
-update=Mo 07 Sep 2020 11:44:13 CEST
+update=Sa 26 Sep 2020 15:11:34 CEST
 version=1
 last_client=kicad
 [general]
@@ -250,22 +250,11 @@ dPairWidth=0.2
 dPairGap=0.25
 dPairViaGap=0.25
 [pcbnew/Netclasses/1]
-Name=deault add clearance
-Clearance=0.2
-TrackWidth=0.25
-ViaDiameter=0.4
-ViaDrill=0.2
-uViaDiameter=0.4
-uViaDrill=0.2
-dPairWidth=0.2
-dPairGap=0.25
-dPairViaGap=0.25
-[pcbnew/Netclasses/2]
 Name=pwr
 Clearance=0.2
 TrackWidth=0.5
-ViaDiameter=0.8
-ViaDrill=0.4
+ViaDiameter=0.6
+ViaDrill=0.3
 uViaDiameter=0.4
 uViaDrill=0.2
 dPairWidth=0.2

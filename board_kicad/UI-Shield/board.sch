@@ -5,11 +5,11 @@ $Descr A4 11693 8268
 encoding utf-8
 Sheet 1 1
 Title "UI Shield"
-Date "2020-08-23"
-Rev ""
+Date "2020-09-26"
+Rev "1.0"
 Comp ""
 Comment1 "ERC Warnings because of false pin types of Symbols"
-Comment2 ""
+Comment2 "OLED (U1): SPI not tested (I2C should work)"
 Comment3 ""
 Comment4 ""
 $EndDescr
@@ -46,7 +46,7 @@ LCD_RS
 Text Label 4350 5850 2    50   ~ 0
 LCD_CS
 Text Label 4350 5950 2    50   ~ 0
-D9
+SW_LED
 Text Label 4350 6050 2    50   ~ 0
 LCD_LED
 $Comp
@@ -62,7 +62,7 @@ F 4 "Do Not Populate Tag" H 2650 6300 50  0001 C CNN "DNP"
 	1    0    0    -1  
 $EndComp
 Wire Wire Line
-	4350 7250 3950 7250
+	4350 7250 4050 7250
 Wire Wire Line
 	4350 7350 3950 7350
 Wire Wire Line
@@ -85,11 +85,11 @@ Wire Wire Line
 	1350 5650 1000 5650
 Wire Wire Line
 	1350 6550 1000 6550
-Text Label 4350 6150 2    50   ~ 0
+Text Label 5250 6150 2    50   ~ 0
 MOSI
-Text Label 4350 6250 2    50   ~ 0
+Text Label 5250 6250 2    50   ~ 0
 MISO
-Text Label 4350 6350 2    50   ~ 0
+Text Label 5250 6350 2    50   ~ 0
 SCK
 Text Label 4350 7250 2    50   ~ 0
 ~RESET
@@ -157,8 +157,6 @@ F 3 "" H 1200 7250 50  0001 C CNN
 $EndComp
 NoConn ~ 1000 5250
 NoConn ~ 1000 5350
-NoConn ~ 1000 5550
-NoConn ~ 1000 5650
 NoConn ~ 1000 5950
 NoConn ~ 1000 6050
 NoConn ~ 1000 6150
@@ -170,312 +168,281 @@ Text Label 4350 5250 2    50   ~ 0
 D2
 NoConn ~ 4350 5450
 NoConn ~ 4350 5650
-NoConn ~ 4350 5950
-NoConn ~ 3950 6550
-NoConn ~ 3950 6650
-NoConn ~ 3950 6750
-NoConn ~ 3950 6850
-NoConn ~ 3950 6950
-NoConn ~ 3950 7050
 NoConn ~ 4350 7350
 NoConn ~ 1200 7350
-Text Label 5900 7500 2    50   ~ 0
+Text Label 10900 1550 2    50   ~ 0
 IO_INTB
-Text Label 5000 7500 0    50   ~ 0
+Text Label 10000 1550 0    50   ~ 0
 IO_INTA
 Wire Wire Line
-	5600 7500 5900 7500
+	10600 1550 10900 1550
 Wire Wire Line
-	5300 7500 5000 7500
-Text Label 5900 7150 2    50   ~ 0
+	10300 1550 10000 1550
+Text Label 10900 1200 2    50   ~ 0
 D3
-Text Label 5900 6800 2    50   ~ 0
+Text Label 10900 850  2    50   ~ 0
 D2
-Text Label 5000 7150 0    50   ~ 0
+Text Label 10000 1200 0    50   ~ 0
 IO_INTB
-Text Label 5000 6800 0    50   ~ 0
+Text Label 10000 850  0    50   ~ 0
 IO_INTA
 Wire Wire Line
-	5600 7150 5900 7150
+	10600 1200 10900 1200
 Wire Wire Line
-	5300 7150 5000 7150
+	10300 1200 10000 1200
 Wire Wire Line
-	5600 6800 5900 6800
+	10600 850  10900 850 
 Wire Wire Line
-	5300 6800 5000 6800
-$Comp
-L Jumper:SolderJumper_2_Bridged JP2
-U 1 1 5F4F6DA6
-P 5450 7150
-F 0 "JP2" H 5450 7355 50  0000 C CNN
-F 1 "SolderJumper_2_Bridged" H 5450 7264 50  0000 C CNN
-F 2 "Jumper:SolderJumper-2_P1.3mm_Bridged2Bar_Pad1.0x1.5mm" H 5450 7150 50  0001 C CNN
-F 3 "~" H 5450 7150 50  0001 C CNN
-F 4 "Do Not Populate Tag" H 5450 7150 50  0001 C CNN "DNP"
-	1    5450 7150
-	1    0    0    -1  
-$EndComp
-$Comp
-L Jumper:SolderJumper_2_Bridged JP3
-U 1 1 5F4F60C2
-P 5450 6800
-F 0 "JP3" H 5450 7005 50  0000 C CNN
-F 1 "SolderJumper_2_Bridged" H 5450 6914 50  0000 C CNN
-F 2 "Jumper:SolderJumper-2_P1.3mm_Bridged2Bar_Pad1.0x1.5mm" H 5450 6800 50  0001 C CNN
-F 3 "~" H 5450 6800 50  0001 C CNN
-F 4 "Do Not Populate Tag" H 5450 6800 50  0001 C CNN "DNP"
-	1    5450 6800
-	1    0    0    -1  
-$EndComp
+	10300 850  10000 850 
 $Comp
 L power:+5V #PWR0114
 U 1 1 5F64BCAF
-P 9850 1350
-F 0 "#PWR0114" H 9850 1200 50  0001 C CNN
-F 1 "+5V" H 9865 1523 50  0000 C CNN
-F 2 "" H 9850 1350 50  0001 C CNN
-F 3 "" H 9850 1350 50  0001 C CNN
-	1    9850 1350
+P 9700 1750
+F 0 "#PWR0114" H 9700 1600 50  0001 C CNN
+F 1 "+5V" H 9715 1923 50  0000 C CNN
+F 2 "" H 9700 1750 50  0001 C CNN
+F 3 "" H 9700 1750 50  0001 C CNN
+	1    9700 1750
 	1    0    0    -1  
 $EndComp
-Text Label 8850 3050 0    50   ~ 0
+Text Label 8700 3450 0    50   ~ 0
 SW4
-Text Label 8850 2950 0    50   ~ 0
+Text Label 8700 3350 0    50   ~ 0
 SW3
-Text Label 8850 2850 0    50   ~ 0
+Text Label 8700 3250 0    50   ~ 0
 SW2
-Text Label 8850 2750 0    50   ~ 0
+Text Label 8700 3150 0    50   ~ 0
 SW1
-Text Label 8850 2650 0    50   ~ 0
+Text Label 8700 3050 0    50   ~ 0
 B
-Text Label 8850 2550 0    50   ~ 0
+Text Label 8700 2950 0    50   ~ 0
 A
-Text Label 8850 2250 0    50   ~ 0
+Text Label 8700 2650 0    50   ~ 0
 LED8
-Text Label 8850 2350 0    50   ~ 0
+Text Label 8700 2750 0    50   ~ 0
 SW8
-Text Label 8850 2050 0    50   ~ 0
+Text Label 8700 2450 0    50   ~ 0
 LED7
-Text Label 8850 2150 0    50   ~ 0
+Text Label 8700 2550 0    50   ~ 0
 SW7
-Text Label 8850 1850 0    50   ~ 0
+Text Label 8700 2250 0    50   ~ 0
 LED6
-Text Label 8850 1950 0    50   ~ 0
+Text Label 8700 2350 0    50   ~ 0
 SW6
-Text Label 8850 1650 0    50   ~ 0
+Text Label 8700 2050 0    50   ~ 0
 LED5
-Text Label 8850 1750 0    50   ~ 0
+Text Label 8700 2150 0    50   ~ 0
 SW5
 Wire Wire Line
-	9150 3250 8850 3250
+	9000 3650 8700 3650
 Wire Wire Line
-	9150 3150 8850 3150
+	9000 3550 8700 3550
 Wire Wire Line
-	9150 3050 8850 3050
+	9000 3450 8700 3450
 Wire Wire Line
-	9150 2950 8850 2950
+	9000 3350 8700 3350
 Wire Wire Line
-	9150 2850 8850 2850
+	9000 3250 8700 3250
 Wire Wire Line
-	9150 2750 8850 2750
+	9000 3150 8700 3150
 Wire Wire Line
-	9150 2650 8850 2650
+	9000 3050 8700 3050
 Wire Wire Line
-	9150 2550 8850 2550
+	9000 2950 8700 2950
 Wire Wire Line
-	9150 2350 8850 2350
+	9000 2750 8700 2750
 Wire Wire Line
-	9150 2250 8850 2250
+	9000 2650 8700 2650
 Wire Wire Line
-	9150 2150 8850 2150
+	9000 2550 8700 2550
 Wire Wire Line
-	9150 2050 8850 2050
+	9000 2450 8700 2450
 Wire Wire Line
-	9150 1950 8850 1950
+	9000 2350 8700 2350
 Wire Wire Line
-	9150 1850 8850 1850
+	9000 2250 8700 2250
 Wire Wire Line
-	9150 1750 8850 1750
+	9000 2150 8700 2150
 Wire Wire Line
-	9150 1650 8850 1650
+	9000 2050 8700 2050
 Wire Wire Line
-	10200 3650 9850 3650
-Connection ~ 10200 3650
+	10050 4050 9700 4050
+Connection ~ 10050 4050
 $Comp
 L power:GND #PWR0105
 U 1 1 5F381E2E
-P 10200 3650
-F 0 "#PWR0105" H 10200 3400 50  0001 C CNN
-F 1 "GND" H 10205 3477 50  0000 C CNN
-F 2 "" H 10200 3650 50  0001 C CNN
-F 3 "" H 10200 3650 50  0001 C CNN
-	1    10200 3650
+P 10050 4050
+F 0 "#PWR0105" H 10050 3800 50  0001 C CNN
+F 1 "GND" H 10055 3877 50  0000 C CNN
+F 2 "" H 10050 4050 50  0001 C CNN
+F 3 "" H 10050 4050 50  0001 C CNN
+	1    10050 4050
 	1    0    0    -1  
 $EndComp
-Text Label 10900 2250 2    50   ~ 0
+Text Label 10750 2650 2    50   ~ 0
 IO_INTB
-Text Label 10900 2350 2    50   ~ 0
+Text Label 10750 2750 2    50   ~ 0
 IO_INTA
-Text Label 10900 2550 2    50   ~ 0
+Text Label 10750 2950 2    50   ~ 0
 ~RESET
 Wire Wire Line
-	10600 3250 10600 3650
-Connection ~ 10600 3250
+	10450 3650 10450 4050
+Connection ~ 10450 3650
 Wire Wire Line
-	10550 3250 10600 3250
+	10400 3650 10450 3650
 Wire Wire Line
-	10600 3150 10600 3250
-Connection ~ 10600 3150
+	10450 3550 10450 3650
+Connection ~ 10450 3550
 Wire Wire Line
-	10550 3150 10600 3150
+	10400 3550 10450 3550
 Wire Wire Line
-	9850 3650 9850 3550
+	9700 4050 9700 3950
 Wire Wire Line
-	10600 3650 10200 3650
+	10450 4050 10050 4050
 Wire Wire Line
-	10600 3050 10600 3150
+	10450 3450 10450 3550
 Wire Wire Line
-	10550 3050 10600 3050
-Text Label 10900 1950 2    50   ~ 0
+	10400 3450 10450 3450
+Text Label 10750 2350 2    50   ~ 0
 MISO
-Text Label 10900 1850 2    50   ~ 0
+Text Label 10750 2250 2    50   ~ 0
 MOSI
-Text Label 10900 1750 2    50   ~ 0
+Text Label 10750 2150 2    50   ~ 0
 SCK
-Text Label 10900 1650 2    50   ~ 0
+Text Label 10750 2050 2    50   ~ 0
 IO_CS
 Wire Wire Line
-	10550 2550 10900 2550
+	10400 2950 10750 2950
 Wire Wire Line
-	10550 2350 10900 2350
+	10400 2750 10750 2750
 Wire Wire Line
-	10550 2250 10900 2250
+	10400 2650 10750 2650
 Wire Wire Line
-	10550 1950 10900 1950
+	10400 2350 10750 2350
 Wire Wire Line
-	10550 1850 10900 1850
+	10400 2250 10750 2250
 Wire Wire Line
-	10550 1750 10900 1750
+	10400 2150 10750 2150
 Wire Wire Line
-	10550 1650 10900 1650
+	10400 2050 10750 2050
 $Comp
 L Interface_Expansion:MCP23S17_SS U1
 U 1 1 5F8C3787
-P 9850 2450
-F 0 "U1" H 10300 3400 50  0000 C CNN
-F 1 "MCP23S17_SS" H 9500 3400 50  0000 C CNN
-F 2 "Package_SO:SSOP-28_5.3x10.2mm_P0.65mm" H 10050 1450 50  0001 L CNN
-F 3 "http://ww1.microchip.com/downloads/en/DeviceDoc/20001952C.pdf" H 10050 1350 50  0001 L CNN
-F 4 "MCP23S17-E/SS" H 9850 2450 50  0001 C CNN "manf#"
-	1    9850 2450
+P 9700 2850
+F 0 "U1" H 10150 3800 50  0000 C CNN
+F 1 "MCP23S17_SS" H 9350 3800 50  0000 C CNN
+F 2 "Package_SO:SSOP-28_5.3x10.2mm_P0.65mm" H 9900 1850 50  0001 L CNN
+F 3 "http://ww1.microchip.com/downloads/en/DeviceDoc/20001952C.pdf" H 9900 1750 50  0001 L CNN
+F 4 "MCP23S17-E/SS" H 9700 2850 50  0001 C CNN "manf#"
+	1    9700 2850
 	-1   0    0    -1  
 $EndComp
 Wire Wire Line
 	3950 6050 4350 6050
 Wire Wire Line
-	4350 6250 3950 6250
+	5250 6250 4850 6250
 Wire Wire Line
 	3950 5850 4350 5850
 Wire Wire Line
 	3950 5750 4350 5750
 Wire Wire Line
-	4350 6150 3950 6150
+	5250 6150 4850 6150
 Wire Wire Line
-	4350 6350 3950 6350
+	5250 6350 4850 6350
 $Comp
 L power:PWR_FLAG #FLG0101
 U 1 1 5F65983E
-P 5200 5300
-F 0 "#FLG0101" H 5200 5375 50  0001 C CNN
-F 1 "PWR_FLAG" H 5200 5473 50  0000 C CNN
-F 2 "" H 5200 5300 50  0001 C CNN
-F 3 "~" H 5200 5300 50  0001 C CNN
-	1    5200 5300
+P 8400 900
+F 0 "#FLG0101" H 8400 975 50  0001 C CNN
+F 1 "PWR_FLAG" H 8400 1073 50  0000 C CNN
+F 2 "" H 8400 900 50  0001 C CNN
+F 3 "~" H 8400 900 50  0001 C CNN
+	1    8400 900 
 	1    0    0    -1  
 $EndComp
 $Comp
 L power:PWR_FLAG #FLG0102
 U 1 1 5F659E93
-P 5600 5300
-F 0 "#FLG0102" H 5600 5375 50  0001 C CNN
-F 1 "PWR_FLAG" H 5600 5473 50  0000 C CNN
-F 2 "" H 5600 5300 50  0001 C CNN
-F 3 "~" H 5600 5300 50  0001 C CNN
-	1    5600 5300
+P 8800 900
+F 0 "#FLG0102" H 8800 975 50  0001 C CNN
+F 1 "PWR_FLAG" H 8800 1073 50  0000 C CNN
+F 2 "" H 8800 900 50  0001 C CNN
+F 3 "~" H 8800 900 50  0001 C CNN
+	1    8800 900 
 	1    0    0    -1  
 $EndComp
 $Comp
 L power:+3.3V #PWR0115
 U 1 1 5F65B9A8
-P 5200 5500
-F 0 "#PWR0115" H 5200 5350 50  0001 C CNN
-F 1 "+3.3V" H 5215 5673 50  0000 C CNN
-F 2 "" H 5200 5500 50  0001 C CNN
-F 3 "" H 5200 5500 50  0001 C CNN
-	1    5200 5500
+P 8400 1100
+F 0 "#PWR0115" H 8400 950 50  0001 C CNN
+F 1 "+3.3V" H 8415 1273 50  0000 C CNN
+F 2 "" H 8400 1100 50  0001 C CNN
+F 3 "" H 8400 1100 50  0001 C CNN
+	1    8400 1100
 	-1   0    0    1   
 $EndComp
 $Comp
 L power:+5V #PWR0116
 U 1 1 5F65C116
-P 5600 5500
-F 0 "#PWR0116" H 5600 5350 50  0001 C CNN
-F 1 "+5V" H 5615 5673 50  0000 C CNN
-F 2 "" H 5600 5500 50  0001 C CNN
-F 3 "" H 5600 5500 50  0001 C CNN
-	1    5600 5500
+P 8800 1100
+F 0 "#PWR0116" H 8800 950 50  0001 C CNN
+F 1 "+5V" H 8815 1273 50  0000 C CNN
+F 2 "" H 8800 1100 50  0001 C CNN
+F 3 "" H 8800 1100 50  0001 C CNN
+	1    8800 1100
 	-1   0    0    1   
 $EndComp
 Wire Wire Line
-	5200 5300 5200 5500
+	8400 900  8400 1100
 Wire Wire Line
-	5600 5300 5600 5500
+	8800 900  8800 1100
 Wire Wire Line
-	5200 6000 5200 6200
+	9200 900  9200 1100
 $Comp
 L power:PWR_FLAG #FLG0104
 U 1 1 5F7A71E7
-P 5200 6000
-F 0 "#FLG0104" H 5200 6075 50  0001 C CNN
-F 1 "PWR_FLAG" H 5200 6173 50  0000 C CNN
-F 2 "" H 5200 6000 50  0001 C CNN
-F 3 "~" H 5200 6000 50  0001 C CNN
-	1    5200 6000
+P 9200 900
+F 0 "#FLG0104" H 9200 975 50  0001 C CNN
+F 1 "PWR_FLAG" H 9200 1073 50  0000 C CNN
+F 2 "" H 9200 900 50  0001 C CNN
+F 3 "~" H 9200 900 50  0001 C CNN
+	1    9200 900 
 	1    0    0    -1  
 $EndComp
 $Comp
 L power:+12V #PWR0118
 U 1 1 5F79D851
-P 5200 6200
-F 0 "#PWR0118" H 5200 6050 50  0001 C CNN
-F 1 "+12V" H 5215 6373 50  0000 C CNN
-F 2 "" H 5200 6200 50  0001 C CNN
-F 3 "" H 5200 6200 50  0001 C CNN
-	1    5200 6200
+P 9200 1100
+F 0 "#PWR0118" H 9200 950 50  0001 C CNN
+F 1 "+12V" H 9215 1273 50  0000 C CNN
+F 2 "" H 9200 1100 50  0001 C CNN
+F 3 "" H 9200 1100 50  0001 C CNN
+	1    9200 1100
 	-1   0    0    1   
 $EndComp
 Wire Wire Line
-	5600 6000 5600 6200
+	9600 900  9600 1100
 $Comp
 L power:GND #PWR0117
 U 1 1 5F65C8EC
-P 5600 6200
-F 0 "#PWR0117" H 5600 5950 50  0001 C CNN
-F 1 "GND" H 5605 6027 50  0000 C CNN
-F 2 "" H 5600 6200 50  0001 C CNN
-F 3 "" H 5600 6200 50  0001 C CNN
-	1    5600 6200
+P 9600 1100
+F 0 "#PWR0117" H 9600 850 50  0001 C CNN
+F 1 "GND" H 9605 927 50  0000 C CNN
+F 2 "" H 9600 1100 50  0001 C CNN
+F 3 "" H 9600 1100 50  0001 C CNN
+	1    9600 1100
 	1    0    0    -1  
 $EndComp
 $Comp
 L power:PWR_FLAG #FLG0103
 U 1 1 5F65A3E3
-P 5600 6000
-F 0 "#FLG0103" H 5600 6075 50  0001 C CNN
-F 1 "PWR_FLAG" H 5600 6173 50  0000 C CNN
-F 2 "" H 5600 6000 50  0001 C CNN
-F 3 "~" H 5600 6000 50  0001 C CNN
-	1    5600 6000
+P 9600 900
+F 0 "#FLG0103" H 9600 975 50  0001 C CNN
+F 1 "PWR_FLAG" H 9600 1073 50  0000 C CNN
+F 2 "" H 9600 900 50  0001 C CNN
+F 3 "~" H 9600 900 50  0001 C CNN
+	1    9600 900 
 	1    0    0    -1  
 $EndComp
 $Comp
@@ -632,7 +599,7 @@ Wire Wire Line
 	1500 4100 1500 4400
 Wire Wire Line
 	2000 3900 1650 3900
-Text Label 1650 3900 0    50   ~ 0
+Text Label 3950 2550 0    50   ~ 0
 LCD_LED
 $Comp
 L Device:L L1
@@ -722,9 +689,7 @@ Wire Wire Line
 Wire Wire Line
 	2950 1950 3450 1950
 Wire Wire Line
-	2950 1850 3500 1850
-Wire Wire Line
-	3500 1850 3500 2050
+	2950 1850 3050 1800
 $Comp
 L power:GND #PWR0111
 U 1 1 5F66480B
@@ -739,19 +704,14 @@ $EndComp
 $Comp
 L Device:R R4
 U 1 1 5F666B17
-P 3200 2050
-F 0 "R4" V 3100 2100 50  0000 R CNN
-F 1 "910k" V 3000 2150 50  0000 R CNN
-F 2 "Resistor_SMD:R_0805_2012Metric" V 3130 2050 50  0001 C CNN
-F 3 "~" H 3200 2050 50  0001 C CNN
-	1    3200 2050
-	0    1    -1   0   
+P 3200 1800
+F 0 "R4" V 3100 1850 50  0000 R CNN
+F 1 "910k" V 3000 1900 50  0000 R CNN
+F 2 "Resistor_SMD:R_0805_2012Metric" V 3130 1800 50  0001 C CNN
+F 3 "~" H 3200 1800 50  0001 C CNN
+	1    3200 1800
+	0    1    1    0   
 $EndComp
-Wire Wire Line
-	2950 2050 3050 2050
-Wire Wire Line
-	3350 2050 3500 2050
-Connection ~ 3500 2050
 Text Label 1150 1850 0    50   ~ 0
 SCK
 Text Label 1150 1950 0    50   ~ 0
@@ -759,7 +719,7 @@ MOSI
 Text Label 1150 2050 0    50   ~ 0
 MISO
 Text Label 1150 2150 0    50   ~ 0
-LCD_CS
+_LCD_CS
 Text Label 3450 1950 2    50   ~ 0
 ~RESET
 $Comp
@@ -782,8 +742,6 @@ Wire Wire Line
 	2950 2600 2950 2650
 Wire Wire Line
 	2550 2600 2950 2600
-Wire Wire Line
-	3500 2050 3500 2600
 Connection ~ 2550 2600
 Connection ~ 2950 2600
 Wire Wire Line
@@ -806,16 +764,14 @@ Wire Wire Line
 	6300 2750 5850 2750
 Wire Wire Line
 	6300 2550 5850 2550
-Text Label 5850 1650 0    50   ~ 0
-SCK
 Text Label 5850 1750 0    50   ~ 0
+SCK
+Text Label 5850 1650 0    50   ~ 0
 MOSI
 Text Label 5850 2650 0    50   ~ 0
 LCD_RS
 Text Label 5850 2550 0    50   ~ 0
 GND
-Text Label 5850 2750 0    50   ~ 0
-LCD_CS
 $Comp
 L EA_Display:EA_DOGM163_with_LED LCD1
 U 1 1 5F364471
@@ -885,14 +841,6 @@ Wire Wire Line
 	6100 2150 6250 2150
 NoConn ~ 7300 1850
 NoConn ~ 7300 1950
-Text Label 7750 2600 2    50   ~ 0
-GND
-Wire Wire Line
-	7300 2600 7750 2600
-Text Label 7750 2700 2    50   ~ 0
-~RESET
-Wire Wire Line
-	7300 2700 7750 2700
 Wire Wire Line
 	6700 1250 6700 1200
 Wire Wire Line
@@ -928,8 +876,6 @@ F 3 "" H 6800 3050 50  0001 C CNN
 	1    6800 3050
 	1    0    0    -1  
 $EndComp
-Wire Wire Line
-	6800 3050 6800 2950
 $Comp
 L Device:Q_NPN_BEC Q1
 U 1 1 5F6CBDA7
@@ -1077,10 +1023,6 @@ Wire Wire Line
 Wire Wire Line
 	8550 5550 8550 4600
 Wire Wire Line
-	6550 5950 6550 6050
-Wire Wire Line
-	6550 6050 6650 6050
-Wire Wire Line
 	10300 6050 10300 5950
 Wire Wire Line
 	9800 5950 9800 6050
@@ -1098,35 +1040,13 @@ Connection ~ 8550 6050
 Wire Wire Line
 	8550 6050 8900 6050
 Wire Wire Line
-	8450 5950 8450 6050
-Connection ~ 8450 6050
-Wire Wire Line
-	8450 6050 8550 6050
-Wire Wire Line
 	7900 5950 7900 6050
 Connection ~ 7900 6050
-Wire Wire Line
-	7900 6050 8450 6050
-Wire Wire Line
-	7800 5950 7800 6050
-Connection ~ 7800 6050
-Wire Wire Line
-	7800 6050 7900 6050
 Wire Wire Line
 	7250 5950 7250 6050
 Connection ~ 7250 6050
 Wire Wire Line
-	7250 6050 7800 6050
-Wire Wire Line
-	7150 5950 7150 6050
-Connection ~ 7150 6050
-Wire Wire Line
-	7150 6050 7250 6050
-Wire Wire Line
 	6650 5950 6650 6050
-Connection ~ 6650 6050
-Wire Wire Line
-	6650 6050 7150 6050
 Wire Wire Line
 	8900 6050 8900 6150
 Connection ~ 8900 6050
@@ -1363,13 +1283,13 @@ ignore corresponding courtyard errors in pcbnew
 $Comp
 L Jumper:SolderJumper_2_Open JP1
 U 1 1 5F44175A
-P 5450 7500
-F 0 "JP1" H 5450 7705 50  0000 C CNN
-F 1 "SolderJumper_2_Open" H 5450 7614 50  0000 C CNN
-F 2 "Jumper:SolderJumper-2_P1.3mm_Open_Pad1.0x1.5mm" H 5450 7500 50  0001 C CNN
-F 3 "~" H 5450 7500 50  0001 C CNN
-F 4 "Do Not Populate Tag" H 5450 7500 50  0001 C CNN "DNP"
-	1    5450 7500
+P 10450 1550
+F 0 "JP1" H 10450 1755 50  0000 C CNN
+F 1 "SolderJumper_2_Open" H 10450 1664 50  0000 C CNN
+F 2 "Jumper:SolderJumper-2_P1.3mm_Open_TrianglePad1.0x1.5mm" H 10450 1550 50  0001 C CNN
+F 3 "~" H 10450 1550 50  0001 C CNN
+F 4 "Do Not Populate Tag" H 10450 1550 50  0001 C CNN "DNP"
+	1    10450 1550
 	1    0    0    -1  
 $EndComp
 $Comp
@@ -1391,83 +1311,437 @@ Wire Wire Line
 $Comp
 L Device:LED D2
 U 1 1 5F4721AC
-P 9300 3800
-F 0 "D2" H 9293 4017 50  0000 C CNN
-F 1 "LED" H 9293 3926 50  0000 C CNN
-F 2 "LED_SMD:LED_0805_2012Metric" H 9300 3800 50  0001 C CNN
-F 3 "~" H 9300 3800 50  0001 C CNN
-	1    9300 3800
-	-1   0    0    -1  
+P 6000 5750
+F 0 "D2" H 5993 5967 50  0000 C CNN
+F 1 "LED" H 5993 5876 50  0000 C CNN
+F 2 "LED_SMD:LED_0805_2012Metric" H 6000 5750 50  0001 C CNN
+F 3 "~" H 6000 5750 50  0001 C CNN
+	1    6000 5750
+	0    1    -1   0   
 $EndComp
 $Comp
 L Device:R R10
 U 1 1 5F472E6B
-P 8800 3800
-F 0 "R10" V 8593 3800 50  0000 C CNN
-F 1 "560" V 8684 3800 50  0000 C CNN
-F 2 "Resistor_SMD:R_0805_2012Metric" V 8730 3800 50  0001 C CNN
-F 3 "~" H 8800 3800 50  0001 C CNN
-	1    8800 3800
-	0    -1   1    0   
+P 6000 5200
+F 0 "R10" V 5793 5200 50  0000 C CNN
+F 1 "560" V 5884 5200 50  0000 C CNN
+F 2 "Resistor_SMD:R_0805_2012Metric" V 5930 5200 50  0001 C CNN
+F 3 "~" H 6000 5200 50  0001 C CNN
+	1    6000 5200
+	-1   0    0    -1  
 $EndComp
 $Comp
 L Device:LED D3
 U 1 1 5F47CBE7
-P 9300 4200
-F 0 "D3" H 9293 4417 50  0000 C CNN
-F 1 "LED" H 9293 4326 50  0000 C CNN
-F 2 "LED_SMD:LED_0805_2012Metric" H 9300 4200 50  0001 C CNN
-F 3 "~" H 9300 4200 50  0001 C CNN
-	1    9300 4200
-	-1   0    0    -1  
+P 5600 5750
+F 0 "D3" H 5593 5967 50  0000 C CNN
+F 1 "LED" H 5593 5876 50  0000 C CNN
+F 2 "LED_SMD:LED_0805_2012Metric" H 5600 5750 50  0001 C CNN
+F 3 "~" H 5600 5750 50  0001 C CNN
+	1    5600 5750
+	0    1    -1   0   
 $EndComp
 $Comp
 L Device:R R11
 U 1 1 5F47CBF1
-P 8800 4200
-F 0 "R11" V 8593 4200 50  0000 C CNN
-F 1 "560" V 8684 4200 50  0000 C CNN
-F 2 "Resistor_SMD:R_0805_2012Metric" V 8730 4200 50  0001 C CNN
-F 3 "~" H 8800 4200 50  0001 C CNN
-	1    8800 4200
+P 5600 5200
+F 0 "R11" V 5393 5200 50  0000 C CNN
+F 1 "560" V 5484 5200 50  0000 C CNN
+F 2 "Resistor_SMD:R_0805_2012Metric" V 5530 5200 50  0001 C CNN
+F 3 "~" H 5600 5200 50  0001 C CNN
+	1    5600 5200
+	-1   0    0    -1  
+$EndComp
+Wire Wire Line
+	6000 5600 6000 5350
+Wire Wire Line
+	6000 5050 6000 4600
+Wire Wire Line
+	5600 5050 5600 4600
+Text Label 8700 3550 0    50   ~ 0
+LED1
+Text Label 8700 3650 0    50   ~ 0
+LED2
+Text Label 6000 4600 3    50   ~ 0
+LED1
+Text Label 5600 4600 3    50   ~ 0
+LED2
+Wire Wire Line
+	5600 5600 5600 5350
+Wire Wire Line
+	3350 1800 3500 1800
+$Comp
+L Device:Q_NPN_BEC Q2
+U 1 1 5F72B7E4
+P 6450 6450
+F 0 "Q2" H 6641 6496 50  0000 L CNN
+F 1 "BSR14" H 6641 6405 50  0000 L CNN
+F 2 "Package_TO_SOT_SMD:SOT-23" H 6650 6550 50  0001 C CNN
+F 3 "~" H 6450 6450 50  0001 C CNN
+F 4 "Q_NPN_BEC" H 6450 6450 50  0001 C CNN "kind"
+F 5 "BSR14" H 6450 6450 50  0001 C CNN "manf#"
+	1    6450 6450
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	6650 6050 7250 6050
+Wire Wire Line
+	7250 6050 7900 6050
+Wire Wire Line
+	7900 6050 8550 6050
+Wire Wire Line
+	6550 5950 6550 6150
+Wire Wire Line
+	7150 5950 7150 6150
+Wire Wire Line
+	7150 6150 6550 6150
+Connection ~ 6550 6150
+Wire Wire Line
+	6550 6150 6550 6250
+Wire Wire Line
+	7800 5950 7800 6150
+Wire Wire Line
+	7800 6150 7150 6150
+Connection ~ 7150 6150
+Wire Wire Line
+	8450 6150 7800 6150
+Wire Wire Line
+	8450 5950 8450 6150
+Connection ~ 7800 6150
+$Comp
+L power:GND #PWR0108
+U 1 1 5F787318
+P 6550 6850
+F 0 "#PWR0108" H 6550 6600 50  0001 C CNN
+F 1 "GND" V 6555 6722 50  0000 R CNN
+F 2 "" H 6550 6850 50  0001 C CNN
+F 3 "" H 6550 6850 50  0001 C CNN
+	1    6550 6850
+	-1   0    0    -1  
+$EndComp
+Wire Wire Line
+	6550 6650 6550 6850
+Wire Wire Line
+	6250 6450 5850 6450
+Text Label 5850 6450 0    50   ~ 0
+SW_LED
+Wire Wire Line
+	6550 6150 6000 6150
+Wire Wire Line
+	5600 5900 5600 6150
+Wire Wire Line
+	6000 5900 6000 6150
+Connection ~ 6000 6150
+Wire Wire Line
+	6000 6150 5600 6150
+Text Label 4350 6650 2    50   ~ 0
+MOSI
+Text Label 4350 6550 2    50   ~ 0
+MISO
+Text Label 4350 6750 2    50   ~ 0
+SCK
+Wire Wire Line
+	4350 6650 3950 6650
+Wire Wire Line
+	4350 6550 3950 6550
+Wire Wire Line
+	4350 6750 3950 6750
+Wire Wire Line
+	3950 6850 4100 6850
+$Comp
+L power:+5V #PWR06
+U 1 1 5F976B7C
+P 4100 6850
+F 0 "#PWR06" H 4100 6700 50  0001 C CNN
+F 1 "+5V" V 4115 6978 50  0000 L CNN
+F 2 "" H 4100 6850 50  0001 C CNN
+F 3 "" H 4100 6850 50  0001 C CNN
+	1    4100 6850
+	0    1    -1   0   
+$EndComp
+$Comp
+L power:GND #PWR07
+U 1 1 5F98D8BE
+P 4150 6950
+F 0 "#PWR07" H 4150 6700 50  0001 C CNN
+F 1 "GND" V 4155 6822 50  0000 R CNN
+F 2 "" H 4150 6950 50  0001 C CNN
+F 3 "" H 4150 6950 50  0001 C CNN
+	1    4150 6950
 	0    -1   1    0   
 $EndComp
 Wire Wire Line
-	9150 3800 8950 3800
+	3950 6950 4150 6950
 Wire Wire Line
-	9450 3800 9650 3800
+	3950 7050 4050 7050
 Wire Wire Line
-	9650 3800 9650 4000
+	4050 7050 4050 7250
+Connection ~ 4050 7250
 Wire Wire Line
-	9650 4200 9450 4200
-Wire Wire Line
-	8650 3800 8350 3800
-Wire Wire Line
-	8650 4200 8350 4200
-Text Label 8850 3150 0    50   ~ 0
-LED1
-Text Label 8850 3250 0    50   ~ 0
-LED2
-Text Label 8350 3800 0    50   ~ 0
-LED1
-Text Label 8350 4200 0    50   ~ 0
-LED2
-Wire Wire Line
-	9150 4200 8950 4200
-Wire Wire Line
-	9650 4000 9750 4000
-Connection ~ 9650 4000
-Wire Wire Line
-	9650 4000 9650 4200
+	4050 7250 3950 7250
 $Comp
-L power:GND #PWR06
-U 1 1 5F5229F2
-P 9750 4000
-F 0 "#PWR06" H 9750 3750 50  0001 C CNN
-F 1 "GND" V 9755 3872 50  0000 R CNN
-F 2 "" H 9750 4000 50  0001 C CNN
-F 3 "" H 9750 4000 50  0001 C CNN
-	1    9750 4000
+L Jumper:SolderJumper_2_Open JP4
+U 1 1 5F9BD594
+P 4700 6150
+F 0 "JP4" H 4700 6500 50  0000 C CNN
+F 1 "SolderJumper_2_Open" H 4700 6264 50  0001 C CNN
+F 2 "Jumper:SolderJumper-2_P1.3mm_Open_TrianglePad1.0x1.5mm" H 4700 6150 50  0001 C CNN
+F 3 "~" H 4700 6150 50  0001 C CNN
+F 4 "Do Not Populate Tag" H 4700 6150 50  0001 C CNN "DNP"
+	1    4700 6150
+	1    0    0    -1  
+$EndComp
+$Comp
+L Jumper:SolderJumper_2_Open JP5
+U 1 1 5F9BF05B
+P 4700 6250
+F 0 "JP5" H 4700 6600 50  0000 C CNN
+F 1 "SolderJumper_2_Open" H 4700 6364 50  0001 C CNN
+F 2 "Jumper:SolderJumper-2_P1.3mm_Open_TrianglePad1.0x1.5mm" H 4700 6250 50  0001 C CNN
+F 3 "~" H 4700 6250 50  0001 C CNN
+F 4 "Do Not Populate Tag" H 4700 6250 50  0001 C CNN "DNP"
+	1    4700 6250
+	1    0    0    -1  
+$EndComp
+$Comp
+L Jumper:SolderJumper_2_Open JP6
+U 1 1 5F9BF6E4
+P 4700 6350
+F 0 "JP6" H 4700 6700 50  0000 C CNN
+F 1 "SolderJumper_2_Open" H 4700 6464 50  0001 C CNN
+F 2 "Jumper:SolderJumper-2_P1.3mm_Open_TrianglePad1.0x1.5mm" H 4700 6350 50  0001 C CNN
+F 3 "~" H 4700 6350 50  0001 C CNN
+F 4 "Do Not Populate Tag" H 4700 6350 50  0001 C CNN "DNP"
+	1    4700 6350
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	4550 6150 3950 6150
+Wire Wire Line
+	3950 6250 4550 6250
+Wire Wire Line
+	4550 6350 3950 6350
+Text Label 5750 7350 2    50   ~ 0
+SCK
+Text Label 4850 7350 0    50   ~ 0
+SCL
+Wire Wire Line
+	5450 7350 5750 7350
+Wire Wire Line
+	5150 7350 4850 7350
+Text Label 5750 7000 2    50   ~ 0
+MOSI
+Text Label 1750 2850 2    50   ~ 0
+MOSI
+Text Label 4850 7000 0    50   ~ 0
+SDA
+Text Label 850  2850 0    50   ~ 0
+MISO
+Wire Wire Line
+	5450 7000 5750 7000
+Wire Wire Line
+	5150 7000 4850 7000
+Wire Wire Line
+	1450 2850 1750 2850
+Wire Wire Line
+	1150 2850 850  2850
+$Comp
+L Jumper:SolderJumper_2_Open JP9
+U 1 1 5FAAC55B
+P 5300 7350
+F 0 "JP9" H 5300 7555 50  0000 C CNN
+F 1 "SolderJumper_2_Open" H 5300 7464 50  0000 C CNN
+F 2 "Jumper:SolderJumper-2_P1.3mm_Open_TrianglePad1.0x1.5mm" H 5300 7350 50  0001 C CNN
+F 3 "~" H 5300 7350 50  0001 C CNN
+F 4 "Do Not Populate Tag" H 5300 7350 50  0001 C CNN "DNP"
+	1    5300 7350
+	1    0    0    -1  
+$EndComp
+$Comp
+L Jumper:SolderJumper_3_Open JP10
+U 1 1 5F6A3883
+P 4400 2850
+F 0 "JP10" V 4446 2917 50  0000 L CNN
+F 1 "SolderJumper_3_Open" V 4355 2917 50  0000 L CNN
+F 2 "Jumper:SolderJumper-3_P2.0mm_Open_TrianglePad1.0x1.5mm" H 4400 2850 50  0001 C CNN
+F 3 "~" H 4400 2850 50  0001 C CNN
+	1    4400 2850
 	0    -1   -1   0   
 $EndComp
+Wire Wire Line
+	4400 2650 4400 2550
+Wire Wire Line
+	4400 2550 3950 2550
+Wire Wire Line
+	4400 3050 4400 3150
+Wire Wire Line
+	4400 3150 4200 3150
+Wire Wire Line
+	4550 2850 4950 2850
+Text Label 1650 3900 0    50   ~ 0
+12V_EN
+Text Label 4950 2850 2    50   ~ 0
+12V_EN
+$Comp
+L power:+5V #PWR08
+U 1 1 5F756FF2
+P 4200 3150
+F 0 "#PWR08" H 4200 3000 50  0001 C CNN
+F 1 "+5V" V 4215 3278 50  0000 L CNN
+F 2 "" H 4200 3150 50  0001 C CNN
+F 3 "" H 4200 3150 50  0001 C CNN
+	1    4200 3150
+	0    -1   -1   0   
+$EndComp
+$Comp
+L Jumper:SolderJumper_2_Open JP8
+U 1 1 5F80DD02
+P 5300 7000
+F 0 "JP8" H 5300 7205 50  0000 C CNN
+F 1 "SolderJumper_2_Open" H 5300 7114 50  0000 C CNN
+F 2 "Jumper:SolderJumper-2_P1.3mm_Open_TrianglePad1.0x1.5mm" H 5300 7000 50  0001 C CNN
+F 3 "~" H 5300 7000 50  0001 C CNN
+F 4 "Do Not Populate Tag" H 5300 7000 50  0001 C CNN "DNP"
+	1    5300 7000
+	1    0    0    -1  
+$EndComp
+$Comp
+L Jumper:SolderJumper_2_Open JP7
+U 1 1 5F81794E
+P 1300 2850
+F 0 "JP7" H 1300 2950 50  0000 C CNN
+F 1 "SolderJumper_2_Open" H 1300 2964 50  0001 C CNN
+F 2 "Jumper:SolderJumper-2_P1.3mm_Open_TrianglePad1.0x1.5mm" H 1300 2850 50  0001 C CNN
+F 3 "~" H 1300 2850 50  0001 C CNN
+F 4 "Do Not Populate Tag" H 1300 2850 50  0001 C CNN "DNP"
+	1    1300 2850
+	1    0    0    -1  
+$EndComp
+$Comp
+L Jumper:SolderJumper_2_Open JP3
+U 1 1 5F824CEE
+P 10450 850
+F 0 "JP3" H 10450 1055 50  0000 C CNN
+F 1 "SolderJumper_2_Open" H 10450 964 50  0000 C CNN
+F 2 "Jumper:SolderJumper-2_P1.3mm_Open_TrianglePad1.0x1.5mm" H 10450 850 50  0001 C CNN
+F 3 "~" H 10450 850 50  0001 C CNN
+F 4 "Do Not Populate Tag" H 10450 850 50  0001 C CNN "DNP"
+	1    10450 850 
+	1    0    0    -1  
+$EndComp
+$Comp
+L Jumper:SolderJumper_2_Open JP2
+U 1 1 5F82A74D
+P 10450 1200
+F 0 "JP2" H 10450 1405 50  0000 C CNN
+F 1 "SolderJumper_2_Open" H 10450 1314 50  0000 C CNN
+F 2 "Jumper:SolderJumper-2_P1.3mm_Open_TrianglePad1.0x1.5mm" H 10450 1200 50  0001 C CNN
+F 3 "~" H 10450 1200 50  0001 C CNN
+F 4 "Do Not Populate Tag" H 10450 1200 50  0001 C CNN "DNP"
+	1    10450 1200
+	1    0    0    -1  
+$EndComp
+Text Label 5850 2750 0    50   ~ 0
+LCD_CS
+Wire Wire Line
+	6800 3050 6800 2950
+Wire Wire Line
+	7300 2600 7750 2600
+Wire Wire Line
+	7300 2700 7750 2700
+Text Label 7750 2700 2    50   ~ 0
+~RESET
+Text Label 7750 2600 2    50   ~ 0
+GND
+$Comp
+L Jumper:SolderJumper_3_Open JP12
+U 1 1 5F8667E1
+P 4400 2050
+F 0 "JP12" V 4446 2117 50  0000 L CNN
+F 1 "SolderJumper_3_Open" V 4355 2117 50  0000 L CNN
+F 2 "Jumper:SolderJumper-3_P2.0mm_Open_TrianglePad1.0x1.5mm" H 4400 2050 50  0001 C CNN
+F 3 "~" H 4400 2050 50  0001 C CNN
+	1    4400 2050
+	0    -1   -1   0   
+$EndComp
+Wire Wire Line
+	4400 1850 4400 1750
+Wire Wire Line
+	4400 1750 4200 1750
+Wire Wire Line
+	4400 2250 4400 2350
+Wire Wire Line
+	4400 2350 4200 2350
+Wire Wire Line
+	4550 2050 4950 2050
+Text Label 4950 2050 2    50   ~ 0
+BS1
+$Comp
+L power:+5V #PWR011
+U 1 1 5F8667F1
+P 4200 2350
+F 0 "#PWR011" H 4200 2200 50  0001 C CNN
+F 1 "+5V" V 4215 2478 50  0000 L CNN
+F 2 "" H 4200 2350 50  0001 C CNN
+F 3 "" H 4200 2350 50  0001 C CNN
+	1    4200 2350
+	0    -1   -1   0   
+$EndComp
+Text Label 3950 950  0    50   ~ 0
+LCD_CS
+$Comp
+L Jumper:SolderJumper_3_Open JP11
+U 1 1 5F88895D
+P 4400 1250
+F 0 "JP11" V 4446 1317 50  0000 L CNN
+F 1 "SolderJumper_3_Open" V 4355 1317 50  0000 L CNN
+F 2 "Jumper:SolderJumper-3_P2.0mm_Open_TrianglePad1.0x1.5mm" H 4400 1250 50  0001 C CNN
+F 3 "~" H 4400 1250 50  0001 C CNN
+	1    4400 1250
+	0    -1   -1   0   
+$EndComp
+Wire Wire Line
+	4400 1050 4400 950 
+Wire Wire Line
+	4400 950  3950 950 
+Wire Wire Line
+	4400 1450 4400 1550
+Wire Wire Line
+	4400 1550 4200 1550
+Wire Wire Line
+	4550 1250 4950 1250
+Text Label 4950 1250 2    50   ~ 0
+_LCD_CS
+Wire Wire Line
+	3500 1800 3500 2600
+Wire Wire Line
+	2950 2050 3450 2050
+Text Label 3450 2050 2    50   ~ 0
+BS1
+$Comp
+L power:GND #PWR09
+U 1 1 5F8BC829
+P 4200 1550
+F 0 "#PWR09" H 4200 1300 50  0001 C CNN
+F 1 "GND" V 4205 1422 50  0000 R CNN
+F 2 "" H 4200 1550 50  0001 C CNN
+F 3 "" H 4200 1550 50  0001 C CNN
+	1    4200 1550
+	0    1    1    0   
+$EndComp
+$Comp
+L power:GND #PWR010
+U 1 1 5F910E45
+P 4200 1750
+F 0 "#PWR010" H 4200 1500 50  0001 C CNN
+F 1 "GND" V 4205 1622 50  0000 R CNN
+F 2 "" H 4200 1750 50  0001 C CNN
+F 3 "" H 4200 1750 50  0001 C CNN
+	1    4200 1750
+	0    1    1    0   
+$EndComp
+Text Notes 4600 1500 0    50   ~ 0
+SPI: LCD_CS\nI2C: GND
+Text Notes 4650 2350 0    50   ~ 0
+SPI: GND\nI2C: +5V
 $EndSCHEMATC

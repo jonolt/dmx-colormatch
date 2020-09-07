@@ -5,12 +5,12 @@ $Descr A4 11693 8268
 encoding utf-8
 Sheet 1 1
 Title "NanoE-DMX"
-Date "2020-09-06"
-Rev "1.1"
+Date "2020-09-26"
+Rev "1.0"
 Comp ""
 Comment1 "Board can be used as Shield without Arduino Nano Every"
 Comment2 "ERROR: U1 has a wrong footprint, which requires a larger rerouting."
-Comment3 "DO NOT USE: in revision only minor mistakes are fixed."
+Comment3 ""
 Comment4 ""
 $EndDescr
 $Comp
@@ -1001,7 +1001,7 @@ Wire Wire Line
 Wire Wire Line
 	2300 2300 1850 2300
 Wire Wire Line
-	4900 3000 5350 3000
+	4900 3000 5000 3000
 Text Label 1500 1000 0    50   ~ 0
 TX
 Text Label 1500 1100 0    50   ~ 0
@@ -1049,29 +1049,18 @@ A2
 Wire Wire Line
 	2300 3100 2150 3100
 Wire Wire Line
-	2300 2900 2000 2900
+	2300 2900 2250 2900
 Wire Wire Line
-	2300 3000 2150 3000
+	2300 3000 2250 3000
 $Comp
 L power:+5V #PWR0106
 U 1 1 5F443F2A
-P 2150 3000
-F 0 "#PWR0106" H 2150 2850 50  0001 C CNN
-F 1 "+5V" H 2165 3173 50  0000 C CNN
-F 2 "" H 2150 3000 50  0001 C CNN
-F 3 "" H 2150 3000 50  0001 C CNN
-	1    2150 3000
-	0    -1   1    0   
-$EndComp
-$Comp
-L power:+3.3V #PWR0107
-U 1 1 5F443F30
-P 2000 2900
-F 0 "#PWR0107" H 2000 2750 50  0001 C CNN
-F 1 "+3.3V" H 2015 3073 50  0000 C CNN
-F 2 "" H 2000 2900 50  0001 C CNN
-F 3 "" H 2000 2900 50  0001 C CNN
-	1    2000 2900
+P 2250 3000
+F 0 "#PWR0106" H 2250 2850 50  0001 C CNN
+F 1 "+5V" V 2250 3200 50  0000 C CNN
+F 2 "" H 2250 3000 50  0001 C CNN
+F 3 "" H 2250 3000 50  0001 C CNN
+	1    2250 3000
 	0    -1   1    0   
 $EndComp
 Text Label 2150 3100 0    50   ~ 0
@@ -1100,18 +1089,6 @@ Text Label 5350 1700 2    50   ~ 0
 D9
 Text Label 7600 5050 0    50   ~ 0
 D9
-$Comp
-L arduino:Arduino_Uno_Shield XA1
-U 1 1 5F53BAD1
-P 3600 2050
-F 0 "XA1" H 3600 3437 60  0000 C CNN
-F 1 "Arduino_Uno_Shield" H 3600 3331 60  0000 C CNN
-F 2 "project:Arduino_Shield" H 5400 5800 60  0001 C CNN
-F 3 "https://store.arduino.cc/arduino-uno-rev3" H 5400 5800 60  0001 C CNN
-F 4 "Do Not Populate Tag" H 3600 2050 50  0001 C CNN "DNP"
-	1    3600 2050
-	1    0    0    -1  
-$EndComp
 Wire Wire Line
 	2300 2600 2300 2700
 Connection ~ 2300 2700
@@ -1122,7 +1099,7 @@ L power:GND #PWR0108
 U 1 1 5F6D541E
 P 2300 2700
 F 0 "#PWR0108" H 2300 2450 50  0001 C CNN
-F 1 "GND" H 2305 2527 50  0000 C CNN
+F 1 "GND" V 2300 2400 50  0000 C CNN
 F 2 "" H 2300 2700 50  0001 C CNN
 F 3 "" H 2300 2700 50  0001 C CNN
 	1    2300 2700
@@ -1302,38 +1279,36 @@ Wire Wire Line
 Wire Wire Line
 	5600 3850 5700 3850
 Text Label 4650 4300 0    50   ~ 0
-ISO_TX
+TX
 Text Label 4650 3850 0    50   ~ 0
-ISO_RX
+RX
 Text Label 4650 4700 0    50   ~ 0
-ISO_+5V
++5V
 Text Label 5850 4700 0    50   ~ 0
-ISO_GND
-Wire Wire Line
-	6400 3850 6600 3850
+GND
 Wire Wire Line
 	6000 3850 6100 3850
 $Comp
 L Device:LED D30
 U 1 1 5F582C98
-P 5850 3850
-F 0 "D30" H 5850 3750 50  0000 C CNN
-F 1 "LED yellow" H 5850 3950 50  0000 C CNN
-F 2 "LED_SMD:LED_0805_2012Metric" H 5850 3850 50  0001 C CNN
-F 3 "~" H 5850 3850 50  0001 C CNN
-F 4 "LY R976-PS-36" H 5850 3850 50  0001 C CNN "manf#"
-	1    5850 3850
+P 6250 3850
+F 0 "D30" H 6250 3750 50  0000 C CNN
+F 1 "LED yellow" H 6250 3950 50  0000 C CNN
+F 2 "LED_SMD:LED_0805_2012Metric" H 6250 3850 50  0001 C CNN
+F 3 "~" H 6250 3850 50  0001 C CNN
+F 4 "LY R976-PS-36" H 6250 3850 50  0001 C CNN "manf#"
+	1    6250 3850
 	-1   0    0    1   
 $EndComp
 $Comp
 L Device:R R33
 U 1 1 5F582CA2
-P 6250 3850
-F 0 "R33" V 6150 3850 50  0000 C CNN
-F 1 "1k" V 6350 3800 50  0000 L CNN
-F 2 "Resistor_SMD:R_0805_2012Metric" V 6180 3850 50  0001 C CNN
-F 3 "~" H 6250 3850 50  0001 C CNN
-	1    6250 3850
+P 5850 3850
+F 0 "R33" V 5750 3850 50  0000 C CNN
+F 1 "1k" V 5950 3800 50  0000 L CNN
+F 2 "Resistor_SMD:R_0805_2012Metric" V 5780 3850 50  0001 C CNN
+F 3 "~" H 5850 3850 50  0001 C CNN
+	1    5850 3850
 	0    1    1    0   
 $EndComp
 Wire Wire Line
@@ -1341,30 +1316,28 @@ Wire Wire Line
 $Comp
 L Device:R R34
 U 1 1 5F582C7E
-P 6250 4300
-F 0 "R34" V 6150 4300 50  0000 C CNN
-F 1 "1k" V 6350 4250 50  0000 L CNN
-F 2 "Resistor_SMD:R_0805_2012Metric" V 6180 4300 50  0001 C CNN
-F 3 "~" H 6250 4300 50  0001 C CNN
-	1    6250 4300
+P 5850 4300
+F 0 "R34" V 5750 4300 50  0000 C CNN
+F 1 "1k" V 5950 4250 50  0000 L CNN
+F 2 "Resistor_SMD:R_0805_2012Metric" V 5780 4300 50  0001 C CNN
+F 3 "~" H 5850 4300 50  0001 C CNN
+	1    5850 4300
 	0    1    1    0   
 $EndComp
 $Comp
 L Device:LED D31
 U 1 1 5F582C88
-P 5850 4300
-F 0 "D31" H 5850 4200 50  0000 C CNN
-F 1 "LED yellow" H 5850 4400 50  0000 C CNN
-F 2 "LED_SMD:LED_0805_2012Metric" H 5850 4300 50  0001 C CNN
-F 3 "~" H 5850 4300 50  0001 C CNN
-F 4 "LY R976-PS-36" H 5850 4300 50  0001 C CNN "manf#"
-	1    5850 4300
+P 6250 4300
+F 0 "D31" H 6250 4200 50  0000 C CNN
+F 1 "LED yellow" H 6250 4400 50  0000 C CNN
+F 2 "LED_SMD:LED_0805_2012Metric" H 6250 4300 50  0001 C CNN
+F 3 "~" H 6250 4300 50  0001 C CNN
+F 4 "LY R976-PS-36" H 6250 4300 50  0001 C CNN "manf#"
+	1    6250 4300
 	-1   0    0    1   
 $EndComp
 Wire Wire Line
 	6000 4300 6100 4300
-Wire Wire Line
-	6400 4300 6600 4300
 Wire Wire Line
 	5650 4700 6600 4700
 Connection ~ 6600 4300
@@ -1528,12 +1501,6 @@ F 3 "" H 1700 3900 50  0001 C CNN
 	0    1    1    0   
 $EndComp
 NoConn ~ 4900 3100
-NoConn ~ 4900 2300
-NoConn ~ 4900 2400
-NoConn ~ 4900 2500
-NoConn ~ 4900 2600
-NoConn ~ 4900 2700
-NoConn ~ 4900 2800
 $Comp
 L Connector_Generic:Conn_01x04 J40
 U 1 1 5F457F5E
@@ -1579,26 +1546,14 @@ $EndComp
 Wire Wire Line
 	8650 2800 8750 2800
 $Comp
-L Device:LED D32
-U 1 1 5F6C6863
-P 8900 2800
-F 0 "D32" H 8900 2700 50  0000 C CNN
-F 1 "LED red" H 8900 2900 50  0000 C CNN
-F 2 "LED_SMD:LED_0805_2012Metric" H 8900 2800 50  0001 C CNN
-F 3 "~" H 8900 2800 50  0001 C CNN
-F 4 "LS R976-NR-1" H 8900 2800 50  0001 C CNN "manf#"
-	1    8900 2800
-	1    0    0    1   
-$EndComp
-$Comp
 L Device:R R35
 U 1 1 5F6C6869
-P 8500 2800
-F 0 "R35" V 8400 2800 50  0000 C CNN
-F 1 "1k" V 8600 2750 50  0000 L CNN
-F 2 "Resistor_SMD:R_0805_2012Metric" V 8430 2800 50  0001 C CNN
-F 3 "~" H 8500 2800 50  0001 C CNN
-	1    8500 2800
+P 8900 2800
+F 0 "R35" V 8800 2800 50  0000 C CNN
+F 1 "1k" V 9000 2750 50  0000 L CNN
+F 2 "Resistor_SMD:R_0805_2012Metric" V 8830 2800 50  0001 C CNN
+F 3 "~" H 8900 2800 50  0001 C CNN
+	1    8900 2800
 	0    1    1    0   
 $EndComp
 Wire Wire Line
@@ -1614,4 +1569,90 @@ Wire Wire Line
 Connection ~ 4000 7350
 Wire Wire Line
 	4000 7350 4100 7350
+$Comp
+L Device:LED D32
+U 1 1 5F6C6863
+P 8500 2800
+F 0 "D32" H 8500 2700 50  0000 C CNN
+F 1 "LED red" H 8500 2900 50  0000 C CNN
+F 2 "LED_SMD:LED_0805_2012Metric" H 8500 2800 50  0001 C CNN
+F 3 "~" H 8500 2800 50  0001 C CNN
+F 4 "LS R976-NR-1" H 8500 2800 50  0001 C CNN "manf#"
+	1    8500 2800
+	-1   0    0    1   
+$EndComp
+Wire Wire Line
+	6400 3850 6600 3850
+Wire Wire Line
+	6400 4300 6600 4300
+Text Notes 6750 3500 0    50   ~ 0
+BRIDGE DMX ISO
+Wire Wire Line
+	4900 2300 5350 2300
+Wire Wire Line
+	4900 2400 5350 2400
+Wire Wire Line
+	4900 2500 5350 2500
+Text Label 5350 2400 2    50   ~ 0
+MOSI
+Text Label 5350 2300 2    50   ~ 0
+MISO
+Text Label 5350 2500 2    50   ~ 0
+SCK
+Wire Wire Line
+	4900 2600 5050 2600
+$Comp
+L power:+5V #PWR0109
+U 1 1 5F5ED78F
+P 5050 2600
+F 0 "#PWR0109" H 5050 2450 50  0001 C CNN
+F 1 "+5V" V 5050 2800 50  0000 C CNN
+F 2 "" H 5050 2600 50  0001 C CNN
+F 3 "" H 5050 2600 50  0001 C CNN
+	1    5050 2600
+	0    1    1    0   
+$EndComp
+$Comp
+L power:+3.3V #PWR0107
+U 1 1 5F443F30
+P 2250 2900
+F 0 "#PWR0107" H 2250 2750 50  0001 C CNN
+F 1 "+3.3V" V 2250 3150 50  0000 C CNN
+F 2 "" H 2250 2900 50  0001 C CNN
+F 3 "" H 2250 2900 50  0001 C CNN
+	1    2250 2900
+	0    -1   1    0   
+$EndComp
+$Comp
+L power:GND #PWR0110
+U 1 1 5F660632
+P 5050 2700
+F 0 "#PWR0110" H 5050 2450 50  0001 C CNN
+F 1 "GND" V 5050 2400 50  0000 C CNN
+F 2 "" H 5050 2700 50  0001 C CNN
+F 3 "" H 5050 2700 50  0001 C CNN
+	1    5050 2700
+	0    -1   -1   0   
+$EndComp
+Wire Wire Line
+	4900 2700 5050 2700
+$Comp
+L arduino:Arduino_Uno_Shield XA1
+U 1 1 5F53BAD1
+P 3600 2050
+F 0 "XA1" H 3600 3437 60  0000 C CNN
+F 1 "Arduino_Uno_Shield" H 3600 3331 60  0000 C CNN
+F 2 "project:Arduino_Shield" H 5400 5800 60  0001 C CNN
+F 3 "https://store.arduino.cc/arduino-uno-rev3" H 5400 5800 60  0001 C CNN
+F 4 "Do Not Populate Tag" H 3600 2050 50  0001 C CNN "DNP"
+	1    3600 2050
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	4900 2800 5000 2800
+Wire Wire Line
+	5000 2800 5000 3000
+Connection ~ 5000 3000
+Wire Wire Line
+	5000 3000 5350 3000
 $EndSCHEMATC
