@@ -2,7 +2,7 @@
 <CodeBlocks_project_file>
 	<FileVersion major="1" minor="6" />
 	<Project>
-		<Option title="sample_project" />
+		<Option title="firmware2" />
 		<Option makefile_is_custom="1" />
 		<Option pch_mode="2" />
 		<Option compiler="gcc" />
@@ -48,75 +48,32 @@
 		</Build>
 		<Compiler>
 			<Add option="-DPLATFORMIO=40304" />
-			<Add option="-DARDUINO_AVR_NANO_EVERY" />
-			<Add option="-DAVR_NANO_4809_328MODE" />
-			<Add option="-DMILLIS_USE_TIMERB3" />
-			<Add option="-DNO_EXTERNAL_I2C_PULLUP" />
+			<Add option="-DARDUINO_AVR_MEGA2560" />
+			<Add option="-DDMX_USE_PORT1" />
 			<Add option="-DF_CPU=16000000L" />
-			<Add option="-DARDUINO_ARCH_MEGAAVR" />
+			<Add option="-DARDUINO_ARCH_AVR" />
 			<Add option="-DARDUINO=10808" />
-			<Add option="-DUSB_VID=0x2341" />
-			<Add option="-DUSB_PID=0x0058" />
-			<Add option='-DUSB_PRODUCT=&quot;Arduino Nano Every&quot;' />
-			<Add option='-DUSB_MANUFACTURER=&quot;Arduino&quot;' />
-			<Add directory="/home/johannes/Documents/test_codeblocks/sample_project/include" />
-			<Add directory="/home/johannes/Documents/test_codeblocks/sample_project/src" />
-			<Add directory="/home/johannes/.platformio/packages/framework-arduino-megaavr/libraries/EEPROM/src" />
-			<Add directory="/home/johannes/.platformio/packages/framework-arduino-megaavr/libraries/SPI/src" />
-			<Add directory="/home/johannes/Documents/test_codeblocks/sample_project/lib/Automaton/src" />
-			<Add directory="/home/johannes/.platformio/packages/framework-arduino-megaavr/cores/arduino/api/deprecated" />
-			<Add directory="/home/johannes/.platformio/packages/framework-arduino-megaavr/cores/arduino" />
-			<Add directory="/home/johannes/.platformio/packages/framework-arduino-megaavr/variants/nona4809" />
-			<Add directory="/home/johannes/.platformio/packages/framework-arduino-megaavr/libraries/HID/src" />
-			<Add directory="/home/johannes/.platformio/packages/framework-arduino-megaavr/libraries/SoftwareSerial/src" />
-			<Add directory="/home/johannes/.platformio/packages/framework-arduino-megaavr/libraries/Wire/src" />
-			<Add directory="/home/johannes/.platformio/packages/toolchain-atmelavr/lib/gcc/avr/7.3.0/include-fixed" />
-			<Add directory="/home/johannes/.platformio/packages/toolchain-atmelavr/lib/gcc/avr/7.3.0/include" />
-			<Add directory="/home/johannes/.platformio/packages/toolchain-atmelavr/avr/include" />
+			<Add option="-D__AVR_ATmega2560__" />
+			<Add directory="/home/johannes/Documents/Projects/dmx-colormatch/firmware2/include" />
+			<Add directory="/home/johannes/Documents/Projects/dmx-colormatch/firmware2/src" />
+			<Add directory="/home/johannes/.platformio/packages/framework-arduino-avr/libraries/EEPROM/src" />
+			<Add directory="/home/johannes/.platformio/packages/framework-arduino-avr/libraries/SPI/src" />
+			<Add directory="/home/johannes/.platformio/packages/framework-arduino-avr/libraries/Wire/src" />
+			<Add directory="/home/johannes/Documents/Projects/dmx-colormatch/firmware2/lib/Automaton/src" />
+			<Add directory="/home/johannes/Documents/Projects/dmx-colormatch/firmware2/.pio/libdeps/megaatmega2560/DMXSerial/src" />
+			<Add directory="/home/johannes/.platformio/packages/framework-arduino-avr/cores/arduino" />
+			<Add directory="/home/johannes/.platformio/packages/framework-arduino-avr/variants/mega" />
+			<Add directory="/home/johannes/.platformio/packages/framework-arduino-avr/libraries/HID/src" />
+			<Add directory="/home/johannes/.platformio/packages/framework-arduino-avr/libraries/SoftwareSerial/src" />
+			<Add directory="/home/johannes/.platformio/packages/toolchain-atmelavr@1.50400.190710/lib/gcc/avr/5.4.0/include-fixed" />
+			<Add directory="/home/johannes/.platformio/packages/toolchain-atmelavr@1.50400.190710/lib/gcc/avr/5.4.0/include" />
+			<Add directory="/home/johannes/.platformio/packages/toolchain-atmelavr@1.50400.190710/avr/include" />
 			<Add directory="/home/johannes/.platformio/packages/tool-unity" />
 		</Compiler>
-		<Unit filename="lib/Automaton/src/Atm_analog.cpp" />
-		<Unit filename="lib/Automaton/src/Atm_analog.hpp" />
-		<Unit filename="lib/Automaton/src/Atm_bit.cpp" />
-		<Unit filename="lib/Automaton/src/Atm_bit.hpp" />
-		<Unit filename="lib/Automaton/src/Atm_button.cpp" />
-		<Unit filename="lib/Automaton/src/Atm_button.hpp" />
-		<Unit filename="lib/Automaton/src/Atm_command.cpp" />
-		<Unit filename="lib/Automaton/src/Atm_command.hpp" />
-		<Unit filename="lib/Automaton/src/Atm_comparator.cpp" />
-		<Unit filename="lib/Automaton/src/Atm_comparator.hpp" />
-		<Unit filename="lib/Automaton/src/Atm_controller.cpp" />
-		<Unit filename="lib/Automaton/src/Atm_controller.hpp" />
-		<Unit filename="lib/Automaton/src/Atm_digital.cpp" />
-		<Unit filename="lib/Automaton/src/Atm_digital.hpp" />
-		<Unit filename="lib/Automaton/src/Atm_encoder.cpp" />
-		<Unit filename="lib/Automaton/src/Atm_encoder.hpp" />
-		<Unit filename="lib/Automaton/src/Atm_fade.cpp" />
-		<Unit filename="lib/Automaton/src/Atm_fade.hpp" />
-		<Unit filename="lib/Automaton/src/Atm_fan.cpp" />
-		<Unit filename="lib/Automaton/src/Atm_fan.hpp" />
-		<Unit filename="lib/Automaton/src/Atm_led.cpp" />
-		<Unit filename="lib/Automaton/src/Atm_led.hpp" />
-		<Unit filename="lib/Automaton/src/Atm_player.cpp" />
-		<Unit filename="lib/Automaton/src/Atm_player.hpp" />
-		<Unit filename="lib/Automaton/src/Atm_step.cpp" />
-		<Unit filename="lib/Automaton/src/Atm_step.hpp" />
-		<Unit filename="lib/Automaton/src/Atm_timer.cpp" />
-		<Unit filename="lib/Automaton/src/Atm_timer.hpp" />
-		<Unit filename="lib/Automaton/src/Automaton.cpp" />
-		<Unit filename="lib/Automaton/src/Automaton.h" />
-		<Unit filename="lib/Automaton/src/Machine.cpp" />
-		<Unit filename="lib/Automaton/src/Machine.hpp" />
-		<Unit filename="lib/Automaton/src/atm_connector.cpp" />
-		<Unit filename="lib/Automaton/src/atm_connector.hpp" />
-		<Unit filename="lib/Automaton/src/atm_counter.cpp" />
-		<Unit filename="lib/Automaton/src/atm_counter.hpp" />
-		<Unit filename="lib/Automaton/src/atm_serial_debug.hpp" />
-		<Unit filename="lib/Automaton/src/atm_timer_millis.cpp" />
-		<Unit filename="lib/Automaton/src/atm_timer_millis.hpp" />
 		<Unit filename="platformio.ini" />
 		<Unit filename="src/AtmButtonExp.cpp" />
 		<Unit filename="src/AtmButtonExp.h" />
+		<Unit filename="src/TCS34725.h" />
 		<Unit filename="src/fsmmain.cpp" />
 		<Unit filename="src/fsmmain.h" />
 		<Unit filename="src/fsmui.cpp" />

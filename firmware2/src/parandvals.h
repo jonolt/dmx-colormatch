@@ -32,10 +32,10 @@ class ParAndVals
             refRegister = val;
             EEPROM.update(ADD_REF_REGISTER, refRegister);
         }
-        uint8_t GetWaitForSerialFlag() { return waitForSerialFlag; }
-        void SetWaitForSerialFlag(uint8_t val) {
+        bool GetWaitForSerialFlag() { return (bool) EEPROM.read(ADD_WAIT_FOR_SERIAL); }
+        void SetWaitForSerialFlag(bool val) {
             waitForSerialFlag = val;
-            EEPROM.update(ADD_WAIT_FOR_SERIAL, waitForSerialFlag);
+            EEPROM.update(ADD_WAIT_FOR_SERIAL, (uint8_t) waitForSerialFlag);
         }
 
         // values (only in RAM)
