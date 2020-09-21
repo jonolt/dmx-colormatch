@@ -25,14 +25,17 @@ static const uint8_t EB5 = 113;
 static const uint8_t EB6 = 114;
 static const uint8_t EB7 = 115;
 
-class Atm_button_exp : Atm_button
+class AtmButtonExp : public Atm_button
 {
 
 public:
     uint8_t pinOffset = 100;
     uint8_t bytes[2];
-    void pinMode(uint8_t pin, PinMode mode);
-    PinStatus digitalReadCustom(uint8_t pin);
+
+protected:
+    void pinMode(pin_size_t pin, PinMode mode);
+    PinStatus digitalRead(pin_size_t pin);
+
 };
 
 #endif // ATM_BUTTON_EXP_H
