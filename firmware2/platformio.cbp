@@ -70,6 +70,45 @@
 			<Add directory="/home/johannes/.platformio/packages/toolchain-atmelavr@1.50400.190710/avr/include" />
 			<Add directory="/home/johannes/.platformio/packages/tool-unity" />
 		</Compiler>
+		<Unit filename="lib/Automaton/src/Atm_analog.cpp" />
+		<Unit filename="lib/Automaton/src/Atm_analog.hpp" />
+		<Unit filename="lib/Automaton/src/Atm_bit.cpp" />
+		<Unit filename="lib/Automaton/src/Atm_bit.hpp" />
+		<Unit filename="lib/Automaton/src/Atm_button.cpp" />
+		<Unit filename="lib/Automaton/src/Atm_button.hpp" />
+		<Unit filename="lib/Automaton/src/Atm_command.cpp" />
+		<Unit filename="lib/Automaton/src/Atm_command.hpp" />
+		<Unit filename="lib/Automaton/src/Atm_comparator.cpp" />
+		<Unit filename="lib/Automaton/src/Atm_comparator.hpp" />
+		<Unit filename="lib/Automaton/src/Atm_controller.cpp" />
+		<Unit filename="lib/Automaton/src/Atm_controller.hpp" />
+		<Unit filename="lib/Automaton/src/Atm_digital.cpp" />
+		<Unit filename="lib/Automaton/src/Atm_digital.hpp" />
+		<Unit filename="lib/Automaton/src/Atm_encoder.cpp" />
+		<Unit filename="lib/Automaton/src/Atm_encoder.hpp" />
+		<Unit filename="lib/Automaton/src/Atm_fade.cpp" />
+		<Unit filename="lib/Automaton/src/Atm_fade.hpp" />
+		<Unit filename="lib/Automaton/src/Atm_fan.cpp" />
+		<Unit filename="lib/Automaton/src/Atm_fan.hpp" />
+		<Unit filename="lib/Automaton/src/Atm_led.cpp" />
+		<Unit filename="lib/Automaton/src/Atm_led.hpp" />
+		<Unit filename="lib/Automaton/src/Atm_player.cpp" />
+		<Unit filename="lib/Automaton/src/Atm_player.hpp" />
+		<Unit filename="lib/Automaton/src/Atm_step.cpp" />
+		<Unit filename="lib/Automaton/src/Atm_step.hpp" />
+		<Unit filename="lib/Automaton/src/Atm_timer.cpp" />
+		<Unit filename="lib/Automaton/src/Atm_timer.hpp" />
+		<Unit filename="lib/Automaton/src/Automaton.cpp" />
+		<Unit filename="lib/Automaton/src/Automaton.h" />
+		<Unit filename="lib/Automaton/src/Machine.cpp" />
+		<Unit filename="lib/Automaton/src/Machine.hpp" />
+		<Unit filename="lib/Automaton/src/atm_connector.cpp" />
+		<Unit filename="lib/Automaton/src/atm_connector.hpp" />
+		<Unit filename="lib/Automaton/src/atm_counter.cpp" />
+		<Unit filename="lib/Automaton/src/atm_counter.hpp" />
+		<Unit filename="lib/Automaton/src/atm_serial_debug.hpp" />
+		<Unit filename="lib/Automaton/src/atm_timer_millis.cpp" />
+		<Unit filename="lib/Automaton/src/atm_timer_millis.hpp" />
 		<Unit filename="platformio.ini" />
 		<Unit filename="src/AtmButtonExp.cpp" />
 		<Unit filename="src/AtmButtonExp.h" />
@@ -78,11 +117,13 @@
 		<Unit filename="src/fsmmain.h" />
 		<Unit filename="src/fsmui.cpp" />
 		<Unit filename="src/fsmui.h" />
+		<Unit filename="src/globals.h" />
 		<Unit filename="src/main.cpp" />
 		<Unit filename="src/parandvals.cpp" />
 		<Unit filename="src/parandvals.h" />
 		<Unit filename="src/rambutoon.cpp" />
 		<Unit filename="src/rambutoon.h" />
+		<Unit filename="src/serial.h" />
 		<Extensions />
 	</Project>
 </CodeBlocks_project_file>

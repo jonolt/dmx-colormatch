@@ -1,6 +1,6 @@
 #include "AtmButtonExp.h"
 
-void Atm_button_exp::pinMode(uint8_t pin, PinMode mode){
+void AtmButtonExp::pinMode(uint8_t pin, PinMode mode){
     if(pin<pinOffset){
         pinMode(pin, mode);
     }else{
@@ -8,7 +8,7 @@ void Atm_button_exp::pinMode(uint8_t pin, PinMode mode){
     }
 }
 
-PinStatus Atm_button_exp::digitalReadCustom(uint8_t pin){
+PinStatus AtmButtonExp::digitalRead(uint8_t pin){
     if(pin<pinOffset){
         return digitalRead(pin);
     }else{
