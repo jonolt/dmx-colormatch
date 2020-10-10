@@ -1,3 +1,6 @@
+//TODO algorithm to detect reaction time of dmx fixtures
+//TODO set boudrate via serial and save in EEPROM
+
 #include <Arduino.h>
 #include <SPI.h>
 
@@ -5,17 +8,19 @@
 #include "TCS34725.h"
 
 #include "globals.h"
-#include "serial.h"
 
 #include "fsmmain.h"
 #include "parandvals.h"
 
-#include "fsmui.h"
-#include "AtmButtonExp.h"
-
-#define SPLIT_CHAR ' '
 
 void(* resetFunc) (void) = 0;
+
+FsmMain fsm_main;
+ParAndVals pav;
+TCS34725 csensor;
+
+uint16_t tmpRGBC[NUM_SENSOR_VALUES];
+uint8_t tmpDMX[NUM_COLOR_CHANNELS];
 
 void print(String str)
 {
@@ -25,103 +30,6 @@ void print(String str)
         Serial.print(str);
     }
 }
-
-template <typename T>
-String formatValues(T val, const char* formatter)
-{
-    char buff[SPRINTF_BUFFER_SIZE];
-    sprintf(buff, formatter, val);
-    return String(buff);
-}
-
-template <typename T>
-String param_print_values(T _array[], int _size, const char* formatter)
-{
-    char buff[SPRINTF_BUFFER_SIZE];
-    String str_print = "";
-    for (int i = 0; i < _size; i++)
-    {
-        if(i>0 && i<_size)
-        {
-            str_print += SPLIT_CHAR;
-        }
-        sprintf(buff, formatter, _array[i]);
-        str_print += String(buff);
-    }
-    return str_print;
-}
-
-
-template <typename T>
-uint8_t array_from_string(T target[], String str, uint8_t charsInVal, uint8_t _size)
-{
-#ifdef _DEBUG
-    print("parsing string: " + str + " with " + String(_size) + " argumnets\n");
-#endif // _DEBUG
-    uint8_t arr_index=0;
-    for(unsigned int i = 0; i<str.length(); i++)
-    {
-        if(str[i]==SPLIT_CHAR)
-        {
-            String sub_str = str.substring(i+1, i+1+charsInVal);
-            //print("arr_index: " + String(arr_index) + "-" + sub_str + "\n");
-            target[arr_index] = sub_str.toInt();
-            //print("as int: " + String(target[arr_index]) + "\n");
-            arr_index++;
-            if(arr_index==_size)
-            {
-                return 0;
-            };
-            //delay(1);
-        }
-    }
-    return 2;
-}
-
-//TODO algorithm to detect reaction time of dmx fixtures
-//TODO set boudrate via serial and save in EEPROM
-
-FsmMain fsm_main;
-FsmUi fsm_ui;
-ParAndVals pav;
-AtmButtonExp buttons[8];
-Atm_led leds[8];
-TCS34725 csensor;
-
-uint16_t tmpRGBC[NUM_SENSOR_VALUES];
-uint8_t tmpDMX[NUM_COLOR_CHANNELS];
-
-//inline void initButtons()
-//{
-//    for (uint8_t i = 0; i<sizeof(BUTTON_MAP); i++)
-//    {
-////        buttons[i].begin( BUTTON_MAP[i] ).onPress(fsm_ui, i);
-//    }
-//}
-//
-//inline void cycleButtons()
-//{
-//    for (AtmButtonExp sw : buttons)
-//    {
-////        sw.cycle();
-//    }
-//}
-//
-//inline void initLEDs()
-//{
-//    for (uint8_t i = 0; i<sizeof(LED_MAP); i++)
-//    {
-//
-//    }
-//}
-//
-//inline void cycleLEDs()
-//{
-//    for (Atm_led d : leds)
-//    {
-////        d.cycle();
-//    }
-//}
 
 inline void initSerial()
 {
@@ -145,7 +53,6 @@ void updateDmx(uint8_t dmx[])
 {
     for(uint8_t i = 0; i<pav.GetcolorChanels(); i++)
     {
-        //print("dmx write ch '" + String(pav.GetstartAddress()+i) + "' to value '" + formatValues(dmx[i], F_DMX) + "'\n");
         DMXSerial.write(pav.GetstartAddress()+i, dmx[i]);
         delay(2);
     }
@@ -239,7 +146,7 @@ inline void readSerial()
                 uint8_t val = DMXSerial.read(add);
                 if(val>0 || (add>=dmx_lower && add<dmx_upper))
                 {
-                    print("  " + formatValues(add, F_DMX) + "/" + formatValues(add+dmx_lower-1, F_DMX) + " " + formatValues(val, F_VAL) + "\n");
+                    print("  " + formatValues(add, F_DMX) + "/" + formatValues(add+dmx_lower-1, F_DMX) + SPLIT_CHAR + formatValues(val, F_VAL) + "\n");
                 }
             }
             return;
@@ -372,12 +279,8 @@ void setup()
     DMXSerial.init(DMXController, REDE);
 
     initSensor();
-    //DO init expander
-//    initButtons();
-//    initLEDs();
-    //DO init diplay
     fsm_main = FsmMain();
-    //fsm_ui = FsmUi();
+
     print("setup done, continue to main loop\n");
 }
 
@@ -401,21 +304,14 @@ inline void clearRGBSum()
 
 void loop()
 {
-
     csensor.startIntegration();
-    //DO read registers IO expander
-//    cycleButtons();
-//    cycleLEDs();
-
     readSerial();
-    //fsm_ui.cycle();
+    // update HMI
     while(!csensor.is_integrated());
     csensor.read_data_rgbc(pav.rgbc);
-    //print(param_print_values(rgbc)+"\n");
-    addToRGBSum();
-    //print(String(pav.sumCount) + param_print_values(pav.sum_rgbc)+"\n");
 
-    //if(pav.sum_rgbc[3] > pav.sumThreshold || pav.sumCount >= pav.sumMaxCount){
+    // this is one way to adjust integration time to the brightnes, can defenitly be improved!
+    addToRGBSum();
     if(pav.sumCount < pav.sumMaxCount)
     {
         return;
@@ -425,10 +321,8 @@ void loop()
     print("~RGBC " + param_print_values(pav.sum_rgbc, NUM_SENSOR_VALUES, F_RGBC)+ "\n");
     clearRGBSum();
 
-    //delay(10);
-    //IF sensor reading is done
-    //fsm_main.cycle();
-    //DO update values in RAM/EEPROM
-    //DO write DMX output
-    //DO send serial monitor
+    // update DMX output
+    // delay until fixture has reacted maybe do some other stuff
+    // update values in RAM/EEPROM
+
 }

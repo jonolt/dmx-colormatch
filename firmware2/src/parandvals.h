@@ -4,7 +4,6 @@
 #include <EEPROM.h>
 #include <stdint.h>
 
-#include "serial.h"
 #include "globals.h"
 /*EEPROM structure
 * 000-030: see conatnts

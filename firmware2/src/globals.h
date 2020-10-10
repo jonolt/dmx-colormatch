@@ -32,48 +32,58 @@ const uint8_t DMX_ADD_MAX = 255;
 const uint8_t DMX_VAL_MIN = 0;
 const uint8_t DMX_VAL_MAX = 255;
 
-//
-//template <typename T>
-//String formatValues(T val, const char* formatter){
-//    char buff[SPRINTF_BUFFER_SIZE];
-//    sprintf(buff, formatter, val);
-//    return String(buff);
-//}
-//
-//template <typename T>
-//String param_print_values(T array[], int size, const char* formatter)
-//{
-//    char buff[SPRINTF_BUFFER_SIZE];
-//    String str_print;
-//    for (int i = 0; i < size; i++)
-//    {
-//        if(i<size)
-//        {
-//            str_print += " ";
-//        }
-//        sprintf(buff, formatter, array[i]);
-//        str_print += buff;
-//    }
-//    return str_print;
-//}
-//
-//
-//template <typename T>
-//void array_from_string(T target[], String str, uint8_t charsInVal, uint8_t size)
-//{
-//    uint8_t arr_index=0;
-//    for(unsigned int i = 0; i<str.length(); i++)
-//    {
-//        if(str[i]==' ')
-//        {
-//            String sub_str = str.substring(i+1, i+1+charsInVal);
-//            target[arr_index] = sub_str.toInt();
-//            arr_index++;
-//            if(arr_index==size)
-//            {
-//                return;
-//            };
-//        }
-//    }
-//}
+const char SPLIT_CHAR = ' ';
+
+
+template <typename T>
+String formatValues(T val, const char* formatter)
+{
+    char buff[SPRINTF_BUFFER_SIZE];
+    sprintf(buff, formatter, val);
+    return String(buff);
+}
+
+template <typename T>
+String param_print_values(T _array[], int _size, const char* formatter)
+{
+    char buff[SPRINTF_BUFFER_SIZE];
+    String str_print = "";
+    for (int i = 0; i < _size; i++)
+    {
+        if(i>0 && i<_size)
+        {
+            str_print += SPLIT_CHAR;
+        }
+        sprintf(buff, formatter, _array[i]);
+        str_print += String(buff);
+    }
+    return str_print;
+}
+
+template <typename T>
+uint8_t array_from_string(T target[], String str, uint8_t charsInVal, uint8_t _size)
+{
+#ifdef _DEBUG
+    print("parsing string: " + str + " with " + String(_size) + " argumnets\n");
+#endif // _DEBUG
+    uint8_t arr_index=0;
+    for(unsigned int i = 0; i<str.length(); i++)
+    {
+        if(str[i]==SPLIT_CHAR)
+        {
+            String sub_str = str.substring(i+1, i+1+charsInVal);
+            //print("arr_index: " + String(arr_index) + "-" + sub_str + "\n");
+            target[arr_index] = sub_str.toInt();
+            //print("as int: " + String(target[arr_index]) + "\n");
+            arr_index++;
+            if(arr_index==_size)
+            {
+                return 0;
+            };
+            //delay(1);
+        }
+    }
+    return 2;
+}
+
 #endif  // GLOBALS_H
