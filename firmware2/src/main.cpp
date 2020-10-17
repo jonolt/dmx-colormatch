@@ -9,13 +9,13 @@
 
 #include "globals.h"
 
-#include "fsmmain.h"
+#include "mainmachine.h"
 #include "parandvals.h"
 
 
 void(* resetFunc) (void) = 0;
 
-FsmMain fsm_main;
+MainMachine mainMachine;
 ParAndVals pav;
 TCS34725 csensor;
 
@@ -33,8 +33,8 @@ void print(String str)
 
 inline void initSerial()
 {
-    Serial.begin( 115200 );
-    if(pav.GetWaitForSerialFlag()==true)
+    Serial.begin( 1000000 );
+    if(pav.getWaitForSerialFlag()==true)
     {
         //check if SDA and SCL a shortened, if yeas act as waitForSerialFlag is clear
         //wait for any serial input to start;
@@ -45,25 +45,32 @@ inline void initSerial()
             Serial.read();
         }
         print("~WaitForSerialFlag cleared.\n");
-        pav.SetWaitForSerialFlag(false);
+        pav.setWaitForSerialFlag(false);
     }
 }
 
 void updateDmx(uint8_t dmx[])
 {
-    for(uint8_t i = 0; i<pav.GetcolorChanels(); i++)
+    bool dmx_changed = false;
+    for(uint8_t i = 0; i<pav.getNumColorChannel(); i++)
     {
-        DMXSerial.write(pav.GetstartAddress()+i, dmx[i]);
-        delay(2);
+        if(DMXSerial.read(pav.getDmxAddress()+i)!=dmx[i])
+        {
+            DMXSerial.write(pav.getDmxAddress()+i, dmx[i]);
+            dmx_changed = true;
+        }
     }
-    print("~DMX " + param_print_values(dmx, pav.GetcolorChanels(), F_DMX) + "\n");
+    if(dmx_changed)
+    {
+        print("~DMX " + param_print_values(dmx, pav.getNumColorChannel(), F_DMX) + "\n");
+    }
 }
 
 void readDmx(uint8_t dmx[])
 {
-    for(uint8_t i = 0; i<pav.GetcolorChanels(); i++)
+    for(uint8_t i = 0; i<pav.getNumColorChannel(); i++)
     {
-        dmx[i] = DMXSerial.read(pav.GetstartAddress()+i);
+        dmx[i] = DMXSerial.read(pav.getDmxAddress()+i);
     }
 }
 
@@ -74,6 +81,17 @@ inline void readSerial()
     {
         String str = Serial.readStringUntil('\n');
         str.trim();
+        if(str.equals("CANCLE") || str.equals("c"))
+        {
+            print("cancle\n");
+            mainMachine.cmd_stop();
+            return;
+        }
+        if(mainMachine.state() != mainMachine.IDLE)
+        {
+            print("device busy\n");
+            return;
+        }
         // reset microcontoller
         if(str.equals("RESET"))
         {
@@ -86,11 +104,11 @@ inline void readSerial()
         else if(str.equals("WFS") || str.equals("wait for serial, please"))
         {
             print("~WaitForSerialFlag set.\n");
-            pav.SetWaitForSerialFlag(true);
+            pav.setWaitForSerialFlag(true);
             return;
         }
-        //set value of address channel (Syntax: DMX ADD VAL)
-        else if(str.startsWith("DMX#"))
+        //set value of address
+        else if(str.startsWith("DMX#"))    // TODO if address in color range also write pav
         {
             uint8_t add = str.substring(5,8).toInt();
             if (add>=DMX_ADD_MIN && add<=DMX_ADD_MAX)
@@ -106,11 +124,12 @@ inline void readSerial()
             }
             error_msg = "value '" + str.substring(9,12) + "' is not a channel valid number (000-254)";
         }
-        else if(str.startsWith("DMX&"))
+        //set value of channel
+        else if(str.startsWith("DMX&"))  // TODO if ch in color range also write pav
         {
             // TODO check input is valid
             int8_t ch = str.substring(5,8).toInt();
-            int16_t add = pav.GetstartAddress() + ch - 1;
+            int16_t add = pav.getDmxAddress() + ch - 1;
             if (add>=DMX_ADD_MIN && ch<=DMX_ADD_MAX)
             {
 
@@ -132,6 +151,7 @@ inline void readSerial()
             {
                 DMXSerial.write(add, 0);
             }
+            pav.resetCDmx();
             print("*DMX all channels set to 0\n");
             return;
         }
@@ -139,8 +159,8 @@ inline void readSerial()
         else if(str.startsWith("DMX?"))
         {
             print("?DMX (ADD/CH) VAL)\n");
-            uint8_t dmx_lower = pav.GetstartAddress();
-            uint8_t dmx_upper = dmx_lower + pav.GetcolorChanels();
+            uint8_t dmx_lower = pav.getDmxAddress();
+            uint8_t dmx_upper = dmx_lower + pav.getNumColorChannel();
             for(int add=DMX_ADD_MIN; add<=DMX_ADD_MAX; add++)
             {
                 uint8_t val = DMXSerial.read(add);
@@ -155,10 +175,11 @@ inline void readSerial()
         else if(str.startsWith("DMX"))
         {
             uint8_t dmx_vals[NUM_COLOR_CHANNELS];
-            uint8_t arrayExitCode = array_from_string(dmx_vals, str.substring(3), 3, pav.GetcolorChanels());
+            uint8_t arrayExitCode = array_from_string(dmx_vals, str.substring(3), 3, pav.getNumColorChannel());
             if(arrayExitCode==0)
             {
-                print(">DMX " + param_print_values(dmx_vals, pav.GetcolorChanels(), F_DMX) + "\n");
+                print(">DMX " + param_print_values(dmx_vals, pav.getNumColorChannel(), F_DMX) + "\n");
+                copyArray(pav.cDmx, dmx_vals, NUM_COLOR_CHANNELS);
                 updateDmx(dmx_vals);
                 return;
             }
@@ -167,7 +188,7 @@ inline void readSerial()
         //get number of color channels
         else if(str.startsWith("NCH?"))
         {
-            print("?NCH " + formatValues(pav.GetcolorChanels(), F_CH) + "\n");
+            print("?NCH " + formatValues(pav.getNumColorChannel(), F_CH) + "\n");
             return;
         }
         // set number of color channels
@@ -176,8 +197,8 @@ inline void readSerial()
             uint8_t n_ch = str.substring(4).toInt();
             if (n_ch>0 && n_ch<=NUM_COLOR_CHANNELS)
             {
-                pav.SetcolorChanels(n_ch);
-                print(">NCH " + formatValues(pav.GetcolorChanels(), F_CH) + "\n");
+                pav.setNumColorChannels(n_ch);
+                print(">NCH " + formatValues(pav.getNumColorChannel(), F_CH) + "\n");
                 return;
             }
             error_msg = "value '" + str.substring(4) + "' is not a channel valid number (1-8)";
@@ -185,7 +206,7 @@ inline void readSerial()
         // get dmx start address
         else if(str.startsWith("ADD?"))
         {
-            print("?ADD " + formatValues(pav.GetstartAddress(), F_DMX) + "\n");
+            print("?ADD " + formatValues(pav.getDmxAddress(), F_DMX) + "\n");
             return;
         }
         // set dmx start address
@@ -194,8 +215,8 @@ inline void readSerial()
             uint8_t add = str.substring(4, 7).toInt();
             if (add>=DMX_ADD_MIN && DMX_ADD_MAX<=255)
             {
-                pav.SetstartAddress(add);
-                print(">ADD " + formatValues(pav.GetstartAddress(), F_DMX) + "\n");
+                pav.setDmxAddress(add);
+                print(">ADD " + formatValues(pav.getDmxAddress(), F_DMX) + "\n");
                 return;
             }
             error_msg = "value '" + str.substring(4, 7) + "' is not a valid address number (001-255)";
@@ -203,7 +224,7 @@ inline void readSerial()
         // get active register
         else if(str.startsWith("REG?"))
         {
-            print("?REG " + formatValues(pav.GetActiveRegister(), F_REG) + "\n");
+            print("?REG " + formatValues(pav.getActiveRegister(), F_REG) + "\n");
             return;
         }
         // set active register
@@ -212,8 +233,8 @@ inline void readSerial()
             uint8_t reg = str.substring(4,6).toInt();
             if(reg>0 && reg<=NUM_REGISTER)
             {
-                pav.SetActiveRegister(reg);
-                print(">REG " + formatValues(pav.GetActiveRegister(), F_REG) + "\n");
+                pav.setActiveRegister(reg);
+                print(">REG " + formatValues(pav.getActiveRegister(), F_REG) + "\n");
                 return;
             }
             error_msg = "value '" + str.substring(4,6) + "' is not a valid register number (01-16)";
@@ -221,33 +242,35 @@ inline void readSerial()
         // return register rgbc values of active register
         else if(str.equals("RRGBC?"))
         {
-            pav.GetRegRgbc(tmpRGBC);
+            pav.getRegRgbc(tmpRGBC);
             print("?RRGBC " + param_print_values(tmpRGBC, NUM_SENSOR_VALUES, F_RGBC) + "\n");
             return;
         }
         // return register dmx values of active register
         else if(str.equals("RDMX?"))
         {
-            pav.GetRegDmx(tmpDMX);
-            print("?RDMX " + param_print_values(tmpDMX, pav.GetcolorChanels(), F_DMX) + "\n");
+            pav.getRegDmx(tmpDMX);
+            print("?RDMX " + param_print_values(tmpDMX, pav.getNumColorChannel(), F_DMX) + "\n");
             return;
         }
         // send register dmx values to dmx output
         else if(str.equals("RDMX!"))
         {
-            pav.GetRegDmx(tmpDMX);
-            print("!RDMX " + param_print_values(tmpDMX, pav.GetcolorChanels(), F_DMX) + "\n");
-            updateDmx(tmpDMX);
+            pav.getRegDmx(tmpDMX);
+            print("!RDMX " + param_print_values(tmpDMX, pav.getNumColorChannel(), F_DMX) + "\n");
+            copyArray(pav.cDmx, tmpDMX, pav.getNumColorChannel());
             return;
         }
-//        else if (str.equals("REF"))
-//        {
-//
-//        }
-//        else if (str.equals("MATCH"))
-//        {
-//
-//        }
+        else if (str.equals("REF"))
+        {
+            mainMachine.trigger(mainMachine.EVT_CMD_REF);
+            return;
+        }
+        else if (str.equals("MATCH"))
+        {
+            mainMachine.cmd_match();
+            return;
+        }
         else
         {
             print("ERROR: invalid string: " + str + "\n");
@@ -265,12 +288,12 @@ inline void initSensor()
         delay(1000);
     }
     print("Found sensor at I2C-Address " + String(csensor.getSensorAddress()) + "\n");
-    csensor.setIntegrationTime(4.8);
+    csensor.setIntegrationTime(24);
 }
 
 void setup()
 {
-    //DO read wait for serial flag from EEPROM
+
     pav = ParAndVals();
     initSerial();
 
@@ -279,50 +302,38 @@ void setup()
     DMXSerial.init(DMXController, REDE);
 
     initSensor();
-    fsm_main = FsmMain();
+    mainMachine.trace( Serial );
+    mainMachine.begin( &pav );
 
     print("setup done, continue to main loop\n");
-}
 
-inline void addToRGBSum()
-{
-    for(uint8_t i=0; i<NUM_SENSOR_VALUES; i++)
-    {
-        pav.sum_rgbc[i] += pav.rgbc[i];
-    }
-    pav.sumCount++;
-}
-
-inline void clearRGBSum()
-{
-    pav.sumCount = 0;
-    for(uint8_t i=0; i<NUM_SENSOR_VALUES; i++)
-    {
-        pav.sum_rgbc[i] = 0;
-    }
 }
 
 void loop()
 {
     csensor.startIntegration();
+    // do time intensive stuff here
     readSerial();
-    // update HMI
-    while(!csensor.is_integrated());
+
+    while(!csensor.is_integrated())
+    {
+        // maybe do some stuff here
+    }
     csensor.read_data_rgbc(pav.rgbc);
 
-    // this is one way to adjust integration time to the brightnes, can defenitly be improved!
-    addToRGBSum();
-    if(pav.sumCount < pav.sumMaxCount)
+    mainMachine.cycle();
+    updateDmx(pav.cDmx);
+    unsigned long waitEndTime = micros() + pav.fixtureReactionTime_us;
+    // do time intensive stuff here
+    print("~RGBC " + param_print_values(pav.rgbc, NUM_SENSOR_VALUES, F_RGBC)+ "\n");
+    if (pav.score >= 0)  // indicates if match is running
     {
-        return;
+        print("~SCORE " + String(pav.score, 8) + "\n");
     }
+    readSerial();
 
-    fsm_main.cycle();
-    print("~RGBC " + param_print_values(pav.sum_rgbc, NUM_SENSOR_VALUES, F_RGBC)+ "\n");
-    clearRGBSum();
-
-    // update DMX output
-    // delay until fixture has reacted maybe do some other stuff
-    // update values in RAM/EEPROM
-
+    while (micros() < waitEndTime)
+    {
+        // maybe do some stuff here
+    }
 }

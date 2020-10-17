@@ -60,6 +60,9 @@ codes_status = [
     CommunicationCodes(
         "~DMX", "dmx value was changed", CommandGroup.status, enabled=False
     ),
+CommunicationCodes(
+        "~SCORE", "score", CommandGroup.status, enabled=False
+    ),
     CommunicationCodes("others", "all others will be checked too but is handled extra", CommandGroup.answer),
 ]
 
@@ -288,7 +291,7 @@ class Application(tk.Frame):
                 else:
                     return
                 self.serial_connection.port = device[0]
-                self.serial_connection.baudrate = 115200
+                self.serial_connection.baudrate = 1000000
                 self.serial_connection.open()
                 self.read_serial_input()
                 self.serial_send_entry["state"] = "normal"

@@ -76,6 +76,8 @@
 		<Unit filename="src/fsmmain.h" />
 		<Unit filename="src/globals.h" />
 		<Unit filename="src/main.cpp" />
+		<Unit filename="src/mainmachine.cpp" />
+		<Unit filename="src/mainmachine.h" />
 		<Unit filename="src/parandvals.cpp" />
 		<Unit filename="src/parandvals.h" />
 		<Extensions />
