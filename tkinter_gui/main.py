@@ -13,6 +13,10 @@ import serial.tools.list_ports
 import serial.threaded
 import enum
 
+import pandas
+import datetime
+import ploting
+
 
 class CommandGroup(enum.Enum):
     undefined = (0,)
@@ -24,11 +28,15 @@ class CommunicationCodes:
 
     master = None
 
-    def __init__(self, code, description, group=CommandGroup.undefined, enabled=True):
+    def __init__(self, code, description, group=CommandGroup.undefined, enabled=True, log_atr_name=None, data_frame_columns=None):
         self.code = code
         self.description = description
         self.group = group
         self.enabled_default = enabled
+        self.log_atr_name = log_atr_name
+        if not data_frame_columns:
+            data_frame_columns = ["val"]
+        self.data = pandas.DataFrame(columns=data_frame_columns)
         self.__enabled_obj = None
 
     @property
@@ -52,16 +60,28 @@ class CommunicationCodes:
         else:
             self.__enabled_obj.set(val)
 
+    def add_values(self, values: list):
+        d = dict()
+        i = 0
+        for v in values:
+            d.update({self.data.columns[i]: v})
+            i = i+1
+        if d:
+            self.data = self.data.append(pandas.Series(data=d, name=datetime.datetime.now()))
+
 
 codes_status = [
     CommunicationCodes(
-        "~RGBC", "rgbc sensor value changed", CommandGroup.status, enabled=False
+        "~RGBC", "rgbc sensor value changed", CommandGroup.status, enabled=False, log_atr_name="values_rgbc", data_frame_columns=["r", "g", "b", "c"]
     ),
     CommunicationCodes(
-        "~DMX", "dmx value was changed", CommandGroup.status, enabled=False
+        "~DMX", "dmx value was changed", CommandGroup.status, enabled=False, log_atr_name="values_dmx", data_frame_columns=["ch1", "ch2", "ch3", "ch4", "ch5", "ch6"]
     ),
-CommunicationCodes(
-        "~SCORE", "score", CommandGroup.status, enabled=False
+    CommunicationCodes(
+        "~SCORE", "score", CommandGroup.status, enabled=False, log_atr_name="values_score", data_frame_columns=["score"]
+    ),
+    CommunicationCodes(
+        "~!", "score", CommandGroup.status, enabled=False, log_atr_name="all values", data_frame_columns=["ch1", "ch2", "ch3", "ch4", "ch5", "ch6", "r", "g", "b", "c", "score"]
     ),
     CommunicationCodes("others", "all others will be checked too but is handled extra", CommandGroup.answer),
 ]
@@ -96,6 +116,9 @@ class Application(tk.Frame):
         CommunicationCodes.master = self.master
         self.code_map = {c.code: c for c in codes_status}
         self.filter_popup = None
+        self.plot_frame = None
+
+        self.after_ids = list()
 
         self.master.protocol("WM_DELETE_WINDOW", self.on_closing)
 
@@ -106,6 +129,10 @@ class Application(tk.Frame):
         serial_menu.add_command(label="Baudrate")
         serial_menu.add_command(label="Device")
         self.menu_bar.add_cascade(label="Serial", menu=serial_menu)
+
+        frames_menu = tk.Menu(self.menu_bar, tearoff=0)
+        frames_menu.add_command(label="Plot", command=self.plot_window)
+        self.menu_bar.add_cascade(label="Frames", menu=frames_menu)
 
         help_menu = tk.Menu(self.menu_bar, tearoff=0)
         help_menu.add_command(label="Help Index")
@@ -218,6 +245,15 @@ class Application(tk.Frame):
         self.encoder["tickinterval"] = upper
         self.encoder["resolution"] = resolution
 
+    def plot_window(self):
+        if self.plot_frame is None or not self.plot_frame.children:
+            tl = tk.Toplevel(self.master)
+            self.plot_frame = ploting.PlotWindow(self.code_map, tl)
+        else:
+            self.plot_frame.destroy()
+
+        return self.plot_frame
+
     def popup_filter(self):
         if self.filter_popup is None or not self.filter_popup.children:
             self.filter_popup = tk.Toplevel(self.master)
@@ -263,14 +299,14 @@ class Application(tk.Frame):
         self.text_lcd.config(state=tk.NORMAL)
         self.text_lcd.insert(0.0, "\n".join(to_insert))
         self.text_lcd.config(state=tk.DISABLED)
-        self.master.after(250, self.write_lcd)
+        self.after_ids.append(self.master.after(250, self.write_lcd))
 
     def update_on_off_button(self):
         if self.serial_connection.is_open:
             self.button_toggle_connection.config(text="OFF", bg="red")
         else:
             self.button_toggle_connection.config(text="ON", bg="green")
-        self.master.after(100, self.update_on_off_button)
+        self.after_ids.append(self.master.after(100, self.update_on_off_button))
 
     def toggle_serial_connection(self):
         if self.serial_connection.is_open:
@@ -337,18 +373,27 @@ class Application(tk.Frame):
             # print("received: " + text)
             if text.startswith("~RGBC"):
                 self.update_intensity(text)
-            code = self.code_map.get(text.split(" ", maxsplit=1)[0], None)
-            if (code and code.enabled) or (code is None and self.code_map.get("others").enabled):
-                self.serial_log.insert(tk.END, text + "\n")
-                self.serial_log.see(tk.END)
+            code = self.code_map.get(text.split(" ", maxsplit=1)[0], self.code_map["others"])
+            if code:
+                if code.enabled:
+                    self.serial_log.insert(tk.END, text + "\n")
+                    self.serial_log.see(tk.END)
+                try:
+                    str_values = text.split(" ")[1:]
+                    float_values = [float(val) for val in str_values]
+                    code.add_values(float_values)
+                except (ValueError, IndexError) as ex:
+                    pass
 
         if self.serial_connection.is_open:
-            self.master.after(10, self.read_serial_input)
+            self.after_ids.append(self.master.after(10, self.read_serial_input))
 
     def on_closing(self):
         if self.serial_connection.is_open:
             self.serial_connection.close()
-        self.master.destroy()
+        for aid in self.after_ids:
+            self.after_cancel(aid)
+        self.master.quit()
 
 
 if __name__ == "__main__":

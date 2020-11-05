@@ -22,6 +22,8 @@ TCS34725 csensor;
 uint16_t tmpRGBC[NUM_SENSOR_VALUES];
 uint8_t tmpDMX[NUM_COLOR_CHANNELS];
 
+String tmp_dmx_str;
+
 void print(String str)
 {
     uint8_t bufferLeft = Serial.availableForWrite();
@@ -73,6 +75,7 @@ void readDmx(uint8_t dmx[])
         dmx[i] = DMXSerial.read(pav.getDmxAddress()+i);
     }
 }
+
 
 inline void readSerial()
 {
@@ -151,6 +154,7 @@ inline void readSerial()
             {
                 DMXSerial.write(add, 0);
             }
+            pav.resetCDmx();
             pav.resetCDmx();
             print("*DMX all channels set to 0\n");
             return;
@@ -288,7 +292,7 @@ inline void initSensor()
         delay(1000);
     }
     print("Found sensor at I2C-Address " + String(csensor.getSensorAddress()) + "\n");
-    csensor.setIntegrationTime(24);
+    csensor.setIntegrationTime(48);
 }
 
 void setup()
@@ -315,25 +319,52 @@ void loop()
     // do time intensive stuff here
     readSerial();
 
+    uint16_t rgbcReference[4];
+    pav.getRegRgbc(rgbcReference);
+    for (int ref_val = 0; ref_val < 3; ref_val++)
+    {
+        for (int var = 0; var < 3; var++)
+        {
+            pav.targetRelVals[ref_val][var] = relDiff(rgbcReference[var], rgbcReference[3]);
+        }
+    }
+
+    readDmx(tmpDMX);
+    tmp_dmx_str = param_print_values(tmpDMX, NUM_COLOR_CHANNELS, F_DMX);
+
+    pav.last_score = pav.score;
+
     while(!csensor.is_integrated())
     {
-        // maybe do some stuff here
+        // maybe do some stuff here or just wait
     }
     csensor.read_data_rgbc(pav.rgbc);
 
+    pav.score = pow(relDiff(pav.rgbc[0], pav.rgbc[3]) - pav.targetRelVals[1][0], 2);
+    pav.score += pow(relDiff(pav.rgbc[1], pav.rgbc[3]) - pav.targetRelVals[2][1], 2);
+    pav.score += pow(relDiff(pav.rgbc[2], pav.rgbc[3]) - pav.targetRelVals[0][2], 2);
+
+    // at this point, score, dmx and rgbx are biased to the same time frame
+
     mainMachine.cycle();
+
     updateDmx(pav.cDmx);
     unsigned long waitEndTime = micros() + pav.fixtureReactionTime_us;
+
     // do time intensive stuff here
     print("~RGBC " + param_print_values(pav.rgbc, NUM_SENSOR_VALUES, F_RGBC)+ "\n");
     if (pav.score >= 0)  // indicates if match is running
     {
         print("~SCORE " + String(pav.score, 8) + "\n");
     }
-    readSerial();
+
+    print("~! ");
+    print(tmp_dmx_str + " ");
+    print(param_print_values(pav.rgbc, NUM_SENSOR_VALUES, F_RGBC) + " ");
+    print(String(pav.score, 8) + "\n");
 
     while (micros() < waitEndTime)
     {
-        // maybe do some stuff here
+        // maybe do some stuff here or just wait
     }
 }

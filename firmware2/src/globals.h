@@ -14,8 +14,10 @@ const uint8_t REDE = 4;
 //data
 const uint8_t NUM_REGISTER = 16;  //one based
 const uint8_t NUM_COLOR_CHANNELS = 6;
+const uint8_t OFFSET_COLOR_CHANNELS = 0;
 const uint8_t NUM_SENSOR_VALUES = 4;
-const uint8_t BYTES_PER_REGISTER = 14;  //=4*uint16+6*uint8
+const uint8_t OFFSET_SENSOR_VALUES = NUM_COLOR_CHANNELS;
+const uint8_t BYTES_PER_REGISTER = NUM_COLOR_CHANNELS*1+NUM_SENSOR_VALUES*2;  //=14
 
 //printing
 const uint16_t SPRINTF_BUFFER_SIZE = 32;
@@ -36,9 +38,9 @@ const uint8_t DMX_VAL_MAX = 255;
 //eeprom
 const uint8_t ADD_NUM_COLOR_CHANNELS = 0;      // uint8_t: number of color channels in current fixture
 const uint8_t ADD_DMX_ADDRESS = 1;             // uint8_t: start address of fixture
-const uint8_t ADD_DMX_COLOR_CHANNEL_MAP = 4;   // uint64_t: bool map on which channel are the colors MSB=ch1, LSB=ch64
 const uint8_t ADD_CURRENT_REGISTER = 2;        // uint8_t: current working register
 const uint8_t ADD_WAIT_FOR_SERIAL = 3;         // uint8_t: wait for serial connection flag
+const uint8_t ADD_DMX_COLOR_CHANNEL_MAP = 4;   // uint64_t: bool map on which channel are the colors MSB=ch1, LSB=ch64
 const uint8_t ADD_FIRST_REGISTER = 31;         // uint8_t: first address of registers
 
 //serial

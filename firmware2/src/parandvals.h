@@ -5,6 +5,7 @@
 #include <stdint.h>
 
 #include "globals.h"
+#include "Arduino.h"
 
 //TODO insert value changed mechanic
 
@@ -43,6 +44,7 @@ public:
     {
         activeRegister = val;
         EEPROM.update(ADD_CURRENT_REGISTER, activeRegister);
+        //TODO add her ref val calculation
 //        print("#REG " + formatValues(activeRegister, F_REG));
     }
 
@@ -58,19 +60,19 @@ public:
     }
     void getRegRgbc(uint16_t rgbc[])
     {
-        readFromEeprom(rgbc, NUM_SENSOR_VALUES, ADD_FIRST_REGISTER+activeRegister*BYTES_PER_REGISTER);
+        readFromEeprom(rgbc, NUM_SENSOR_VALUES, getRegisterAddress(OFFSET_COLOR_CHANNELS));
     }
     void setRegRgbc(uint16_t rgbc[])
     {
-        writeToEeprom(rgbc, NUM_SENSOR_VALUES, ADD_FIRST_REGISTER+activeRegister*BYTES_PER_REGISTER);
+        writeToEeprom(rgbc, NUM_SENSOR_VALUES, getRegisterAddress(OFFSET_COLOR_CHANNELS));
     }
     void getRegDmx(uint8_t dmx[])
     {
-        readFromEeprom(dmx, NUM_COLOR_CHANNELS, ADD_FIRST_REGISTER+activeRegister*BYTES_PER_REGISTER);
+        readFromEeprom(dmx, NUM_COLOR_CHANNELS, getRegisterAddress(OFFSET_SENSOR_VALUES));
     }
     void setRegDmx(uint8_t dmx[])
     {
-        writeToEeprom(dmx, NUM_COLOR_CHANNELS, ADD_FIRST_REGISTER+activeRegister*BYTES_PER_REGISTER);
+        writeToEeprom(dmx, NUM_COLOR_CHANNELS, getRegisterAddress(OFFSET_SENSOR_VALUES));
     }
 
     void resetMatchArrays();
@@ -84,6 +86,8 @@ public:
     uint16_t rgbc[NUM_SENSOR_VALUES];
     uint8_t intensity;
     float score;
+    float last_score;
+    float targetRelVals[3][3] = { };  // target values for match
 
 protected:
     uint8_t numColorChannels;
@@ -92,6 +96,15 @@ protected:
     bool waitForSerialFlag;
 
 private:
+    inline uint8_t getRegisterAddress(uint8_t offset){
+//        Serial.print("active register: ");
+//        Serial.print(activeRegister);
+//        Serial.print("/");
+//        Serial.print(getActiveRegister());
+//        Serial.print(" eeprom address: ");
+//        Serial.println(ADD_FIRST_REGISTER+(activeRegister-1)*BYTES_PER_REGISTER+offset);
+        return ADD_FIRST_REGISTER+(activeRegister-1)*BYTES_PER_REGISTER+offset;
+    }
 };
 
 #endif // PAR_AND_VALS_H

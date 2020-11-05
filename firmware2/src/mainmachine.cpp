@@ -201,12 +201,12 @@ void MainMachine::match_enter()
 bool MainMachine::match_loop()
 {
 
-    lastScore = score;
-
-    score = pow(relDiff(pav->rgbc[0], pav->rgbc[3]) - targetRelVals[1][0], 2);
-    score += pow(relDiff(pav->rgbc[1], pav->rgbc[3]) - targetRelVals[2][1], 2);
-    score += pow(relDiff(pav->rgbc[2], pav->rgbc[3]) - targetRelVals[0][2], 2);
-
+    //lastScore = score;
+    lastScore = pav->last_score;
+    //score = pow(relDiff(pav->rgbc[0], pav->rgbc[3]) - targetRelVals[1][0], 2);
+    //score += pow(relDiff(pav->rgbc[1], pav->rgbc[3]) - targetRelVals[2][1], 2);
+    //score += pow(relDiff(pav->rgbc[2], pav->rgbc[3]) - targetRelVals[0][2], 2);
+    score = pav->score;
 //    Serial.print("refCChannel: ");
 //    Serial.print(refCChannel);
 //    Serial.print("  varCChannel: ");
